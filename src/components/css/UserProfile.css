@@ -1,0 +1,141 @@
+.profile-main-box{
+    background-color: white;
+    padding-bottom: 10px;
+}
+
+.profile-detail-main-box{
+    margin: 20px 30px;
+    display: flex;
+    align-items: flex-end;
+    /* text-transform: capitalize; */
+}
+
+.profile-picture-box{
+    width: 140px;
+    height: 140px;
+    position: relative;
+}
+
+.profile-edit-icon{
+    position: absolute;
+    right: 59px;
+    bottom: 5px;
+    color: white;
+    font-size: 20px;
+}
+
+.profile-select-input{
+    width: 16px;
+    height: 16px;
+    position: absolute;
+    right: 59px;
+    bottom: 5px;
+    opacity: 0;
+}
+
+.profile-detail-box{
+    margin-left: 15px;
+}
+
+.profile-name-box{
+    font-weight: 600;
+    font-size: 25px;
+    text-transform: capitalize;
+}
+
+.profile-user-button{
+    width: 110px;
+    height: 27px;
+    margin-top: 5px;
+    cursor: pointer;
+    border: 1px solid #E4E4E4;
+}
+
+.profile-user-button:hover{
+    background-color: rgb(213,212,212);
+}
+
+.profile-main-features-box{
+    border: 1px solid #E4E4E4;
+}
+
+.profile-main-features-ul{
+    list-style: none;
+    display: flex;
+    justify-content: center;
+}
+
+.profile-main-features-ul > a {
+    margin-right:10px;
+    display: inline-block;
+}
+
+.profile-main-features-ul > a >li {
+    padding: 10px;
+    cursor: pointer;
+}
+
+.profile-main-features-ul > a > li:hover{
+    background-color: #ff0000;
+    color: white;
+}
+
+.profile-apply-background-color{
+    background-color: #ff0000;
+    color: white;
+}
+
+
+
+/* media query */
+
+@media only screen and (max-width: 600px) {   
+    .profile-main-features-ul > a >li {
+        padding: 10px 5px;
+        font-size: 15px;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .profile-main-features-ul{
+        justify-content: left;
+        overflow-x: scroll;
+        white-space: nowrap;
+    }
+
+    .profile-main-features-ul::-webkit-scrollbar{
+        display: none;
+    }
+    
+    .profile-detail-main-box {
+        margin: 20px 10px;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .profile-edit-icon {
+        right: 48px;
+    }
+
+    .profile-select-input {
+        right: 48px;
+    }
+
+    .profile-detail-box {
+        margin-left: 5px;
+        margin-top: 10px;
+    }
+
+    .profile-picture-box {
+        width: 120px;
+        height: 120px;
+    }
+    
+    .profile-name-box {
+        font-size: 20px;
+    }
+
+    .profile-details{
+        font-size: 16px;
+    }
+}
