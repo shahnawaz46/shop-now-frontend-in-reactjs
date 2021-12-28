@@ -1,0 +1,58 @@
+.errorhandle-main-box{
+    position: fixed;
+    bottom: 5%;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+    width: 25%;
+    z-index: 5;
+}
+
+@media only screen and (max-width: 1030px) {
+    .errorhandle-main-box{
+        width: 30%;
+    }
+}
+
+@media only screen and (max-width: 860px) {
+    .errorhandle-main-box{
+        width: 35%;
+    }
+}
+
+@media only screen and (max-width: 730px) {
+    .errorhandle-main-box{
+        width: 40%;
+    }
+}
+
+@media only screen and (max-width: 640px) {
+    .errorhandle-main-box{
+        width: 45%;
+    }
+}
+
+@media only screen and (max-width: 570px) {
+    .errorhandle-main-box{
+        width: 60%;
+    }
+}
+
+@media only screen and (max-width: 430px) {
+    .errorhandle-main-box{
+        width: 70%;
+    }
+}
+
+@media only screen and (max-width: 370px) {
+    .errorhandle-main-box{
+        width: 90%;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .errorhandle-main-box{
+        width: 95%;
+    }
+}

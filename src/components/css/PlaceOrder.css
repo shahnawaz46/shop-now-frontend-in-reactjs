@@ -1,0 +1,219 @@
+.MuiStepConnector-line{
+    display: none !important;
+}
+
+.MuiStepConnector-root {
+    height: 1px;
+    background-color: rgba(0,0,0,0.349);
+}
+
+.MuiStepConnector-active,
+.MuiStepConnector-completed {
+    background-color: tomato;
+}
+
+.place-order-stepper-main-box{
+    border: 1px solid black;
+    font-size: 10px;
+}
+
+.place-order-delivery-address-box{ 
+    margin: 10px;
+    background-color: white;
+}
+
+.place-order-delivery-tag{ 
+    background-color: tomato;
+    color: white;
+    padding: 10px;
+    font-size: 15px;
+    /* border:1px solid black; */
+    /* height:52px; */
+}
+
+
+.place-order-delivery-addressess-box{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+}
+
+.place-order-delivery-address-list{ 
+    border: 1px solid #e9e9e9;
+    border-top: none;
+    padding: 7px 9px;
+    /* position: relative; */
+}
+
+.place-order-add-address-buttton{
+    width: 150px;
+    padding: 10px;
+    font-size: 15px;
+    margin: 10px 0px;
+    border:none;
+    background-color: tomato;
+    color: white;
+}
+
+.place-order-add-address-form-buttton{
+    width: 150px;
+    padding: 10px;
+    font-size: 15px;
+    margin: 10px 0px;
+    border:none;
+    background-color: tomato;
+    color: white;
+    /* margin-left: 10px; */
+}
+
+.place-order-personal-address-box{
+    font-family: Arial, Helvetica, sans-serif;
+    margin: 10px;
+    flex: 1;
+}
+
+.place-order-form-paragraph{
+    font-size: 28px;
+    margin-top: 12px;
+}
+
+.place-order-personal-address-box-two{
+    border: 1px solid #e9e9e9; 
+    /* border: 1px solid gray; */
+    line-height: 150%;
+    padding: 20px 10px;
+    /* display: inline-block; */
+}
+
+/* form css style */
+
+.place-order-form-box{
+    /* border: 1px solid black; */
+    padding: 10px;
+}
+
+.place-order-form-input{
+    width: 400px;
+    outline: none;
+    height: 40px;
+    font-size: 15px;
+    padding-left:5px;
+}
+
+.place-order-form-box-part-II{
+    display: flex;
+}
+
+.place-order-form-input-field{
+    font-size: 17px;
+    font-weight: 600;
+    margin: 5px 0px;
+}
+
+.place-order-personal-address-main-box{
+    /* border: 1px solid black; */
+    display:flex;
+}
+
+.place-order-summery-main-box{
+    padding: 12px;
+}
+
+.place-order-add-sub-delete-box{
+    display: flex;
+    align-items: center;
+}
+
+/* Modal */
+
+.place-order-modal-position-relative-box{
+    /* border: 1px solid black; */
+    position: relative;
+}
+
+.place-order-modal-position-absolute-box{
+    /* border: 1px solid black; */
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    /* width: 100%; */
+    /* height: 100vh; */
+    /* transform: translate(-50%, -50%); */
+}
+
+.place-order-delivery-address-detail-box{
+    display:flex;
+    flex-direction: column;
+}
+
+.place-order-total-price-box{
+    margin: 10px;
+    margin-left: 0px; 
+    width: 350px;
+}
+
+.place-order-personal-address-tag{
+    background-color: tomato;
+    color: white;
+    padding: 10px; 
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size:17px;
+}
+
+/* .place-order-summery-image-and-content-box{ */
+    /* border: 1px solid black; */
+    /* display: flex;
+    align-items: center; */
+/* } */
+
+.place-order-total-price{
+    border: 1px solid #e9e9e9;
+    padding: 10px 5px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.place-order-items-name{
+    font-size: 18px;
+    font-weight: 400;
+}
+
+.place-order-product-selling-actual-price-box{
+    display: flex;
+    align-items: center;
+    margin: 10px 0px;
+}
+
+.place-order-product-selling-actual-price-box > h2 {
+    font-weight: 400;
+    color: red;
+}
+
+.place-order-product-selling-actual-price-box > strike {
+    margin:0px 10px;
+    font-size: 18px;
+}
+
+.place-order-product-selling-actual-price-box > h4{
+    font-weight: 400;
+}
+
+.place-order-address-list-and-button{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border: 1px solid #e9e9e9;
+    padding: 0px 10px;
+}
+
+.place-order-address-list-and-button > h2{
+    font-weight: 400;
+}
+
+@media only screen and (max-width: 600px){
+    .place-order-delivery-addressess-box{
+        grid-template-columns: 1fr;
+    }
+}

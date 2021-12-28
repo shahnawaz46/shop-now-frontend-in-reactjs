@@ -1,0 +1,194 @@
+.menwomencard-main-box{
+    margin-bottom: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.menwomencard-main-box > h1{
+    margin-top: 20px;
+    font-weight: 500;
+}
+
+.menwomencard-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 20px;
+}
+
+.mencard-box{
+    width: 45%;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 0px 8px 2px rgb(163, 163, 163);
+}
+
+.mencard-box > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    overflow: hidden;
+    transition: 0.5s ease-in-out;
+}
+
+.mencard-box > img:hover{
+    opacity: 0.4;
+}
+
+.mencard-content{
+    position: absolute;
+    bottom: 5%;
+    left: 5%;
+    overflow: hidden;
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.5s ease-in-out;
+}
+
+.mencard-content > a > h2{
+    font-weight: 500;
+    font-size: 25px;
+}
+
+.mencard-box:hover .mencard-content{
+    opacity: 1;
+}
+
+/* .menselection-content > a > button{
+    width: 120px;
+    padding: 5px 0px;
+    font-size: 18px;
+    border: none;
+    border: 1px solid rgb(163, 163, 163);
+    border-radius: 5px;
+    outline: none;
+    margin-top: 10px;
+} */
+
+
+.womencard-box{
+    width: 45%;
+    height: 400px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0px 0px 8px 2px rgb(163, 163, 163);
+}
+
+.womencard-box > img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: 0.5s ease-in-out;
+}
+
+.womencard-box > img:hover{
+    opacity: 0.4;
+}
+
+.womencard-content{
+    position: absolute;
+    bottom: 5%;
+    right: 5%;
+    overflow: hidden;
+    display: flex;
+    /* flex-direction: column; */
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: 0.5s ease-in-out;
+}
+
+.womencard-content > a > h2{
+    font-weight: 500;
+    font-size: 22px;
+}
+
+.womencard-box:hover .womencard-content{
+    opacity: 1;
+}
+
+/* .womencard-content > a > button{
+    width: 120px;
+    padding: 5px 0px;
+    font-size: 18px;
+    border: none;
+    border: 1px solid rgb(163, 163, 163);
+    border-radius: 5px;
+    outline: none;
+    margin-top: 10px;
+} */
+
+a{
+    color: black;
+}
+
+
+
+@media only screen and (max-width: 910px) {
+    .menwomencard-main-box > h1{
+        font-size: 25px;
+    }
+
+    .mencard-box{
+        height: 320px;
+    }
+
+    .womencard-box{
+        height: 320px;
+    }
+}
+
+
+@media only screen and (max-width: 768px) {
+    .menwomencard-main-box > h1{
+        font-size: 20px;
+    }
+
+    .menwomencard-box{
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        padding: 0px 15px;
+    }
+    
+    .mencard-box{
+        width: 100%;
+        height: 370px;
+        margin-bottom: 20px;
+    }
+
+    .womencard-box{
+        width: 100%;
+        height: 370px;
+    }
+}
+
+
+
+/* media query for mobile */
+@media only screen and (max-width: 500px) {
+    .mencard-box{
+        height: 260px;
+    }
+
+    .mencard-content > a > h2, .womencard-content > a > h2{
+        font-size: 20px;
+    }
+
+    .womencard-box{
+        height: 260px;
+    }
+}
+
+
+@media only screen and (max-width:350px){
+    .menwomencard-main-box > h1{
+        font-size: 15px;
+    }
+}

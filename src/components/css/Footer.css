@@ -1,0 +1,112 @@
+.footer-main-box{
+    background-color: #E4E4E4;
+    color: black;
+    font-size: 14px;
+}
+
+.footer-first-box{
+    padding: 10px;
+    box-sizing: border-box;
+    height:100%;
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    justify-items: center;
+}
+
+.footer-links-box{
+    padding: 10px;
+}
+
+.footer-h4{
+    font-size: 17px;
+    font-weight: 500;
+    margin-bottom: 20px;
+}
+
+.footer-links-box > ul > a > li{
+    margin-bottom: 8px;
+}
+
+.footer-links-box > ul > a{
+    list-style: none;
+    color: black;
+}
+
+.footer-links-box > ul > a >li:hover{
+    text-decoration: underline;
+}
+
+.footer-contact-box{
+    padding: 10px;
+}
+
+.footer-contact-box > ul{
+    display: flex;
+    flex-direction: column;
+}
+
+.footer-contact-box > ul >li{
+    list-style: none;
+    display: flex;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.footer-signup{
+    width: 60%;
+    padding: 10px;
+}
+
+.footer-signup > a > button{
+    width: 120px;
+    padding: 5px 0px;
+    border: none;
+    outline: none;
+    border: 1px solid grey;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.footer-second-box{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.footer-second-box-content{
+    text-align: center;
+    margin: 10px 0px;
+}
+
+.footer-copyright-box{
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.footer-copyright-box > span{
+    font-size: 15px;
+}
+
+
+
+/* -------------------media quieries---------------- */
+
+@media only screen and (max-width:910px){
+    .footer-signup{
+        width: 100%;
+    }
+}
+
+
+
+@media only screen and (max-width:768px){
+    .footer-main-box{
+        margin-top: 8px;
+    }
+
+    .footer-first-box{
+        grid-template-columns: 1fr 1fr;
+        justify-items: flex-start;
+    }
+}

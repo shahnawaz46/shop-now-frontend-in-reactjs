@@ -1,0 +1,101 @@
+.editprofile-main-box{
+    border: 1px solid #d4d4d9;
+    margin: 20px 150px 10px 150px;
+    padding: 20px;
+}
+
+.editprofile-main-box > h2{
+    font-size: 22px;
+    font-weight: 500;
+    border-bottom: 1px solid #d4d4d9;
+    padding-bottom: 5px;
+    margin-bottom: 10px
+}
+
+.editprofile-edit-form{
+    display: flex;
+    flex-direction: column;
+}
+
+.editprofile-edit-input{
+    display: flex;
+    flex-direction: column;
+    margin: 10px 0px;
+}
+
+.editprofile-edit-input > input{
+    border: 1px solid #d4d4d9;
+    font-size: 16px;
+    padding: 0px 5px;
+    margin-top: 5px;
+    height: 35px;
+}
+
+.editprofile-edit-input > span{
+    font-size: 17px;
+}
+
+.editprofile-edit-phone-no-button{
+    width: 120px;
+    height: 25px;
+    margin-top: 5px;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: white;
+    border: 1px solid #d4d4d9;
+    cursor: pointer;
+
+}
+
+.editprofile-edit-form-button{
+    height: 35px;
+    border: 1px solid red;
+    background: red;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+
+
+/* media query */
+
+@media only screen and (max-width: 768px) {   
+    .editprofile-main-box{
+        margin: 20px 20px 10px 20px;
+        padding: 20px;
+    }
+}
+
+@media only screen and (max-width: 500px) {   
+    .editprofile-main-box{
+        margin: 10px 10px;
+    }
+
+    .editprofile-main-box > h2 {
+        font-size: 20px;
+    }
+
+    .editprofile-edit-input > span {
+        font-size: 16px;
+    }
+
+    .editprofile-edit-input > input {
+        font-size: 15px;
+        height: 30px;
+    }
+
+    .editprofile-edit-input {
+        margin: 8px 0px;
+    }
+
+    .editprofile-edit-form-button {
+        height: 30px;
+    }
+}
+
+@media only screen and (max-width:360px) {
+    .editprofile-main-box{
+        padding: 10px;
+    }
+}

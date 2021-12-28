@@ -1,0 +1,138 @@
+.signup-main-page{
+    height: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    justify-items: center;
+    align-items: center;
+    position: relative;
+}
+
+.signup-main-page > a >h3{
+    margin-top: 10px;
+    font-size: 30px;
+    font-family: 'Spectral SC',serif;
+}
+
+.signup-image{
+    margin-right: 20px;
+}
+.signup-form{
+    background-color: white;
+    width:400px;
+    padding: 10px 30px;
+    margin-top: 15px;
+    margin-bottom: 30px;
+    border: 1px solid rgb(164,167,167);
+}
+
+.signup-form > h3 {
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+    margin-top: 15px;
+    /* color: cadetblue; */
+}
+
+.signup-form > h4{
+    font-weight: 400;
+    margin-top:12px;
+    margin-bottom: 8px;
+}
+
+.signup-input{
+    width: 100%;
+    padding: 5px;
+    outline: none;
+    border: 1px solid rgb(194,194,194);
+}
+
+.checkbox{
+    outline: none;
+    margin: 10px 0px;
+    margin-right: 5px;
+}
+
+.signup-password-box{
+    display: flex;
+    justify-content:space-between;
+}
+
+.signup-password-one > input{
+    width:100%;
+    padding: 5px;
+    outline: none;
+    border: 1px solid rgb(194,194,194);
+}
+
+.signup-password-one > h4{
+    font-weight: 400;
+    margin-top: 12px;
+    margin-bottom: 8px;
+}
+
+.signup-password{
+    border: 1px solid black;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.signup-button{
+    width: 100%;
+    padding: 10px;
+    background-color: #478ccd;
+    color: white;
+    font-size: 18px;
+    border: none;
+    margin-top:10px;
+    cursor: pointer;
+}
+
+
+.signup-form > h5{
+    font-size: 17px;
+    font-weight: 500;
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+@media only screen and (max-width:470px){
+    .signup-form{
+        width: 350px;
+    }
+    .signup-form > h3 {
+        font-size: 20px;
+    }
+    .signup-form > h5{
+        font-size: 15px;
+    }
+    .signup-button{
+        font-size: 15px;
+    }
+
+
+}
+
+@media only screen and (max-width:380px){
+    .signup-form{
+        width: 310px;
+        padding: 5px 15px;
+    } 
+}
+
+@media only screen and (max-width:340px){
+    .signup-form{
+        width: 300px;
+    } 
+}
+
+@media only screen and (max-width:300px){
+    .signup-form{
+        width: 250px;
+    }
+    .signup-terms-box{
+        font-size: 13px;
+    }
+}
