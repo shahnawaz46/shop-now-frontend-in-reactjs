@@ -1,0 +1,245 @@
+/* close icon disabled in desktop navbar */
+.close-icon{
+    display: none;
+}
+
+.navbar-container{
+    position: sticky;
+    top: 0px;
+    z-index: 2;
+}
+
+.navbar{
+    width: 100%;
+    height: 80px;
+    background: #fff;
+    box-shadow: 0 0 16px rgb(0 0 0 / 15%);
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+    padding: 0px 100px;
+}
+
+.website-name{
+    flex: 1;
+    font-size: 25px;
+    display: flex;
+    align-items: center;
+    font-family: 'Spectral SC', serif;
+}
+
+.navbar-item{
+    display: flex;
+    justify-content: center;
+    gap: 25px;
+    margin-right: 40px;
+}
+
+.navbar-link{
+    /* margin: 0px 15px; */
+    font-size: 14px;
+    font-weight: 500;
+    text-transform: uppercase;
+}
+
+.navbar-link > a{
+    text-decoration: none;
+    color: #1e1e27;
+}
+
+.navbar-link > a:hover{
+    color: orangered;
+}
+
+.nav-link-class{
+    border-bottom: 1px solid orangered;
+}
+
+.navbar-icons{
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.icon{
+    font-size: 19px;
+    cursor: pointer;
+}
+
+.profile-icon{
+    font-size: 24px;
+}
+
+.navbar-cart{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    border-radius: 50%;
+    background: #ECEFF6;
+    width: 40px;
+    height: 40px;
+}
+
+.navbar-cart > span{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: -10px;
+    left: 25px;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: #fe4c50;
+    font-size: 12px;
+    font-weight: 700;
+    color: white;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+.menu-icon{
+    display: none;
+    margin-left: 10px;
+}
+
+.search-field{
+    display: flex;
+    align-items: center;
+    position: absolute;
+    top: 0px;
+    width: 100%;
+    z-index: 2;
+    padding:  28px 10px;
+    box-sizing: border-box;
+    background-color:#fff;
+}
+
+.search-field > input{
+    width: 100%;
+    border: none;
+    background-color:#fff;
+    padding: 10px;
+    font-size: 15px;
+    outline: none;
+}
+
+/* media queries */
+
+@media only screen and (max-width: 1190px) {
+    .navbar{
+        padding: 0px 60px;
+    }
+}
+
+
+@media only screen and (max-width: 1120px) {
+    .navbar{
+        padding: 0px 40px;
+    }
+}
+
+
+@media only screen and (max-width: 1050px) {
+    .navbar{
+        padding: 0px 30px;
+    }
+}
+
+
+/* media query for mobile */
+@media only screen and (max-width: 950px) {
+
+    .navbar-item{
+        background-color: #fff;
+        z-index: 5;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-end;
+        gap: 0;
+        width: 100%;
+        height: 100vh;
+        position: fixed;
+        top: 0;
+        left: 0;
+        transform: translateX(-100%);
+        transition: all 0.5s;
+    }
+
+    .mobile-navbar{
+        transform: translateX(0%);
+    }
+
+    .navbar-link{
+        width: 100%;
+        border-bottom: 1px solid #e4e4e4;
+        font-size: 20px;
+        font-weight: 400;
+        padding: 15px 0px;
+        padding-left: 20px;
+        text-transform: capitalize;
+        color: #1e1e27;
+    }
+
+    .nav-link-class{
+        border-bottom: none;
+    }
+
+    .menu-icon{
+        display: block;
+        font-size: 24px;
+    }
+
+    .close-icon{
+        display: block;
+        margin: 20px;
+        font-size: 1.5rem;
+    }
+
+}
+
+@media only screen and (max-width: 676px) {
+    .navbar{
+        padding:0px 10px;
+    }
+}
+
+
+@media only screen and (max-width: 360px) {
+    .website-name{
+        font-size: 20px;
+    }
+
+    .navbar-icons{
+        gap: 8px;
+    }
+
+    .icon{
+        font-size: 17px;
+    }
+
+    .profile-icon{
+        font-size: 20px;
+    }
+
+    .menu-icon{
+        font-size: 20px;
+        margin-left: 5px;
+    }
+
+    .navbar-cart{
+        margin: 0px 6px;
+    }
+    
+    .navbar-cart > span{
+        width: 17px;
+        height: 17px;
+        font-size: 9px;
+        top: -7px;
+        left: 25px;
+    }
+}
