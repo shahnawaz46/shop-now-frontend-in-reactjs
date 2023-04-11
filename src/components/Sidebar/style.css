@@ -1,0 +1,111 @@
+.desktop-category-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 20px 20px 10px 20px;
+}
+
+.category-options {
+    border: 1px solid rgb(212, 212, 212);
+    width: 180px;
+    margin-bottom: 10px;
+    padding: 5px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    position: relative;
+    z-index: 1;
+    transition: all 0.3s linear;
+    overflow: hidden;
+    background-color: #f8f7fe;
+}
+
+.category-options::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: #E4E4E4;
+    height: 100%;
+    transform: translateX(-102%);
+    transition: all 0.3s linear;
+}
+
+.category-options:hover::before {
+    transform: translateX(0%);
+    z-index: -1;
+}
+
+.mobile-category-container {
+    display: none;
+}
+
+@media screen and (max-width:768px) {
+    .desktop-category-container {
+        display: none;
+    }
+
+    .category-options {
+        width: 100%;
+    }
+
+    .mobile-category-container {
+        display: block;
+        width: 100%;
+        box-sizing: border-box;
+        font-family: 'Libre Baskerville', serif;
+        position: relative;
+        padding: 0px 10px;
+        box-sizing: border-box;
+        padding-top: 10px;
+    }
+
+    .men-category-button-box {
+        display: flex;
+        height: 50px;
+        border: 1px solid rgb(212, 212, 212);
+    }
+
+    .men-category-button {
+        flex: 1;
+        border: none;
+        outline: none;
+        font-size: 18px;
+        background-color: #f8f7fe;
+        font-family: 'Libre Baskerville', serif;
+    }
+
+    .men-category-drop-down {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background-color: #f8f7fe;
+    }
+
+    .men-category-mobile-option-box {
+        width: 100%;
+        padding: 10px;
+        position: absolute;
+        z-index: 1;
+        top: 0%;
+        left: -100%;
+        border: 1px solid rgb(212, 212, 212);
+        border-top: none;
+        box-sizing: border-box;
+        background-color: white;
+        transition: all 0.4s;
+    }
+
+    .category-show {
+        left: 0%;
+    }
+
+    .men-category-drop-up {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

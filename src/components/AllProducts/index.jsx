@@ -1,125 +1,40 @@
-import React, { useState, useEffect } from "react";
-// import ArrowRightIcon from '@material-ui/icons/ArrowRight';
-// import ArrowLeftIcon from '@material-ui/icons/ArrowLeft';
-// import { useSelector, useDispatch } from 'react-redux';
-import { Link, NavLink } from "react-router-dom";
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
-// import CircularProgress from '@mui/material/CircularProgress';
-import { AiOutlineArrowRight, AiOutlineArrowLeft } from "react-icons/ai";
-import { BsRecordCircleFill } from "react-icons/bs";
-import axios from "axios";
-// components
 import "./style.css";
-// import Navbar from '../Navbar';
-// import Footer from '../Footer';
 import { giveMeImages } from "../../axios/UlrConfig";
+import SideBar from "../Sidebar";
 
-// action
-import { getAllProductBySlug } from "../../actions/ProductAction";
-
-const AllProducts = ({ urlSlug }) => {
-    // const 
-  // const { categorySlug, subCategorySlug } = useParams()
-
-  const [category, setCategory] = useState(false);
-  const [allProducts, setAllProducts] = useState([]);
-  const [allSubCategory, setAllSubCategory] = useState([]);
-
-  // const dispatch = useDispatch()
-  // const categoryState = useSelector((state) => state.category)
-  // const productState = useSelector((state) => state.product)
-
-  // const getSubCategory = (categories) => {
-  //     if (categories.length > 0) {
-  //         let allCategory = categories.filter((data) => data.slug === categorySlug)
-  //         if (allCategory.length > 0) {
-  //             return allCategory[0].children.map((value, index) => <NavLink to={`/collections/${categorySlug}/${value.slug}`} key={index} className="men-category-options" activeClassName="men-category-activeclass" onClick={() => setCategory(false)}>{value.categoryName.split(" ").slice(1).join(" ")}</NavLink>)
-  //         }
-  //         else {
-  //             return <Redirect to="/*" />
-  //         }
-  //     }
-  // }
-
+const AllProducts = ({ urlSlug, products, subCategory }) => {
+  // console.log(products);
   // const totalRating = (reviews) => {
   //     let sumOfRating = reviews ? reviews.reduce((total, value) => value.rating + total, 0) : 0
   //     sumOfRating = (sumOfRating * 5) / (reviews.length * 5)
   //     return sumOfRating > 0 ? sumOfRating.toFixed(1) : 0
   // }
 
-  // useEffect(() => {
-  //     subCategorySlug ? dispatch((getAllProductBySlug(subCategorySlug))) : dispatch(getAllProductBySlug(categorySlug))
-  // }, [categorySlug, subCategorySlug])
-
-  const fetchProducts = async () => {
-    const res = await axios.get(
-      `http://localhost:9000/api/product/${urlSlug}`
-    );
-    console.log(res.data);
-    setAllProducts(res.data.products);
-    setAllSubCategory(res.data.subCategory);
-  };
-  useEffect(() => {
-    fetchProducts();
-  }, []);
-
   return (
     <>
       <div className="all-product-container">
-        {/* desktop sub-category */}
-        <div className="desktop-category-container">
-          {
-            // getSubCategory(categoryState.categories)
-            allSubCategory.map((value, index) => (
-              <NavLink
-                to={`/collections/${urlSlug}/${value.slug}`}
-                key={index}
-                className="category-options"
-                // activeClassName="men-category-activeclass"
-                onClick={() => setCategory(false)}
-              >
-                {value.categoryName.split(" ").slice(1).join(" ")}
-              </NavLink>
-            ))
-          }
-        </div>
-
-        {/* mobile sub-category */}
-        <div className="mobile-category-container">
-          <div className="men-category-button-box">
-            {/* <button className="men-category-button">{categorySlug.split("-").join(" ")}</button> */}
-            <button className="men-category-button">{urlSlug}</button>
-            <div className="men-category-drop-down">
-              {/* <AiOutlineArrowRight onClick={() => setCategory(true)} /> */}
-              <AiOutlineArrowRight />
-            </div>
-          </div>
-
-          <div
-            className={
-              category
-                ? "men-category-mobile-option-box category-show"
-                : "men-category-mobile-option-box"
-            }
-          >
-            {
-              // getSubCategory(categoryState.categories)
-            }
-            <div className="men-category-drop-up">
-              {/* <AiOutlineArrowLeft onClick={() => setCategory(false)} /> */}
-              <AiOutlineArrowLeft />
-            </div>
-          </div>
-        </div>
+        <SideBar subCategory={subCategory} urlSlug={urlSlug} />
 
         {/* products */}
-        {false ? (
-          <div className="men-loader">
-            <BsRecordCircleFill />
-          </div>
-        ) : (
-          <div className="men-product-box">
-            {allProducts?.map((value, index) => {
+        <div className="men-product-box">
+          {products.length === 0 ? (
+            <div
+              style={{
+                position: "absolute",
+                top: "40%",
+                left: "55%",
+                transform: "translate(-50%,-50%)",
+              }}
+            >
+              <h2 >
+              Currently No Products Available
+              </h2>
+            </div>
+          ) : (
+            products?.map((value, index) => {
               return (
                 <div className="men-product-image-box" key={index}>
                   <img
@@ -153,12 +68,12 @@ const AllProducts = ({ urlSlug }) => {
                   </div>
                 </div>
               );
-            })}
-          </div>
-        )}
+            })
+          )}
+        </div>
       </div>
     </>
   );
 };
 
-export default AllProducts;
+export default React.memo(AllProducts);

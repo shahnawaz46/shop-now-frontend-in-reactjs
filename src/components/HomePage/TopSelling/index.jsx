@@ -1,32 +1,21 @@
 import React from "react";
 import "./style.css";
-import MenProduct1 from "../../../asset/MenProduct_1.jpg";
-import MenProduct2 from "../../../asset/MenProduct_2.jpg";
-import MenProduct3 from "../../../asset/MenProduct_3.jpg";
-import MenProduct4 from "../../../asset/MenProduct_4.jpg";
-import MenProduct5 from "../../../asset/MenProduct_5.jpg";
-import WomenProduct1 from "../../../asset/WomenProduct_1.jpg";
-import WomenProduct2 from "../../../asset/WomenProduct_2.jpg";
-import WomenProduct3 from "../../../asset/WomenProduct_3.png";
-import WomenProduct4 from "../../../asset/WomenProduct_4.jpg";
-import WomenProduct5 from "../../../asset/WomenProduct_5.jpg";
 import { motion } from "framer-motion";
 import HeadingAndParagraph from "../HeadingAndParagraph";
-
-const topSellingProducts = [
-  MenProduct1,
-  MenProduct2,
-  MenProduct3,
-  MenProduct4,
-  MenProduct5,
-  WomenProduct1,
-  WomenProduct2,
-  WomenProduct3,
-  WomenProduct4,
-  WomenProduct5,
-];
+import { useSelector } from "react-redux";
+import { giveMeImages } from "../../../axios/UlrConfig";
+import { Link } from "react-router-dom";
+import ShowError from "../../ShowError";
 
 const TopSelling = () => {
+  const { topSellingProducts:{products, error} } = useSelector((state) => state.allProducts);
+  // console.log(topSellingProducts);
+  
+  if(error){
+    console.log(error)
+    return <ShowError message={error} />
+  }
+
   return (
     <div className="top-selling-container">
       <HeadingAndParagraph
@@ -34,15 +23,18 @@ const TopSelling = () => {
         para={"Pick up for outfit inspiration and must have looks"}
       />
       <div className="top-selling-image-container">
-        {topSellingProducts.map((product,index) => (
-          <motion.img
-            whileHover={{ scale: 1.03, transition: { duration: 0.2 }, }}
-            whileTap={{ scale: 1.03 }}
-            key={index}
-            src={product}
-            alt="not-found"
-            className="top-selling-images"
-          />
+        {products.map((product, index) => (
+          <Link to={`/preview/${product?._id}`} key={product?._id}>
+            <motion.img
+              whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
+              whileTap={{ scale: 1.03 }}
+              key={index}
+              src={giveMeImages(product?.productPictures[0]?.img)}
+              // src={product?.productPictures[0]?.img}
+              alt="not-found"
+              className="top-selling-images"
+            />
+          </Link>
         ))}
       </div>
     </div>

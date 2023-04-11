@@ -1,7 +1,6 @@
 import React from "react";
-import LoaderAnimation from "../../asset/Hourglass.gif";
 
-const Loading = () => {
+const ShowError = ({ message }) => {
   return (
     <div
       style={{
@@ -11,9 +10,9 @@ const Loading = () => {
         transform: "translate(-50%,-50%)",
       }}
     >
-      <img src={LoaderAnimation} alt="loader" />
+      {message}
     </div>
   );
 };
 
-export default Loading;
+export default ShowError;

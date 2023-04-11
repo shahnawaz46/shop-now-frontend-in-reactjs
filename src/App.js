@@ -15,7 +15,8 @@ import User from './components/profile/User';
 // import ScrollTop from './components/js/ScrollTop';
 // import placeOrder from './components/js/PlaceOrder'
 
-// import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTopSellingProducts } from './redux/slices/ProductSlice';
 // import { cartConstant } from './actions/Constants';
 
 // actions
@@ -27,7 +28,7 @@ import User from './components/profile/User';
 
 
 function App() {
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   // const userState = useSelector((state) => state.user)
 
   // useEffect(() => {
@@ -66,6 +67,11 @@ function App() {
   //   }
   // }, [userState.authenticate])
 
+  useEffect(()=>{
+    console.log("useEffect App.js")
+    dispatch(fetchTopSellingProducts())
+  },[])
+
   return (
     <Router>
 
@@ -79,7 +85,9 @@ function App() {
 
         <Route path='collections'>
           <Route path="Men's-Wardrobe" element={<MenProducts />} />
+          <Route path="Men's-Wardrobe/:subSlug" element={<MenProducts />} />
           <Route path="Women's-Wardrobe" element={<WomenProducts />} />
+          <Route path="Women's-Wardrobe/:subSlug" element={<WomenProducts />} />
         </Route>
 
         <Route path="/top-selling" element={<TopSelling />} />
@@ -87,20 +95,15 @@ function App() {
         <Route path="/preview/:productId" element={<Preview />} />
         <Route path="/my-account/:page" element={<User />} />
         <Route path="*" element={<PageNotFound />} />
+        
         {/* <Route path="/collections/:categorySlug" exact component={MenAndWomenCategoryPage} />
 
         <Route path="/collections/:categorySlug/:subCategorySlug" exact component={MenAndWomenCategoryPage} />
 
         <Route path="/place-order/:productIdAndSize" component={placeOrder}/>
 
-        <Route path="/my-account/:page" component={UserProfile} />
-
-        <Route path="/preview/:productId/product-review" component={AllReview} />
-
         <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
-
-        <Route path="*" component={PageNotFound} /> */}
+        <Route path="/signup" component={Signup} />*/}
 
       </Routes>
     </Router>

@@ -1,15 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import AliceCarousel from "react-alice-carousel";
 
 // components
 import "./style.css";
 import { giveMeImages } from "../../axios/UlrConfig";
+import { Link } from "react-router-dom";
 // import Review from './Review';
 
-// action
-// import { getSingleProductById } from '../../actions/ProductAction';
-// import { addToCart } from '../../actions/CartAction';
 
 const responsive = {
   0: { items: 1 },
@@ -257,7 +255,7 @@ const PreviewProduct = ({ previewProduct }) => {
         size={5}
       /> */}
       {previewProduct?.reviews.length > 5 && (
-        <Link to={`/preview/${singleProduct?._id}/product-review`}>
+        <Link to={`/preview/${previewProduct?._id}/product-review`}>
           <button className="review-all-review">See All Reviews</button>
         </Link>
       )}

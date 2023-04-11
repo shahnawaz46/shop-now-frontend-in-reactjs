@@ -5,35 +5,36 @@ import { useParams } from "react-router-dom";
 import axios from "axios";
 import ReturnPolicy from "../components/ReturnPolicy";
 import Loading from "../components/Loading";
+import axiosInstance from "../axios/AxiosInstance";
 
 const Preview = () => {
   const { productId } = useParams();
   const [previewProduct, setPreviewProduct] = useState({});
-  console.log(productId);
+  // console.log(productId);
 
   const getProductForPreview = async () => {
-    const res = await axios.post(
-      `http://localhost:9000/api/product/single/${productId}`
-    );
-    console.log(res.data.product);
+    const res = await axiosInstance.get(`/product/single/${productId}`);
+    // console.log(res.data.product);
     setPreviewProduct({ ...res.data.product });
   };
 
   useEffect(() => {
-    getProductForPreview();
+    setTimeout(()=>{
+      getProductForPreview();
+    },1000)
   }, []);
 
   return (
     <Layout>
-      <div style={{ minHeight: "calc(100vh - 140px )" }}>
+      <div style={{ minHeight: "calc(100vh - 130px )" }}>
         {Object.keys(previewProduct).length === 0 ? (
           <Loading />
         ) : (
           <PreviewProduct previewProduct={previewProduct} />
         )}
 
-        <ReturnPolicy />
       </div>
+        <ReturnPolicy />
     </Layout>
   );
 };
