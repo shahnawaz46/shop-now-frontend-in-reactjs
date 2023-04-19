@@ -6,6 +6,7 @@ import { FiShoppingBag } from "react-icons/fi";
 import { RiMenu2Line } from "react-icons/ri";
 import { MdClose, MdPerson } from "react-icons/md";
 import Cart from "../Cart";
+import { useSelector } from "react-redux";
 
 const navLinks = [
   { name: "Home", link: "/home" },
@@ -22,7 +23,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   // const userState = useSelector((state) => state.user)
-  // const { allCartItem } = useSelector((state) => state.cart)
+  const cart = useSelector((state) => state.cart)
 
   // const checkUserIsLogin = () => {
   //     if (userState.authenticate) {
@@ -100,8 +101,7 @@ const Navbar = () => {
                 className="icon"
                 onClick={() => setShowCart(true)}
               />
-              {/* <span>{allCartItem ? cartQuantity(allCartItem) : 0}</span>  */}
-              <span>{10}</span>
+              <span>{cart?.length > 0 ? cart?.length : 0}</span> 
             </div>
             <Link to={"/my-account/address"}>
               <MdPerson className="icon profile-icon" />

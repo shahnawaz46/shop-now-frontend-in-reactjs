@@ -1,50 +1,44 @@
-import React, {  useState } from "react";
+import React, { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import AliceCarousel from "react-alice-carousel";
+import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+import {useDispatch} from 'react-redux'
 
 // components
 import "./style.css";
-import { giveMeImages } from "../../axios/UlrConfig";
-import { Link } from "react-router-dom";
+import { giveMeImages } from "../../../axios/UlrConfig";
+import Sizes from "../Sizes";
+import { addToCart } from "../../../redux/slices/CartSlice";
 // import Review from './Review';
-
 
 const responsive = {
   0: { items: 1 },
   500: { items: 2 },
 };
 
-const PreviewProduct = ({ previewProduct }) => {
+const PreviewProduct = ({ product }) => {
   // const History = useHistory()
   // const { productId } = useParams()
-  // const dispatch = useDispatch()
+  const dispatch = useDispatch()
   // const { singleProduct, loading } = useSelector((state) => state.product)
   // const { allCartItem, message } = useSelector((state) => state.cart)
   // const user = useSelector((state) => state.user)
 
   const [condition, setCondition] = useState();
-  const sizeDescription = {
-    XS: "Your body measurements for Extra Small are Bust: 32 in, Waist: 24 in, Hip: 34 in",
-    S: "Your body measurements for Small are Bust: 33-34 in, Waist: 25-26 in, Hip: 35-36 in",
-    M: "Your body measurements for Medium are Bust: 35-36 in, Waist: 27-28 in, Hip: 37-38 in",
-    L: "Your body measurements for Large are Bust: 37-38 in, Waist: 29-30 in, Hip: 39-40 in",
-    XL: "Your body measurements for Extra Large are Bust: 40-41 in, Waist: 32-33 in, Hip: 42-43 in",
-  };
 
-  // const addToCartFnc = (singleProduct) => {
-  //     if (!condition) {
-  //         return alert("Please select size")
-  //     }
-  //     const product = [{ productId: singleProduct._id, size: condition, qty: 1 }]
-  //     dispatch(addToCart(product, singleProduct))
-  // }
+  const addToCartFnc = () => {
+      if (!condition) {
+          return toast.error("Please Select The Size")
+      }
+      dispatch(addToCart(product))
+      // const product = [{ productId: singleProduct._id, size: condition, qty: 1 }]
+      // dispatch(addToCart(product, singleProduct))
+  }
 
   const totalRating = () => {
-    let sumOfRating = previewProduct?.reviews.reduce(
-      (total, value) => value.rating + total,
-      0
-    );
-    sumOfRating = (sumOfRating * 5) / (previewProduct?.reviews.length * 5);
+    let sumOfRating = product?.reviews.reduce((total, value) => value.rating + total, 0);
+    sumOfRating = (sumOfRating * 5) / (product?.reviews.length * 5);
     return sumOfRating > 0 ? sumOfRating.toFixed(1) : 0;
   };
 
@@ -74,7 +68,7 @@ const PreviewProduct = ({ previewProduct }) => {
       <div className="preview-main-box">
         <div className="preview-pc-image-box">
           {true &&
-            previewProduct.productPictures.map((item, index) => (
+            product.productPictures.map((item, index) => (
               <img
                 key={index}
                 src={giveMeImages(item.img)}
@@ -85,36 +79,15 @@ const PreviewProduct = ({ previewProduct }) => {
             ))}
         </div>
         <div className="preview-mobile-image-box">
-          {/* <AliceCarousel
-            autoPlay={false}
-            indicatorContainerProps={{
-              style: {
-                marginTop: "-35px",
-                marginBottom: "10px",
-              },
-            }}
-          >
-            {previewProduct &&
-              previewProduct.productPictures.map((item, index) => (
-                <img
-                  key={index}
-                  src={giveMeImages(item.img)}
-                  loading="lazy"
-                  alt="not found"
-                  className="preview-image preview-image-space-box-one"
-                />
-              ))}
-          </AliceCarousel> */}
-
           <AliceCarousel
             responsive={responsive}
-            // autoPlay={true}
-            animationDuration={1500}
+            autoPlay={true}
+            animationDuration={2000}
             infinite={true}
             // disableDotsControls={true}
             disableButtonsControls={true}
             mouseTracking
-            items={previewProduct.productPictures.map((item) => (
+            items={product.productPictures.map((item) => (
               <img
                 key={item._id}
                 src={giveMeImages(item.img)}
@@ -127,7 +100,7 @@ const PreviewProduct = ({ previewProduct }) => {
         </div>
 
         <div className="preview-box-two">
-          <h3>{previewProduct?.productName}</h3>
+          <h3>{product?.productName}</h3>
           <div className="preview-product-rating">
             <AiFillStar
               style={{
@@ -138,86 +111,33 @@ const PreviewProduct = ({ previewProduct }) => {
             />
             <span>{totalRating()}</span>
             <div className="product-review">
-              <span>{previewProduct?.reviews.length} Reviews</span>
+              <span>{product?.reviews.length} Reviews</span>
             </div>
           </div>
           <div className="preview-price-box">
-            <h2>&#8377; {previewProduct?.sellingPrice}</h2>
-            {previewProduct?.actualPrice > 0 && (
-              <strike>&#8377; {previewProduct?.actualPrice}</strike>
+            <h2>&#8377; {product?.sellingPrice}</h2>
+            {product?.actualPrice > 0 && (
+              <strike>&#8377; {product?.actualPrice}</strike>
             )}
             <h4>
               Save &#8377;
-              {previewProduct?.actualPrice - previewProduct?.sellingPrice} (
+              {product?.actualPrice - product?.sellingPrice} (
               {100 -
                 parseInt(
-                  (previewProduct?.sellingPrice / previewProduct?.actualPrice) *
+                  (product?.sellingPrice / product?.actualPrice) *
                     100
                 )}
               %)
             </h4>
           </div>
-          <div className="preview-size-button-box">
-            <button
-              onClick={() => setCondition("XS")}
-              className={
-                condition === "XS"
-                  ? "preview-size-button background-color-black"
-                  : "preview-size-button"
-              }
-            >
-              XS
-            </button>
-            <button
-              onClick={() => setCondition("S")}
-              className={
-                condition === "S"
-                  ? "preview-size-button background-color-black"
-                  : "preview-size-button"
-              }
-            >
-              S
-            </button>
-            <button
-              onClick={() => setCondition("M")}
-              className={
-                condition === "M"
-                  ? "preview-size-button background-color-black"
-                  : "preview-size-button"
-              }
-            >
-              M
-            </button>
-            <button
-              onClick={() => setCondition("L")}
-              className={
-                condition === "L"
-                  ? "preview-size-button background-color-black"
-                  : "preview-size-button"
-              }
-            >
-              L
-            </button>
-            <button
-              onClick={() => setCondition("XL")}
-              className={
-                condition === "XL"
-                  ? "preview-size-button background-color-black"
-                  : "preview-size-button"
-              }
-            >
-              XL
-            </button>
-          </div>
 
-          <div className="preview-size-detail-box">
-            {sizeDescription[condition]}
-          </div>
+          {/* products sizes */}
+          <Sizes condition={condition} setCondition={setCondition} />
 
           <div className="preview-page-main-button-box">
             <button
               className="preview-page-main-button"
-              //   onClick={() => addToCartFnc(singleProduct)}
+              onClick={addToCartFnc}
             >
               ADD TO SHOP
             </button>
@@ -235,7 +155,7 @@ const PreviewProduct = ({ previewProduct }) => {
           </div>
           <div className="preview-product-description-box">
             <h4>Description</h4>
-            <p>{previewProduct?.description}</p>
+            <p>{product?.description}</p>
           </div>
           {/* <div className="preview-product-description-box">
                                     <h4>Detail</h4>
@@ -254,8 +174,8 @@ const PreviewProduct = ({ previewProduct }) => {
         reviewShowBox={"review-show-box"}
         size={5}
       /> */}
-      {previewProduct?.reviews.length > 5 && (
-        <Link to={`/preview/${previewProduct?._id}/product-review`}>
+      {product?.reviews.length > 5 && (
+        <Link to={`/preview/${product?._id}/product-review`}>
           <button className="review-all-review">See All Reviews</button>
         </Link>
       )}

@@ -73,39 +73,6 @@
     margin-left: 10px;
 }
 
-.preview-size-button-box{
-    display: flex;
-    align-items: center;
-    justify-content:flex-start;
-    padding: 10px 0px;
-}
-
-.preview-size-button{
-    transition: all 0.3s linear;
-    width: 40px;
-    border: 1px solid black;
-    background-color: #faf9f8;
-    font-weight: 600;
-    padding: 10px;
-    margin-right: 10px;
-    cursor: pointer;
-}
-
-.preview-size-button:hover{
-    transition: all 0.3s linear;
-    background-color: black;
-    color: #faf9f8;
-}
-
-.background-color-black{
-    background-color: black;
-    color: #faf9f8;
-}
-
-.preview-size-detail-box{
-    line-height: 20px;
-}
-
 .preview-page-main-button-box{
     margin: 20px 0px 10px 0px;
 }

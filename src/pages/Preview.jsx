@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import Layout from "../components/Layout";
-import PreviewProduct from "../components/PreviewProduct";
+import PreviewProduct from "../components/Preview/PreviewProduct";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import ReturnPolicy from "../components/ReturnPolicy";
@@ -30,7 +30,7 @@ const Preview = () => {
         {Object.keys(previewProduct).length === 0 ? (
           <Loading />
         ) : (
-          <PreviewProduct previewProduct={previewProduct} />
+          <PreviewProduct product={previewProduct} />
         )}
 
       </div>
