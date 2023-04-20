@@ -23,7 +23,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   // const userState = useSelector((state) => state.user)
-  const cart = useSelector((state) => state.cart)
+  const {totalQty} = useSelector((state) => state.cart)
 
   // const checkUserIsLogin = () => {
   //     if (userState.authenticate) {
@@ -101,7 +101,7 @@ const Navbar = () => {
                 className="icon"
                 onClick={() => setShowCart(true)}
               />
-              <span>{cart?.length > 0 ? cart?.length : 0}</span> 
+              <span>{totalQty}</span> 
             </div>
             <Link to={"/my-account/address"}>
               <MdPerson className="icon profile-icon" />

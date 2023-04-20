@@ -4,31 +4,33 @@ import { IoMdClose, IoMdAdd, IoMdRemove } from "react-icons/io";
 import { MdDelete } from "react-icons/md";
 import { Link } from "react-router-dom";
 import { giveMeImages } from "../../axios/UlrConfig";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart, removeCartItem } from "../../redux/slices/CartSlice";
 
 // action
 // import { getCartItem, addToCart, removeCartMessage, removeCartItem } from '../../actions/CartAction';
 
 const Cart = ({ show, setShow }) => {
   // const { allCartItem, message } = useSelector((state) => state.cart)
-  const cart = useSelector((state) => state.cart);
-  console.log(cart);
-  // const dispatch = useDispatch()
+  const {items, totalCost} = useSelector((state) => state.cart);
+  const dispatch = useDispatch()
+  // console.log(cart);
   // const user = useSelector((state)=> state.user)
   // const History = useHistory()
 
-  const itemIncrementFnc = (productId, size) => {
-    const product = [{ productId, size, qty: 1 }];
+  const itemIncrementFnc = (_id, size, sellingPrice) => {
+    const product = { _id, size, qty: 1, sellingPrice };
     dispatch(addToCart(product));
   };
 
-  const itemDecrementFnc = (productId, size) => {
-    const product = [{ productId, size, qty: -1 }];
+  const itemDecrementFnc = (_id, size, sellingPrice) => {
+    const product = { _id, size, qty: -1,sellingPrice: -sellingPrice};
     dispatch(addToCart(product));
   };
 
-  const deleteCartItemFnc = (productId, size) => {
-    dispatch(removeCartItem(productId, size));
+  const deleteCartItemFnc = (_id, size) => {
+    const product = { _id, size};
+    dispatch(removeCartItem(product));
   };
 
   useEffect(() => {
@@ -75,12 +77,12 @@ const Cart = ({ show, setShow }) => {
         </div>
 
         <div className="cart-second-box">
-          {cart.length > 0 ? (
-            cart.map((product, index) => {
+          {items?.length > 0 ? (
+            items.map((product, index) => {
               return (
                 <div key={index} className="cart-image-product-details">
                   <img
-                    src={giveMeImages(product.productPictures[0].img)}
+                    src={giveMeImages(product.productImage)}
                     alt=""
                   />
                   <div className="cart-product-details">
@@ -97,9 +99,10 @@ const Cart = ({ show, setShow }) => {
                             borderRight: "1px solid #e8e8e1",
                             cursor: "pointer",
                           }}
-                        //   onClick={() =>
-                        //     itemDecrementFnc(value.productId._id, value.size)
-                        //   }
+                          disabled={product.qty <= 1 ? true : false}
+                          onClick={() =>
+                            itemDecrementFnc(product._id, product.size, product.sellingPrice)
+                          }
                         >
                           <IoMdRemove
                             className="cart-icons click"
@@ -112,10 +115,7 @@ const Cart = ({ show, setShow }) => {
                             borderLeft: "1px solid #e8e8e1",
                             cursor: "pointer",
                           }}
-                        //   onClick={() =>
-                        //     itemIncrementFnc(value.productId._id, value.size)
-                        //   }
-                        >
+                          onClick={() => itemIncrementFnc(product._id, product.size, product.sellingPrice)}>
                           <IoMdAdd
                             className="cart-icons click"
                             style={{ fontSize: "16px" }}
@@ -125,10 +125,10 @@ const Cart = ({ show, setShow }) => {
 
                       <MdDelete
                         className="cart-icons click"
-                        style={{ fontSize: "20px" }}
-                        // onClick={() =>
-                        //   deleteCartItemFnc(value.productId._id, value.size)
-                        // }
+                        style={{ fontSize: "20px", cursor:'pointer' }}
+                        onClick={() =>
+                          deleteCartItemFnc(product._id, product.size)
+                        }
                       />
                     </div>
                     <h4>Rs. {product.sellingPrice}</h4>
@@ -145,19 +145,11 @@ const Cart = ({ show, setShow }) => {
           <div className="cart-price">
             <h3>SUBTOTAL</h3>
             <h3>
-              Rs.{" "}
-              {cart.length > 0
-                ? cart.reduce(
-                    (total, product) =>
-                      total +
-                      parseInt(product.sellingPrice) * product.qty,
-                    0
-                  )
-                : 0}
+              Rs. {totalCost}
             </h3>
           </div>
           <p>Shipping, taxes, and discounts calculated at checkout.</p>
-          <button onClick={PlaceOrderPageFunc}>Check out</button>
+          <button style={{cursor:'pointer'}}>Check out</button>
         </div>
       </div>
     </div>

@@ -3,7 +3,7 @@ import { AiFillStar } from "react-icons/ai";
 import AliceCarousel from "react-alice-carousel";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
-import {useDispatch} from 'react-redux'
+import { useDispatch } from "react-redux";
 
 // components
 import "./style.css";
@@ -20,24 +20,36 @@ const responsive = {
 const PreviewProduct = ({ product }) => {
   // const History = useHistory()
   // const { productId } = useParams()
-  const dispatch = useDispatch()
+  const dispatch = useDispatch();
   // const { singleProduct, loading } = useSelector((state) => state.product)
   // const { allCartItem, message } = useSelector((state) => state.cart)
   // const user = useSelector((state) => state.user)
 
-  const [condition, setCondition] = useState();
+  const [productSize, setProductSize] = useState();
 
   const addToCartFnc = () => {
-      if (!condition) {
-          return toast.error("Please Select The Size")
-      }
-      dispatch(addToCart(product))
-      // const product = [{ productId: singleProduct._id, size: condition, qty: 1 }]
-      // dispatch(addToCart(product, singleProduct))
-  }
+    if (!productSize) {
+      return toast.error("Please Select The Size");
+    }
+    dispatch(
+      addToCart({
+        _id: product._id,
+        productName:product.productName,
+        productImage: product.productPictures[0]?.img,
+        sellingPrice: product.sellingPrice,
+        size: productSize,
+        qty:1
+      })
+    );
+    // const product = [{ productId: singleProduct._id, size: condition, qty: 1 }]
+    // dispatch(addToCart(product, singleProduct))
+  };
 
   const totalRating = () => {
-    let sumOfRating = product?.reviews.reduce((total, value) => value.rating + total, 0);
+    let sumOfRating = product?.reviews.reduce(
+      (total, value) => value.rating + total,
+      0
+    );
     sumOfRating = (sumOfRating * 5) / (product?.reviews.length * 5);
     return sumOfRating > 0 ? sumOfRating.toFixed(1) : 0;
   };
@@ -123,22 +135,16 @@ const PreviewProduct = ({ product }) => {
               Save &#8377;
               {product?.actualPrice - product?.sellingPrice} (
               {100 -
-                parseInt(
-                  (product?.sellingPrice / product?.actualPrice) *
-                    100
-                )}
+                parseInt((product?.sellingPrice / product?.actualPrice) * 100)}
               %)
             </h4>
           </div>
 
           {/* products sizes */}
-          <Sizes condition={condition} setCondition={setCondition} />
+          <Sizes productSize={productSize} setProductSize={setProductSize} />
 
           <div className="preview-page-main-button-box">
-            <button
-              className="preview-page-main-button"
-              onClick={addToCartFnc}
-            >
+            <button className="preview-page-main-button" onClick={addToCartFnc}>
               ADD TO SHOP
             </button>
             <button

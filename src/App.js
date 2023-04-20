@@ -18,6 +18,7 @@ import User from './components/profile/User';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTopSellingProducts } from './redux/slices/ProductSlice';
 import Toastify from './utils/Toastify';
+import { getCartItem } from './redux/slices/CartSlice';
 // import { cartConstant } from './actions/Constants';
 
 // actions
@@ -71,6 +72,7 @@ function App() {
   useEffect(()=>{
     console.log("useEffect App.js")
     dispatch(fetchTopSellingProducts())
+    dispatch(getCartItem())
   },[])
 
   return (

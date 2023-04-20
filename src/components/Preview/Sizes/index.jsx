@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import './style.css'
 
-const Sizes = ({condition, setCondition}) => {
+const Sizes = ({productSize, setProductSize}) => {
   const sizeDescription = {
     XS: "Your body measurements for Extra Small are Bust: 32 in, Waist: 24 in, Hip: 34 in",
     S: "Your body measurements for Small are Bust: 33-34 in, Waist: 25-26 in, Hip: 35-36 in",
@@ -14,9 +14,9 @@ const Sizes = ({condition, setCondition}) => {
     <>
       <div className="preview-size-button-box">
         <button
-          onClick={() => setCondition("XS")}
+          onClick={() => setProductSize("XS")}
           className={
-            condition === "XS"
+            productSize === "XS"
               ? "preview-size-button background-color-black"
               : "preview-size-button"
           }
@@ -24,9 +24,9 @@ const Sizes = ({condition, setCondition}) => {
           XS
         </button>
         <button
-          onClick={() => setCondition("S")}
+          onClick={() => setProductSize("S")}
           className={
-            condition === "S"
+            productSize === "S"
               ? "preview-size-button background-color-black"
               : "preview-size-button"
           }
@@ -34,9 +34,9 @@ const Sizes = ({condition, setCondition}) => {
           S
         </button>
         <button
-          onClick={() => setCondition("M")}
+          onClick={() => setProductSize("M")}
           className={
-            condition === "M"
+            productSize === "M"
               ? "preview-size-button background-color-black"
               : "preview-size-button"
           }
@@ -44,9 +44,9 @@ const Sizes = ({condition, setCondition}) => {
           M
         </button>
         <button
-          onClick={() => setCondition("L")}
+          onClick={() => setProductSize("L")}
           className={
-            condition === "L"
+            productSize === "L"
               ? "preview-size-button background-color-black"
               : "preview-size-button"
           }
@@ -54,9 +54,9 @@ const Sizes = ({condition, setCondition}) => {
           L
         </button>
         <button
-          onClick={() => setCondition("XL")}
+          onClick={() => setProductSize("XL")}
           className={
-            condition === "XL"
+            productSize === "XL"
               ? "preview-size-button background-color-black"
               : "preview-size-button"
           }
@@ -66,7 +66,7 @@ const Sizes = ({condition, setCondition}) => {
       </div>
 
       <div className="preview-size-detail-box">
-        {sizeDescription[condition]}
+        {sizeDescription[productSize]}
       </div>
     </>
   );
