@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
 import AliceCarousel from "react-alice-carousel";
-import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 
@@ -10,7 +9,8 @@ import "./style.css";
 import { giveMeImages } from "../../../axios/UlrConfig";
 import Sizes from "../Sizes";
 import { addToCart } from "../../../redux/slices/CartSlice";
-// import Review from './Review';
+import Reviews from "../../Review/Reviews";
+import { totalRating } from "../../../common/TotalRating";
 
 const responsive = {
   0: { items: 1 },
@@ -18,14 +18,10 @@ const responsive = {
 };
 
 const PreviewProduct = ({ product }) => {
-  // const History = useHistory()
-  // const { productId } = useParams()
   const dispatch = useDispatch();
-  // const { singleProduct, loading } = useSelector((state) => state.product)
-  // const { allCartItem, message } = useSelector((state) => state.cart)
-  // const user = useSelector((state) => state.user)
 
   const [productSize, setProductSize] = useState();
+  const [reviewSize, setReviewSize] = useState(5);
 
   const addToCartFnc = () => {
     if (!productSize) {
@@ -34,25 +30,16 @@ const PreviewProduct = ({ product }) => {
     dispatch(
       addToCart({
         _id: product._id,
-        productName:product.productName,
+        productName: product.productName,
         productImage: product.productPictures[0]?.img,
         sellingPrice: product.sellingPrice,
         size: productSize,
-        qty:1
+        qty: 1,
       })
     );
-    // const product = [{ productId: singleProduct._id, size: condition, qty: 1 }]
-    // dispatch(addToCart(product, singleProduct))
   };
 
-  const totalRating = () => {
-    let sumOfRating = product?.reviews.reduce(
-      (total, value) => value.rating + total,
-      0
-    );
-    sumOfRating = (sumOfRating * 5) / (product?.reviews.length * 5);
-    return sumOfRating > 0 ? sumOfRating.toFixed(1) : 0;
-  };
+  
 
   // const PlaceOrderPageFunc = (value) => {
   //     if (!condition) {
@@ -121,7 +108,7 @@ const PreviewProduct = ({ product }) => {
                 marginRight: "1px",
               }}
             />
-            <span>{totalRating()}</span>
+            <span>{totalRating(product?.reviews)}</span>
             <div className="product-review">
               <span>{product?.reviews.length} Reviews</span>
             </div>
@@ -163,27 +150,18 @@ const PreviewProduct = ({ product }) => {
             <h4>Description</h4>
             <p>{product?.description}</p>
           </div>
-          {/* <div className="preview-product-description-box">
-                                    <h4>Detail</h4>
-                                    <ul>
-                                        <li>Kimono</li>
-                                        <li>Print Combination</li>
-                                        <li>3/4 Sleeve</li>
-                                        <li>Floral print</li>
-                                        <li>Poly Georgette</li>
-                                    </ul>
-                                </div> */}
         </div>
       </div>
-      {/* <Review
-        reviewWidth={"review-main-box"}
-        reviewShowBox={"review-show-box"}
-        size={5}
-      /> */}
-      {product?.reviews.length > 5 && (
-        <Link to={`/preview/${product?._id}/product-review`}>
-          <button className="review-all-review">See All Reviews</button>
-        </Link>
+
+      <Reviews productReview={product?.reviews} size={reviewSize} />
+
+      {reviewSize < product?.reviews?.length && (
+        <button
+          className="review-all-review"
+          onClick={() => setReviewSize((prev) => prev + 5)}
+        >
+          See More
+        </button>
       )}
     </>
   );

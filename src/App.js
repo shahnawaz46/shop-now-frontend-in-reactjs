@@ -1,32 +1,13 @@
 import React, { useEffect } from 'react';
 import Loader from './components/Loader';
-import { HomePage, MenProducts, WomenProducts, TopSelling, NewProducts, PageNotFound, Preview } from './pages';
-// import MenAndWomenCategoryPage from './components/js/MenAndWomenCategoryPage';
-// import Preview from './components/js/Preview';
-// import Cart from './components/Cart';
-// import UserProfile from './components/js/UserProfile';
-// import AllReview from './components/js/AllReview';
-// import Login from './components/authentication/Login';
-// import Signup from './components/authentication/Signup';
-// import PageNotFound from './components/js/PageNotFound';
+import { HomePage, MenProducts, WomenProducts, TopSelling, NewProducts, PageNotFound, Preview, Profile } from './pages';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import ScrollTop from './components/ScrollTop';
-import User from './components/profile/User';
-// import ScrollTop from './components/js/ScrollTop';
-// import placeOrder from './components/js/PlaceOrder'
+import Toastify from './utils/Toastify';
 
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTopSellingProducts } from './redux/slices/ProductSlice';
-import Toastify from './utils/Toastify';
 import { getCartItem } from './redux/slices/CartSlice';
-// import { cartConstant } from './actions/Constants';
-
-// actions
-// import { getAllCategory } from './actions/CategoryAction';
-// import { isUserLogin } from './actions/LoginSignupAction';
-// import { getBanner } from './actions/BannerAction';
-// import { getCartItem, clearCartState, addToCart } from './actions/CartAction';
-// import { getFeaturedProducts } from './actions/ProductAction';
 
 
 function App() {
@@ -97,7 +78,7 @@ function App() {
         <Route path="/top-selling" element={<TopSelling />} />
         <Route path="/new-products" element={<NewProducts />} />
         <Route path="/preview/:productId" element={<Preview />} />
-        <Route path="/my-account/:page" element={<User />} />
+        <Route path="/my-account/:page" element={<Profile />} />
         <Route path="*" element={<PageNotFound />} />
         
         {/* <Route path="/collections/:categorySlug" exact component={MenAndWomenCategoryPage} />

@@ -12,5 +12,6 @@ export const giveMeBannerImages = (image_link) => {
 }
 
 export const giveMeProfileImage = (image_link) => {
-    return `https://fuzicon-backend-server.herokuapp.com//profileImages/${image_link}`
+    return `${apiUlr2}//profileImages/${image_link}`
+    // return `http://localhost:9000/profileImages/${image_link}`
 }

@@ -1,17 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import { AiFillStar } from "react-icons/ai";
 import "./style.css";
 import { giveMeImages } from "../../axios/UlrConfig";
 import SideBar from "../Sidebar";
+import { totalRating } from "../../common/TotalRating";
 
 const AllProducts = ({ urlSlug, products, subCategory }) => {
-  // console.log(products);
-  // const totalRating = (reviews) => {
-  //     let sumOfRating = reviews ? reviews.reduce((total, value) => value.rating + total, 0) : 0
-  //     sumOfRating = (sumOfRating * 5) / (reviews.length * 5)
-  //     return sumOfRating > 0 ? sumOfRating.toFixed(1) : 0
-  // }
 
   return (
     <>
@@ -57,7 +52,7 @@ const AllProducts = ({ urlSlug, products, subCategory }) => {
                             marginRight: "1px",
                           }}
                         />
-                        {/* <span>{totalRating(value.reviews)}</span> */}
+                        <span>{totalRating(value?.reviews)}</span>
                       </div>
                     </div>
                     <Link to={`/preview/${value._id}`}>

@@ -5,6 +5,7 @@ import TopSelling from "./TopSelling";
 import NewProducts from "./NewProducts";
 import PageNotFound from "./PageNotFound";
 import Preview from "./Preview";
+import Profile from "./Profile";
 
 export {
   HomePage,
@@ -14,4 +15,5 @@ export {
   NewProducts,
   PageNotFound,
   Preview,
+  Profile
 };

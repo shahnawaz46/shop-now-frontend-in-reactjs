@@ -1,5 +1,5 @@
 .review-main-box{
-    padding: 0px 10px;
+    padding: 0px 20px;
     width: 60%;
     margin: 40px 0px 10px 0px;
 }
@@ -10,11 +10,8 @@
     margin-bottom: 30px;
     width: 40%;
     background-color: white;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
     padding: 15px;
+    border-radius: 5px;
 }
 
 .review-box_1 > h2{
@@ -26,16 +23,6 @@
     display: flex;
     justify-content: space-between;
     margin: 10px 0px;
-}
-
-.review-rating-input{
-    border: 1px solid;
-    position: relative;
-    left: 6px;
-    top: 3px;
-    margin-right: -10px;
-    opacity: 0;
-    cursor: pointer;
 }
 
 .review-text-area{

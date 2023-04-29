@@ -9,9 +9,7 @@ import { useParams } from "react-router-dom";
 import axiosInstance from "../axios/AxiosInstance";
 
 const MenProducts = () => {
-  const {
-    menProducts: { products, subCategory, status, error },
-  } = useSelector((state) => state.allProducts);
+  const { menProducts: { products, subCategory, status, error }} = useSelector((state) => state.allProducts);
   const dispatch = useDispatch();
   const [subCategoryProducts, setSubCategoryProducts] = useState([]);
   const { subSlug } = useParams();
