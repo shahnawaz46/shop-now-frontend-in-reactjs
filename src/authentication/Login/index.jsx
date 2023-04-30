@@ -1,34 +1,35 @@
 import React, { useState, useEffect } from 'react';
-import './Login.css';
-import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { userLogin, loginErrorRemove } from '../../actions/LoginSignupAction';
-import ErrorHandle from '../js/ErrorHandle';
+import './style.css';
+import { Link } from 'react-router-dom';
+// import { Link, useHistory } from 'react-router-dom';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { userLogin, loginErrorRemove } from '../../actions/LoginSignupAction';
+// import ErrorHandle from '../js/ErrorHandle';
 
 
 const Login = () => {
-    const history = useHistory()
+    // const history = useHistory()
 
     const [email, setEmail] = useState()
     const [password, setPassword] = useState()
 
-    const dispatch = useDispatch()
-    const { authenticate, error } = useSelector((state) => state.user)
+    // const dispatch = useDispatch()
+    // const { authenticate, error } = useSelector((state) => state.user)
 
     const formHandle = (e) => {
         e.preventDefault();
-        dispatch(userLogin({ email, password }))
+        // dispatch(userLogin({ email, password }))
     }
 
-    useEffect(() => {
-        if (authenticate)
-            history.goBack()
-    }, [authenticate])
+    // useEffect(() => {
+    //     if (authenticate)
+    //         history.goBack()
+    // }, [authenticate])
 
     return (
         <div className="login-div">
             {/* <Link to="/home"><img src={logo} alt="Not Found" /></Link> */}
-            <Link to="/home"><h3><span style={{ color: "red" }}>FUZ</span>ICON</h3></Link>
+            {/* <Link to="/home"><h3><span style={{ color: "red" }}>FUZ</span>ICON</h3></Link> */}
             <div className="login-form">
                 <h3>Login to your Account</h3>
                 <form onSubmit={formHandle}>
@@ -46,7 +47,7 @@ const Login = () => {
 
             {/* calling ErrorHandle() function component to show alert */}
             {
-                <ErrorHandle error={error} removeAction={loginErrorRemove} />
+                // <ErrorHandle error={error} removeAction={loginErrorRemove} />
             }
         </div>
     );

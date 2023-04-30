@@ -1,17 +1,16 @@
 .signup-main-page{
-    height: 100%;
-    display: grid;
-    grid-template-columns: 1fr;
-    justify-items: center;
-    align-items: center;
-    position: relative;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   height: 100vh;
+   margin: 40px 0px;
 }
 
-.signup-main-page > a >h3{
+/* .signup-main-page > a >h3{
     margin-top: 10px;
     font-size: 30px;
     font-family: 'Spectral SC',serif;
-}
+} */
 
 .signup-image{
     margin-right: 20px;
@@ -19,10 +18,9 @@
 .signup-form{
     background-color: white;
     width:400px;
-    padding: 10px 30px;
-    margin-top: 15px;
-    margin-bottom: 30px;
-    border: 1px solid rgb(164,167,167);
+    padding: 20px 30px;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    border-radius: 4px;
 }
 
 .signup-form > h3 {
@@ -30,21 +28,23 @@
     display: flex;
     align-items: center;
     font-weight: 500;
-    margin-top: 15px;
+    margin-top: 5px;
     /* color: cadetblue; */
 }
 
 .signup-form > h4{
     font-weight: 400;
     margin-top:12px;
-    margin-bottom: 8px;
+    margin-bottom: 5px;
 }
 
 .signup-input{
+    padding: 7px;
     width: 100%;
-    padding: 5px;
+    border: 1px solid rgb(217 216 216);
+    border-radius: 4px;
     outline: none;
-    border: 1px solid rgb(194,194,194);
+    font-size: 16px;
 }
 
 .checkbox{
@@ -59,10 +59,12 @@
 }
 
 .signup-password-one > input{
-    width:100%;
-    padding: 5px;
+    padding: 7px;
+    width: 100%;
+    border: 1px solid rgb(217 216 216);
+    border-radius: 4px;
     outline: none;
-    border: 1px solid rgb(194,194,194);
+    font-size: 16px;
 }
 
 .signup-password-one > h4{
@@ -97,6 +99,16 @@
     text-align: center;
 }
 
+@media only screen and (max-width:500px){
+    .signup-main-page{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        margin: 0px;
+        margin-top: -20px;
+     }
+}
 
 @media only screen and (max-width:470px){
     .signup-form{

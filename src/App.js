@@ -1,13 +1,16 @@
 import React, { useEffect } from 'react';
-import Loader from './components/Loader';
-import { HomePage, MenProducts, WomenProducts, TopSelling, NewProducts, PageNotFound, Preview, Profile } from './pages';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import ScrollTop from './components/ScrollTop';
 import Toastify from './utils/Toastify';
-
 import { useDispatch, useSelector } from 'react-redux';
+
+// components
+import Loader from './components/Loader';
+import { HomePage, MenProducts, WomenProducts, TopSelling, NewProducts, PageNotFound, Preview, Profile } from './pages';
 import { fetchTopSellingProducts } from './redux/slices/ProductSlice';
 import { getCartItem } from './redux/slices/CartSlice';
+import PrivateRoute from './routes/PrivateRoute';
+import { Login, Signup } from './authentication';
 
 
 function App() {
@@ -78,17 +81,17 @@ function App() {
         <Route path="/top-selling" element={<TopSelling />} />
         <Route path="/new-products" element={<NewProducts />} />
         <Route path="/preview/:productId" element={<Preview />} />
-        <Route path="/my-account/:page" element={<Profile />} />
+        <Route path="/my-account/:page" element={<PrivateRoute><Profile /></PrivateRoute>} />
         <Route path="*" element={<PageNotFound />} />
         
-        {/* <Route path="/collections/:categorySlug" exact component={MenAndWomenCategoryPage} />
+        {/* <Route path="/collections/:categorySlug" exact component={MenAndWomenCategoryPage} /> */}
 
-        <Route path="/collections/:categorySlug/:subCategorySlug" exact component={MenAndWomenCategoryPage} />
+        {/* <Route path="/collections/:categorySlug/:subCategorySlug" exact component={MenAndWomenCategoryPage} /> */}
 
-        <Route path="/place-order/:productIdAndSize" component={placeOrder}/>
+        {/* <Route path="/place-order/:productIdAndSize" component={placeOrder}/> */}
 
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />*/}
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
 
       </Routes>
     </Router>

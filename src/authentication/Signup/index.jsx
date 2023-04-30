@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react'
-import './Signup.css'
-import { Link, useHistory } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { userSignup, loginErrorRemove } from '../../actions/LoginSignupAction';
-import ErrorHandle from '../js/ErrorHandle';
+import './style.css'
+import { Link } from 'react-router-dom'
+// import { Link, useHistory } from 'react-router-dom';
+// import { useDispatch, useSelector } from 'react-redux';
+// import { userSignup, loginErrorRemove } from '../../actions/LoginSignupAction';
+// import ErrorHandle from '../js/ErrorHandle';
 
 
-function Signup() {
-    const history = useHistory()
+const Signup = () => {
+    // const history = useHistory()
 
     const [user, setUser] = useState({
         firstName: "",
@@ -18,8 +19,8 @@ function Signup() {
         cpassword: ""
     })
 
-    const dispatch = useDispatch()
-    const { authenticate, error } = useSelector((state) => state.user)
+    // const dispatch = useDispatch()
+    // const { authenticate, error } = useSelector((state) => state.user)
 
     const handleInput = (e) => {
         const name = e.target.name;
@@ -29,17 +30,17 @@ function Signup() {
 
     const handleForm = (e) => {
         e.preventDefault()
-        dispatch(userSignup(user))
+        // dispatch(userSignup(user))
     }
 
-    useEffect(() => {
-        if (authenticate)
-            history.goBack()
-    }, [authenticate])
+    // useEffect(() => {
+    //     if (authenticate)
+    //         history.goBack()
+    // }, [authenticate])
 
     return (
         <div className="signup-main-page">
-            <Link to="/home"><h3><span style={{ color: "red" }}>FUZ</span>ICON</h3></Link>
+            {/* <Link to="/home"><h3><span style={{ color: "red" }}>FUZ</span>ICON</h3></Link> */}
             <form onSubmit={handleForm}>
                 <div className="signup-form">
                     <h3>Create Your Account</h3>
@@ -78,13 +79,13 @@ function Signup() {
                         <input type="checkbox" required className="checkbox" /><span className="signup-terms-box">I agree to the Terms and condition</span>
                     </div>
                     <button className="signup-button">Sign Up</button>
-                    <h5>Already have account <Link to="login"><span style={{ color: "#478ccd" }}>Click here</span></Link></h5>
+                    <h5>Already have account <Link to="/login"><span style={{ color: "#478ccd" }}>Click here</span></Link></h5>
                 </div>
             </form>
 
             {/* calling ErrorHandle() function component to show alert */}
             {
-                <ErrorHandle error={error} removeAction={loginErrorRemove} />
+                // <ErrorHandle error={error} removeAction={loginErrorRemove} />
             }
 
         </div>
