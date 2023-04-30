@@ -34,6 +34,9 @@
 }
 
 .profile-detail-box{
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
     margin-left: 15px;
 }
 
@@ -63,15 +66,13 @@
     list-style: none;
     display: flex;
     justify-content: center;
+    gap: 10px;
+    padding: 0px 10px;
 }
 
-.profile-main-features-ul > a {
-    margin-right:10px;
-    display: inline-block;
-}
 
 .profile-main-features-ul > a >li {
-    padding: 10px;
+    padding: 8px 20px;
     cursor: pointer;
 }
 
@@ -80,7 +81,7 @@
     color: white;
 }
 
-.profile-apply-background-color{
+.active-tab{
     background-color: #ff0000;
     color: white;
 }
@@ -91,12 +92,11 @@
 
 @media only screen and (max-width: 600px) {   
     .profile-main-features-ul > a >li {
-        padding: 10px 5px;
         font-size: 15px;
     }
 }
 
-@media only screen and (max-width: 500px) {
+@media only screen and (max-width: 700px) {
     .profile-main-features-ul{
         justify-content: left;
         overflow-x: scroll;
@@ -106,8 +106,10 @@
     .profile-main-features-ul::-webkit-scrollbar{
         display: none;
     }
-    
-    .profile-detail-main-box {
+}
+
+@media only screen and (max-width: 500px) {
+        .profile-detail-main-box {
         margin: 20px 10px;
         flex-direction: column;
         align-items: flex-start;
@@ -124,6 +126,7 @@
     .profile-detail-box {
         margin-left: 5px;
         margin-top: 10px;
+        gap: 3px;
     }
 
     .profile-picture-box {

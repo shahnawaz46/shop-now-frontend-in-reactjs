@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { BsFillStarFill } from "react-icons/bs";
 // import { useSelector, useDispatch } from "react-redux";
-import AvatarImage from "../../../asset/avatar.jpg";
+import AvatarImage from "../../asset/avatar.jpg";
 
 // components
 import "./style.css";
-import Modal from "../Modal";
-import { giveMeProfileImage } from "../../../axios/UlrConfig";
+import Modal from "../../common/Modal";
+import { giveMeProfileImage } from "../../axios/UlrConfig";
 
 // action
 // import Axios from "../../axios/Axios";

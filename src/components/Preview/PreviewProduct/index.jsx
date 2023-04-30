@@ -9,7 +9,7 @@ import "./style.css";
 import { giveMeImages } from "../../../axios/UlrConfig";
 import Sizes from "../Sizes";
 import { addToCart } from "../../../redux/slices/CartSlice";
-import Reviews from "../../Review/Reviews";
+import Reviews from "../../Review";
 import { totalRating } from "../../../common/TotalRating";
 
 const responsive = {

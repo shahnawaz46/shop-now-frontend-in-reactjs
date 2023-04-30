@@ -1,11 +1,11 @@
 import React from 'react'
 
-const Exchange = () => {
+const WishList = () => {
     return (
         <div>
-            exchange
+            wish list
         </div>
     )
 }
 
-export default Exchange
+export default WishList
