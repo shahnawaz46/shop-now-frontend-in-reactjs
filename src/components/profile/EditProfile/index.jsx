@@ -1,21 +1,33 @@
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 // components
 import "./style.css";
-
+import { editPersonalDetails } from "../../../redux/slices/UserSlice";
 
 const EditProfile = () => {
+  const dispatch = useDispatch();
   const { personalDetails } = useSelector((state) => state.user);
+
   const [editUserDetail, setEditUserDetail] = useState(personalDetails);
 
   const EditFormhandle = (e) => {
     e.preventDefault();
-  };
+    const { firstName, lastName, email, location } = editUserDetail;
+    console.log(firstName, lastName, email, location);
+    if (!firstName) return toast.error("Please Enter First Name");
+    else if (!lastName) return toast.error("Please Enter Last Name");
+    else if (!email) return toast.error("Please Enter Email");
+    else if (!location) return toast.error("Please Enter Location");
 
+    console.log("all done")
+    dispatch(editPersonalDetails({firstName, lastName, email, location}))
+  };
+  
   const changeMobileNo = (e) => {
     e.preventDefault();
-    console.log("done")
+    console.log("done");
   };
 
   return (
@@ -27,9 +39,8 @@ const EditProfile = () => {
           <input
             type="text"
             value={editUserDetail.firstName}
-            required
             onChange={(e) =>
-              setEditUserDetail({ ...userDetail, firstName: e.target.value })
+              setEditUserDetail({ ...editUserDetail, firstName: e.target.value })
             }
           />
         </div>
@@ -39,9 +50,8 @@ const EditProfile = () => {
           <input
             type="text"
             value={editUserDetail.lastName}
-            required
             onChange={(e) =>
-              setEditUserDetail({ ...userDetail, lastName: e.target.value })
+              setEditUserDetail({ ...editUserDetail, lastName: e.target.value })
             }
           />
         </div>
@@ -51,10 +61,9 @@ const EditProfile = () => {
           <input
             type="number"
             value={editUserDetail.phoneNo}
-            required
             readOnly
             onChange={(e) =>
-              setEditUserDetail({ ...userDetail, phoneNo: e.target.value })
+              setEditUserDetail({ ...editUserDetail, phoneNo: e.target.value })
             }
           />
 
@@ -71,9 +80,8 @@ const EditProfile = () => {
           <input
             type="email"
             value={editUserDetail.email}
-            required
             onChange={(e) =>
-              setEditUserDetail({ ...userDetail, email: e.target.value })
+              setEditUserDetail({ ...editUserDetail, email: e.target.value })
             }
           />
         </div>
@@ -82,10 +90,9 @@ const EditProfile = () => {
           <span>Location</span>
           <input
             type="text"
-            value={editUserDetail?.location || "Location"}
-            required
+            value={editUserDetail?.location || ""}
             onChange={(e) =>
-              setEditUserDetail({ ...userDetail, location: e.target.value })
+              setEditUserDetail({ ...editUserDetail, location: e.target.value })
             }
           />
         </div>

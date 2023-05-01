@@ -9,10 +9,27 @@ const initialState = {
     orderDetails: [],
 }
 
-export const fetchPersonalDetails = createAsyncThunk("personalDetails/fetch", async()=>{
+export const fetchPersonalDetails = createAsyncThunk("personalDetail/fetch", async()=>{
     try{
         const res = await axiosInstance.get("/user/profile")
         return res.data
+
+    }catch(error){
+        if(error?.response?.data?.msg){
+            console.log(error?.response?.data?.msg)
+            throw new Error(error?.response?.data?.msg)
+        }
+        else {
+            console.log(error)
+            throw new Error(error)
+        }
+    }
+})
+
+export const editPersonalDetails = createAsyncThunk("personalDetail/update", async(userDetail)=>{
+    try{
+        const res = await axiosInstance.patch("/user/updateProfile",{userDetail})
+        return res.data.userDetail
 
     }catch(error){
         if(error?.response?.data?.msg){
@@ -45,6 +62,13 @@ const userSlice = createSlice({
             state.addressDetails = action.payload.userAddress
         })
         .addCase(fetchPersonalDetails.rejected, (state, action)=>{
+            state.status = "failed",
+            state.error = action.error.message
+        })
+        .addCase(editPersonalDetails.fulfilled, (state, action)=>{
+            state.personalDetails = action.payload
+        })
+        .addCase(editPersonalDetails.rejected, (state, action)=>{
             state.status = "failed",
             state.error = action.error.message
         })
