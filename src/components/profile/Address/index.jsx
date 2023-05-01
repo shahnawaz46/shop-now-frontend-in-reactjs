@@ -1,18 +1,16 @@
 import React, { useState } from "react";
 import { FaRegAddressBook } from "react-icons/fa";
-// import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 // components
 import "./style.css";
 import AddressForm from '../AddressForm'
 
-// actions
-// import { removeAddress } from '../../../../actions/AddressAction'
-
 const Address = () => {
   const [showAddress, setShowAddress] = useState(false);
   const [userAddress, setUserAddress] = useState({});
-//   const { address } = useSelector((state) => state.address)
+  const { addressDetails } = useSelector((state) => state.user)
+
 const address = [{
   "name": "shanu",
   "mobileNumber": "9966338855",
@@ -35,15 +33,16 @@ const address = [{
   "_id": "61c9f2cabe79ede5afff37df"
 }]
 
-  // const dispatch = useDispatch()
+
 
   // const removeAddressFnc = (addressId) => {
   //     dispatch(removeAddress(addressId))
   // }
 
+
   return (
     <div className="address-main-box">
-      {address.length === 0 ? (
+      {addressDetails.length === 0 ? (
         <div className="address-not-available">
           <FaRegAddressBook className="address-icon" />
           <div className="address-not-available-content">
@@ -68,7 +67,7 @@ const address = [{
             </button>
           </div>
           <div className="address-available">
-            {address?.map((value, index) => (
+            {addressDetails?.map((value, index) => (
               <div key={index} className="address-data-show">
                 <span className="address-person-name">{value.name}</span>
                 <span className="address-detail">{value.address}</span>
@@ -113,4 +112,4 @@ const address = [{
   );
 };
 
-export default Address;
+export default React.memo(Address);

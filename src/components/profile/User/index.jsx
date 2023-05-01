@@ -1,37 +1,31 @@
-import React, { useEffect, useState } from "react";
-// import { useSelector, useDispatch } from 'react-redux';
-import { useHistory, NavLink, useParams } from "react-router-dom";
-// import Avatar from '@mui/material/Avatar';
+import React, { useState } from "react";;
+import {  NavLink, useNavigate, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 import { BsFillCameraFill } from "react-icons/bs";
-// import CircularProgress from '@mui/material/CircularProgress';
 
 // components
 import "./style.css";
 import Address from "../Address";
 import EditProfile from "../EditProfile";
 import PlaceOrders from "../PlaceOrder";
-import Return from "../Return";
 import AvatarImage from "../../../asset/avatar.jpg";
 import WishList from "../Exchange";
+import { logout } from "../../../redux/slices/UserSlice";
 // import { giveMeProfileImage } from '../../axios/UlrConfig';
-// import ErrorHandle from '../ErrorHandle';
 
-// action
-// import { userLogout, getUserProfile, updateProfilePic, loginErrorRemove } from '../../actions/LoginSignupAction';
-// import { getAddress, removeAddressMessageAndError } from '../../actions/AddressAction';
 
-const User = () => {
+const User = ({userData}) => {
+  const dispatch = useDispatch()
   const { page } = useParams();
-  // const { userDetail, authenticate, loading, updatedMessage, error } = useSelector((state) => state.user)
-  // const { addressMessage, addressError } = useSelector((state) => state.address)
-  // const dispatch = useDispatch()
-  // const history = useHistory()
+  const navigate = useNavigate()
 
   const [userProfilePic, setUserProfilePic] = useState(null);
 
-  // const userLogoutFnc = () => {
-  //     dispatch(userLogout())
-  // }
+  const logoutHandle = () => {
+    localStorage.removeItem("_f_id")
+    dispatch(logout())
+    navigate("/home", {replace:true})
+  }
 
   // const updateProfileFnc = (e) => {
   //     const form = new FormData()
@@ -41,25 +35,6 @@ const User = () => {
   //     setUserProfilePic(null)
   // }
 
-  // useEffect(() => {
-  //     if (authenticate) {
-  //         dispatch(getUserProfile())
-  //         dispatch(getAddress())
-  //     }
-  //     if (!localStorage.getItem("__xyz__"))
-  //         history.push('/home')
-  // }, [authenticate])
-
-  // useEffect(() => {
-  //     if (updatedMessage) {
-  //         console.log("updatedMessage")
-  //         dispatch(getUserProfile())
-  //     }
-  //     if (addressMessage) {
-  //         console.log("addressMessage")
-  //         dispatch(getAddress())
-  //     }
-  // }, [updatedMessage, addressMessage])
 
   return (
     <div className="profile-main-box">
@@ -99,25 +74,25 @@ const User = () => {
         </div>
         <div className="profile-detail-box">
           {/* <h2 className="profile-name-box">{userDetail?.firstName}</h2> */}
-          <h2 className="profile-name-box">{"Mohammad Shahnawaz"}</h2>
+          <h2 className="profile-name-box">{`${userData?.firstName} ${userData?.lastName}`}</h2>
           <div className="profile-details">
             {/* First Name - {userDetail?.firstName} */}
-            First Name - {"Mohammad"}
+            First Name - {userData?.firstName}
           </div>
           <div className="profile-details">
             {/* Last Name - {userDetail?.lastName} */}
-            Last Name - {"Shahnawaz"}
+            Last Name - {userData?.lastName}
           </div>
           <div className="profile-details">
             {/* Email - {userDetail?.email} */}
-            Email - {"shahnawaz@gmail.com"}
+            Email - {userData?.email}
           </div>
           <div className="profile-details">
             {/* Mobile No. - {userDetail?.phoneNo} */}
-            Mobile No. - {"+91 9685748596"}
+            Mobile No. - {userData?.phoneNo}
           </div>
           {/* <button onClick={userLogoutFnc} className="profile-user-button"> */}
-          <button className="profile-user-button">Logout</button>
+          <button className="profile-user-button" onClick={logoutHandle}>Logout</button>
         </div>
       </div>
 
@@ -177,24 +152,7 @@ const User = () => {
 
         {/* {page === "return" && <Return />} */}
       </div>
-      {/* for show error and messages */}
-      {/* {(updatedMessage || error) && (
-              <ErrorHandle
-                message={updatedMessage}
-                error={error}
-                removeAction={loginErrorRemove}
-              />
-            )} */}
-
-      {/* for show error and messages */}
-      {/* {(addressMessage || addressError) && (
-              <ErrorHandle
-                message={addressMessage}
-                error={addressError}
-                removeAction={removeAddressMessageAndError}
-              />
-            )} */}
     </div>
   );
 };
-export default User;
+export default React.memo(User);
