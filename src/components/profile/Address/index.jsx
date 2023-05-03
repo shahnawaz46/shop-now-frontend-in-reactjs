@@ -1,54 +1,57 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaRegAddressBook } from "react-icons/fa";
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 // components
 import "./style.css";
 import AddressForm from '../AddressForm'
+import { fetchAddress } from "../../../redux/slices/AddressSlice";
+import ShowError from "../../ShowError";
+import { toast } from "react-toastify";
+import axiosInstance from "../../../axios/AxiosInstance";
+import { updateAddress } from "../../../redux/slices/AddressSlice";
 
 const Address = () => {
-  const [showAddress, setShowAddress] = useState(false);
+  const dispatch = useDispatch()
+  const { status, addressDetails, error } = useSelector((state) => state.address)
+  console.log(addressDetails)
+
+  const [showAddress, setShowAddress] = useState({type:'', show: false});
   const [userAddress, setUserAddress] = useState({});
-  const { addressDetails } = useSelector((state) => state.user)
 
-const address = [{
-  "name": "shanu",
-  "mobileNumber": "9966338855",
-  "pinCode": "110006",
-  "locality": "Chandni Chowk",
-  "address": "house no 636 block no 102",
-  "state": "Delhi",
-  "addressType": "Home",
-  "_id": "61c9d5500667ff86764f3d6f"
-},
-{
-  "name": "somya ranjan",
-  "mobileNumber": "8855441122",
-  "pinCode": "110091",
-  "locality": "Mayur Vihar Ph-I",
-  "address": "Sashi garden gali no 12 house no 445",
-  "state": "Delhi",
-  "landmark": "near Jevan anmol hospital",
-  "addressType": "Home",
-  "_id": "61c9f2cabe79ede5afff37df"
-}]
+  const removeAddressFnc = async (_id) => {
+      try{
+        const res = await axiosInstance.delete(`/user/deleteAddress/${_id}`)
+        toast.success(res.data.msg)
+        dispatch(updateAddress(res.data.address))
 
+      }catch(error){
+        if(error?.response?.data?.msg){
+          toast.error(error?.response?.data?.msg)
 
+        }else{
+          toast.error(error?.message)
+        }
+      }
+  }
 
-  // const removeAddressFnc = (addressId) => {
-  //     dispatch(removeAddress(addressId))
-  // }
+  useEffect(()=>{
+    if(status === 'idle') dispatch(fetchAddress())
+  },[])
 
+  if(status === 'failed'){
+    return <ShowError message={error} />;
+  }
 
   return (
     <div className="address-main-box">
-      {addressDetails.length === 0 ? (
+      {addressDetails?.length === 0 ? (
         <div className="address-not-available">
           <FaRegAddressBook className="address-icon" />
           <div className="address-not-available-content">
             <h3>You haven't Added any Addresses</h3>
             <button
-              onClick={() => setShowAddress(true)}
+              onClick={() => setShowAddress({type:'Add Address', show: true})}
               className="address-add-button-1"
             >
               Add Address
@@ -60,7 +63,7 @@ const address = [{
           <div className="address-add-button-box">
             <h3>Saved Addresses</h3>
             <button
-              onClick={() => setShowAddress(true)}
+              onClick={() => setShowAddress({type:'Add Address',show: true})}
               className="address-add-button-2"
             >
               Add Address
@@ -88,14 +91,14 @@ const address = [{
                     style={{ marginRight: "5px" }}
                     onClick={() => {
                       setUserAddress(value);
-                      setShowAddress(true);
+                      setShowAddress({type:'Update Address',show: true});
                     }}
                   >
                     Edit
                   </button>
                   <button
                     style={{ marginLeft: "5px" }}
-                    // onClick={() => removeAddressFnc(value._id)}
+                    onClick={() => removeAddressFnc(value._id)}
                   >
                     Remove
                   </button>
@@ -106,7 +109,7 @@ const address = [{
         </div>
       )}
       {
-        showAddress && <AddressForm showAddress={showAddress} setShowAddress={setShowAddress} userAddress={userAddress} setUserAddress={setUserAddress} />
+        showAddress?.show && <AddressForm showAddress={showAddress} setShowAddress={setShowAddress} userAddress={userAddress} setUserAddress={setUserAddress} />
       }
     </div>
   );

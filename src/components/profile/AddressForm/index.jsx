@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from "react";
-// import { useSelector,useDispatch } from 'react-redux'
 import axios from "axios";
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
-// import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
 // components
 import "./style.css";
-import Modal from '../../../common/Modal'
+import Modal from "../../../common/Modal";
+import { updateAddress } from "../../../redux/slices/AddressSlice";
+import axiosInstance from "../../../axios/AxiosInstance";
 
-// actions
-// import { addAddress } from '../../../../actions/AddressAction';
+const AddressForm = (props) => {
+  const { showAddress, setShowAddress, userAddress, setUserAddress } = props;
 
-const AddressForm = ({
-  showAddress,
-  setShowAddress,
-  userAddress,
-  setUserAddress,
-}) => {
+  const dispatch = useDispatch();
+
   const [invalidPinCodeMessage, setInvalidPinCodeMessage] = useState(null);
   const [locality, setLocality] = useState([]);
   const [showLocalityList, setShowLocalityList] = useState(false);
-
-  // const dispatch = useDispatch()
 
   const handleInput = async (e) => {
     const name = e.target.name;
@@ -52,29 +48,55 @@ const AddressForm = ({
     }
   };
 
-  const handleForm = (e) => {
+  const handleForm = async (e, type) => {
     e.preventDefault();
-    dispatch(addAddress(userAddress));
-    setShowAddress(false);
+    console.log(type);
+
+    try {
+      const res =
+        type === "Update Address"
+          ? await axiosInstance.patch("/user/updateAddress", { ...userAddress })
+          : await axiosInstance.post("/user/addAddress", { ...userAddress });
+
+      toast.success(res.data.msg);
+      dispatch(updateAddress(res.data.address));
+
+    } catch (error) {
+      if (error?.response?.data?.msg) {
+        // console.log(error?.response?.data?.msg);
+        toast.error(error?.response?.data?.msg);
+      } else {
+        // console.log(error);
+        toast.error(error?.message);
+      }
+    }
+
+    setShowAddress({ type: "", show: false });
     setUserAddress({});
   };
 
-//   useEffect(() => {
-//     if (showAddress) {
-//       document.body.style.overflow = "hidden";
-//       if (window.innerWidth > 769) {
-//         document.body.style.paddingRight = "16px";
-//       }
-//     }
-//     return () => {
-//       document.body.style.overflow = "unset";
-//       document.body.style.paddingRight = "0px";
-//     };
-//   }, [showAddress]);
+  //   useEffect(() => {
+  //     if (showAddress) {
+  //       document.body.style.overflow = "hidden";
+  //       if (window.innerWidth > 769) {
+  //         document.body.style.paddingRight = "16px";
+  //       }
+  //     }
+  //     return () => {
+  //       document.body.style.overflow = "unset";
+  //       document.body.style.paddingRight = "0px";
+  //     };
+  //   }, [showAddress]);
 
   return (
-    <Modal open={showAddress} onClose={()=>setShowAddress(false)}>
-      <form onSubmit={handleForm} className="address-form">
+    <Modal
+      open={showAddress}
+      onClose={() => setShowAddress({ type: "", show: false })}
+    >
+      <form
+        onSubmit={(e) => handleForm(e, showAddress.type)}
+        className="address-form"
+      >
         <div className="address-form-delivery-tag">
           <h2>Add New Address</h2>
         </div>
@@ -245,7 +267,7 @@ const AddressForm = ({
           </div>
         </div>
         <h4 className="address-form-input-field-name">Addres Type</h4>
-        <div style={{display:'flex', alignItems:'center', gap:'20px'}}>
+        <div style={{ display: "flex", alignItems: "center", gap: "20px" }}>
           <div style={{ display: "flex", alignItems: "center" }}>
             <input
               style={{ marginRight: "2px" }}
@@ -277,7 +299,7 @@ const AddressForm = ({
             id={invalidPinCodeMessage && "disable-add-address-button"}
             disabled={invalidPinCodeMessage}
           >
-            Add Address
+            {showAddress.type}
           </button>
           <button
             className="address-form-buttton"

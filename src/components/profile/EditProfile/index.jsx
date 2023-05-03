@@ -4,7 +4,8 @@ import { toast } from "react-toastify";
 
 // components
 import "./style.css";
-import { editPersonalDetails } from "../../../redux/slices/UserSlice";
+import axiosInstance from "../../../axios/AxiosInstance";
+import { updatePersonDetail } from "../../../redux/slices/UserSlice";
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -12,19 +13,34 @@ const EditProfile = () => {
 
   const [editUserDetail, setEditUserDetail] = useState(personalDetails);
 
-  const EditFormhandle = (e) => {
+  const EditFormhandle = async (e) => {
     e.preventDefault();
     const { firstName, lastName, email, location } = editUserDetail;
-    console.log(firstName, lastName, email, location);
+    // console.log(firstName, lastName, email, location);
     if (!firstName) return toast.error("Please Enter First Name");
     else if (!lastName) return toast.error("Please Enter Last Name");
     else if (!email) return toast.error("Please Enter Email");
     else if (!location) return toast.error("Please Enter Location");
 
-    console.log("all done")
-    dispatch(editPersonalDetails({firstName, lastName, email, location}))
+    try {
+      const res = await axiosInstance.patch("/user/updateProfile", {
+        userDetail: { firstName, lastName, email, location },
+      });
+      toast.success(res.data.msg);
+      dispatch(updatePersonDetail(res.data.userDetail));
+      // return res.data.userDetail
+
+    } catch (error) {
+      if (error?.response?.data?.msg) {
+        // console.log(error?.response?.data?.msg)
+        toast.error(error?.response?.data?.msg);
+      } else {
+        // console.log(error);
+        toast.error(error.message);
+      }
+    }
   };
-  
+
   const changeMobileNo = (e) => {
     e.preventDefault();
     console.log("done");
@@ -40,7 +56,10 @@ const EditProfile = () => {
             type="text"
             value={editUserDetail.firstName}
             onChange={(e) =>
-              setEditUserDetail({ ...editUserDetail, firstName: e.target.value })
+              setEditUserDetail({
+                ...editUserDetail,
+                firstName: e.target.value,
+              })
             }
           />
         </div>
