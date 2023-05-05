@@ -5,15 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 // components
 import "./style.css";
 import AddressForm from '../AddressForm'
-import { fetchAddress } from "../../../redux/slices/AddressSlice";
 import ShowError from "../../ShowError";
 import { toast } from "react-toastify";
 import axiosInstance from "../../../axios/AxiosInstance";
-import { updateAddress } from "../../../redux/slices/AddressSlice";
+import { updateAddress } from "../../../redux/slices/UserSlice";
+
 
 const Address = () => {
   const dispatch = useDispatch()
-  const { status, addressDetails, error } = useSelector((state) => state.address)
+  const { addressDetails } = useSelector((state) => state.user)
   console.log(addressDetails)
 
   const [showAddress, setShowAddress] = useState({type:'', show: false});
@@ -35,13 +35,6 @@ const Address = () => {
       }
   }
 
-  useEffect(()=>{
-    if(status === 'idle') dispatch(fetchAddress())
-  },[])
-
-  if(status === 'failed'){
-    return <ShowError message={error} />;
-  }
 
   return (
     <div className="address-main-box">

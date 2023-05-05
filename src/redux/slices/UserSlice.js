@@ -5,20 +5,21 @@ const initialState = {
     status: 'idle',
     error: null,
     personalDetails: {},
+    addressDetails: []
 }
 
 export const fetchPersonalDetails = createAsyncThunk("personalDetail/fetch", async()=>{
     try{
         const res = await axiosInstance.get("/user/profile")
-        return res.data.userDetail
+        return res.data
 
     }catch(error){
         if(error?.response?.data?.msg){
-            console.log(error?.response?.data?.msg)
+            // console.log(error?.response?.data?.msg)
             throw new Error(error?.response?.data?.msg)
         }
         else {
-            console.log(error)
+            // console.log(error)
             throw new Error(error)
         }
     }
@@ -32,6 +33,15 @@ const userSlice = createSlice({
             state.personalDetails = action.payload
         },
 
+        updateAddress: (state, action)=>{
+            state.addressDetails = action.payload
+        },
+
+        removeErrorMsg: (state, action)=>{
+            state.error = null
+            state.status = 'idle'
+        },
+
         logout: (state)=>{
             return {...initialState}
         }
@@ -43,7 +53,8 @@ const userSlice = createSlice({
         })
         .addCase(fetchPersonalDetails.fulfilled, (state, action)=>{
             state.status = "success",
-            state.personalDetails = action.payload
+            state.personalDetails = action.payload.userDetail
+            state.addressDetails = action.payload.address
         })
         .addCase(fetchPersonalDetails.rejected, (state, action)=>{
             state.status = "failed",
@@ -52,6 +63,6 @@ const userSlice = createSlice({
     }
 })
 
-export const { updatePersonDetail, logout } = userSlice.actions
+export const { updatePersonDetail, updateAddress, logout, removeErrorMsg } = userSlice.actions
 
 export default userSlice.reducer

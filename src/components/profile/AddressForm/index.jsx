@@ -7,7 +7,7 @@ import { toast } from "react-toastify";
 // components
 import "./style.css";
 import Modal from "../../../common/Modal";
-import { updateAddress } from "../../../redux/slices/AddressSlice";
+import { updateAddress } from "../../../redux/slices/UserSlice";
 import axiosInstance from "../../../axios/AxiosInstance";
 
 const AddressForm = (props) => {
@@ -74,19 +74,6 @@ const AddressForm = (props) => {
     setShowAddress({ type: "", show: false });
     setUserAddress({});
   };
-
-  //   useEffect(() => {
-  //     if (showAddress) {
-  //       document.body.style.overflow = "hidden";
-  //       if (window.innerWidth > 769) {
-  //         document.body.style.paddingRight = "16px";
-  //       }
-  //     }
-  //     return () => {
-  //       document.body.style.overflow = "unset";
-  //       document.body.style.paddingRight = "0px";
-  //     };
-  //   }, [showAddress]);
 
   return (
     <Modal

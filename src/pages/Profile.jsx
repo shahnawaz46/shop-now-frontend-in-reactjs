@@ -4,7 +4,7 @@ import Layout from "../components/Layout";
 import Loading from "../components/Loading";
 import { useDispatch, useSelector } from "react-redux";
 import ShowError from "../components/ShowError";
-import { fetchPersonalDetails } from "../redux/slices/UserSlice";
+import { fetchPersonalDetails, removeErrorMsg } from "../redux/slices/UserSlice";
 import { useNavigate } from "react-router-dom";
 
 const Profile = () => {
@@ -22,17 +22,14 @@ const Profile = () => {
     if (error === "Authorization denied") {
       setTimeout(() => {
         localStorage.removeItem("_f_id");
+        dispatch(removeErrorMsg());
         navigate("/login");
       }, 2000);
 
-      return (
-        <ShowError
-          message={
-            "Authorization denied You will be redirect to the login page"
-          }
-        />
-      );
+      return
     }
+
+    dispatch(removeErrorMsg());
     return <ShowError message={error} />;
   }
   

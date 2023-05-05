@@ -54,7 +54,7 @@ const EditProfile = () => {
           <span>First Name</span>
           <input
             type="text"
-            value={editUserDetail.firstName}
+            value={editUserDetail?.firstName}
             onChange={(e) =>
               setEditUserDetail({
                 ...editUserDetail,
@@ -68,7 +68,7 @@ const EditProfile = () => {
           <span>Last Name</span>
           <input
             type="text"
-            value={editUserDetail.lastName}
+            value={editUserDetail?.lastName}
             onChange={(e) =>
               setEditUserDetail({ ...editUserDetail, lastName: e.target.value })
             }
@@ -79,7 +79,7 @@ const EditProfile = () => {
           <span>Phone No</span>
           <input
             type="number"
-            value={editUserDetail.phoneNo}
+            value={editUserDetail?.phoneNo}
             readOnly
             onChange={(e) =>
               setEditUserDetail({ ...editUserDetail, phoneNo: e.target.value })
@@ -98,7 +98,7 @@ const EditProfile = () => {
           <span>Email</span>
           <input
             type="email"
-            value={editUserDetail.email}
+            value={editUserDetail?.email}
             onChange={(e) =>
               setEditUserDetail({ ...editUserDetail, email: e.target.value })
             }
