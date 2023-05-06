@@ -62,7 +62,7 @@ function App() {
   // }, [userState.authenticate])
 
   useEffect(() => {
-    console.log("useEffect App.js");
+    // console.log("useEffect App.js");
     dispatch(fetchTopSellingProducts());
     dispatch(getCartItem());
   }, []);

@@ -1,5 +1,5 @@
-import React, { useState } from "react";;
-import {  NavLink, useNavigate, useParams } from "react-router-dom";
+import React, { useState } from "react";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { BsFillCameraFill } from "react-icons/bs";
 
@@ -10,31 +10,59 @@ import EditProfile from "../EditProfile";
 import PlaceOrders from "../PlaceOrder";
 import AvatarImage from "../../../asset/avatar.jpg";
 import WishList from "../Exchange";
-import { logout } from "../../../redux/slices/UserSlice";
+import { logout, updatePersonDetail } from "../../../redux/slices/UserSlice";
+import axiosInstance from "../../../axios/AxiosInstance";
 // import { giveMeProfileImage } from '../../axios/UlrConfig';
 
-
-const User = ({userData}) => {
-  const dispatch = useDispatch()
+const User = ({ userData }) => {
+  const dispatch = useDispatch();
   const { page } = useParams();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const [userProfilePic, setUserProfilePic] = useState(null);
 
   const logoutHandle = () => {
-    localStorage.removeItem("_f_id")
-    dispatch(logout())
-    navigate("/home", {replace:true})
-  }
+    localStorage.removeItem("_f_id");
+    dispatch(logout());
+    navigate("/home", { replace: true });
+  };
 
-  // const updateProfileFnc = (e) => {
-  //     const form = new FormData()
-  //     form.append("profilePicture", e.target.files[0])
+  const updateProfileFnc = async (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const fileReader = new FileReader();
+      let imageBase64 = "";
+      // console.log(imageBase64);
+      // console.log()
 
-  //     dispatch(updateProfilePic(form))
-  //     setUserProfilePic(null)
-  // }
+      fileReader.readAsDataURL(file);
+      fileReader.onloadend = async () => {
+        imageBase64 = fileReader.result;
+        // console.log(imageBase64)
+        if (imageBase64) {
+          try {
+            const res = await axiosInstance.patch("/user/updateProfilePic", {
+              imageBase64: JSON.stringify(imageBase64),
+              userName: userData.firstName,
+            });
+            dispatch(updatePersonDetail(res.data.userDetails));
 
+          } catch (error) {
+            if (error?.response?.data?.msg) {
+              // console.log(error?.response?.data?.msg)
+              toast.error(error?.response?.data?.msg);
+
+            } else {
+              // console.log(error);
+              toast.error(error.message);
+            }
+          }
+        }
+      }
+    }
+
+    e.target.file = null;
+  };
 
   return (
     <div className="profile-main-box">
@@ -54,23 +82,27 @@ const User = ({userData}) => {
           <img
             alt="Remy Sharp"
             src={
-              // userDetail.profilePicture &&
-              // giveMeProfileImage(userDetail.profilePicture)
-              AvatarImage
+              userData?.profilePicture
+              ? userData.profilePicture
+              : "https://media.istockphoto.com/id/1288129985/vector/missing-image-of-a-person-placeholder.jpg?s=612x612&w=0&k=20&c=9kE777krx5mrFHsxx02v60ideRWvIgI1RWzR1X4MG2Y="
             }
             style={{
               width: "100%",
               height: "100%",
-              objectFit: "contain",
+              objectFit: "cover",
+              borderRadius: "50%",
             }}
           />
-          <BsFillCameraFill className="profile-edit-icon" />
-          <input
-            type="file"
-            accept=".png, .jpg, .jpeg"
-            className="profile-select-input"
-            //   onChange={updateProfileFnc}
-          />
+          <label htmlFor="for-upload-profile">
+            <BsFillCameraFill className="profile-edit-icon" />
+            <input
+              type="file"
+              accept=".png, .jpg, .jpeg"
+              id="for-upload-profile"
+              style={{ display: "none" }}
+              onChange={updateProfileFnc}
+            />
+          </label>
         </div>
         <div className="profile-detail-box">
           {/* <h2 className="profile-name-box">{userDetail?.firstName}</h2> */}
@@ -92,7 +124,9 @@ const User = ({userData}) => {
             Mobile No. - {userData?.phoneNo}
           </div>
           {/* <button onClick={userLogoutFnc} className="profile-user-button"> */}
-          <button className="profile-user-button" onClick={logoutHandle}>Logout</button>
+          <button className="profile-user-button" onClick={logoutHandle}>
+            Logout
+          </button>
         </div>
       </div>
 
@@ -101,33 +135,25 @@ const User = ({userData}) => {
         <ul className="profile-main-features-ul">
           <NavLink
             to="/my-account/address"
-            className={({ isActive }) =>
-              isActive ? "active-tab" : ""
-            }
+            className={({ isActive }) => (isActive ? "active-tab" : "")}
           >
             <li>Your Address</li>
           </NavLink>
           <NavLink
             to="/my-account/edit-profile"
-            className={({ isActive }) =>
-              isActive ? "active-tab" : ""
-            }
+            className={({ isActive }) => (isActive ? "active-tab" : "")}
           >
             <li>Edit Profile</li>
           </NavLink>
           <NavLink
             to="/my-account/orders"
-            className={({ isActive }) =>
-              isActive ? "active-tab" : ""
-            }
+            className={({ isActive }) => (isActive ? "active-tab" : "")}
           >
             <li>Your Order</li>
           </NavLink>
           <NavLink
             to="/my-account/wish-list"
-            className={({ isActive }) =>
-              isActive ? "active-tab" : ""
-            }
+            className={({ isActive }) => (isActive ? "active-tab" : "")}
           >
             <li>Your Wish List</li>
           </NavLink>

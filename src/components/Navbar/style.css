@@ -104,6 +104,7 @@ a{
 .menu-icon{
     display: none;
     margin-left: 10px;
+    cursor: pointer;
 }
 
 .search-field{

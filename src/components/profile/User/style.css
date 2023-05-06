@@ -22,15 +22,7 @@
     bottom: 5px;
     color: white;
     font-size: 20px;
-}
-
-.profile-select-input{
-    width: 16px;
-    height: 16px;
-    position: absolute;
-    right: 59px;
-    bottom: 5px;
-    opacity: 0;
+    cursor: pointer;
 }
 
 .profile-detail-box{
@@ -116,10 +108,6 @@
     }
 
     .profile-edit-icon {
-        right: 48px;
-    }
-
-    .profile-select-input {
         right: 48px;
     }
 

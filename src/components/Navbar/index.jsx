@@ -72,9 +72,7 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div
-            className={condition ? "navbar-item mobile-navbar" : "navbar-item"}
-          >
+          <div className={condition ? "navbar-item mobile-navbar" : "navbar-item"}>
             {/* this icon show only in mobile Navbar */}
             <div className="close-icon" onClick={() => setCondition(false)}>
               <MdClose />
