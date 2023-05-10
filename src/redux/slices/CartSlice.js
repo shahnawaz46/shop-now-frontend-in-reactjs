@@ -1,9 +1,9 @@
 import { createAsyncThunk, createSlice, current } from "@reduxjs/toolkit";
+import axiosInstance from "../../axios/AxiosInstance";
 
 const initialState = {
-    items:[],
-    totalCost:null,
-    totalQty:0,
+    cartItems: [],
+    error: null
 }
 
 export const addToCart = createAsyncThunk("cart/addToCart", async(product)=>{
@@ -13,7 +13,9 @@ export const addToCart = createAsyncThunk("cart/addToCart", async(product)=>{
     // if user is logged in then call the api and store cartItem into db
     // otherwise store the cartItem into LocalStorage
     if(_userId){
-        console.log("Yes")
+        const {_id, size, qty} = product
+        await axiosInstance.post("/user/cartItem/add", {productId:_id, size, qty})
+
     }else{
         const isCartItemPresent = localStorage.getItem("__f_cartItem")
         if(!isCartItemPresent){
@@ -41,13 +43,13 @@ export const getCartItem = createAsyncThunk("cart/getCartItem", async()=>{
     // if user is logged in then call the api and get cartItem from db
     // otherwise get cartItem from LocalStorage
     if(_userId){
-        console.log("Yes")
+        const res = await axiosInstance.get("/user/cartItem/get")
+        return res.data.allCartItem
+
     }else{
         const isCartItemPresent = localStorage.getItem("__f_cartItem")
         return isCartItemPresent ? JSON.parse(isCartItemPresent) : []
     }
-
-    return []
 })
 
 export const removeCartItem = createAsyncThunk("cart/removeCartItem", async(product)=>{
@@ -56,15 +58,18 @@ export const removeCartItem = createAsyncThunk("cart/removeCartItem", async(prod
     // if user is logged in then call the api and remove cartItem from db
     // otherwise remove cartItem from LocalStorage
     if(_userId){
-        console.log("Yes")
+        await axiosInstance.delete("/user/cartItem/remove",{
+            data:{product}
+        })
+
     }else{
         const parseCartItem = JSON.parse(localStorage.getItem("__f_cartItem"))
         const removedProductIndex = parseCartItem.findIndex((item)=> item._id === product._id && item.size === product.size)
         parseCartItem.splice(removedProductIndex,1)
         localStorage.setItem("__f_cartItem",JSON.stringify(parseCartItem))
-        console.log(parseCartItem, removedProductIndex)
-        return {parseCartItem, removedProductIndex}
+        // console.log(parseCartItem, removedProductIndex)
     }
+    return product
 })
 
 const cartSlice = createSlice({
@@ -75,32 +80,26 @@ const cartSlice = createSlice({
             // iterating the array and checking wheather item is already present or not
             // if item is already present in the Cart then increment the quantity
             // else push the item into Cart
-            const index = state.items.findIndex((item)=> item._id === action.payload._id && item.size === action.payload.size)
-            index >= 0 ? state.items[index].qty += action.payload.qty : state.items.push(action.payload)
- 
-            state.totalCost += action.payload.sellingPrice
-            state.totalQty += action.payload.qty
+            const index = state.cartItems.findIndex((item)=> item._id === action.payload._id && item.size === action.payload.size)
+            index >= 0 ? state.cartItems[index].qty += action.payload.qty : state.cartItems.push(action.payload)
+        })
+        .addCase(addToCart.rejected, (state, action)=>{
+            state.error = action.error.message
         })
         .addCase(getCartItem.fulfilled, (state, action)=>{
-            state.items.push(...action.payload)
-
-            // with the help of reduce combining totalCost and totalQty
-            state.totalCost = action.payload.reduce((total, value)=> (total + value.sellingPrice)*value.qty, 0)
-            state.totalQty = action.payload.reduce((total, value)=> total + value.qty, 0)
+            state.cartItems.push(...action.payload)
+        })
+        .addCase(getCartItem.rejected, (state, action)=>{
+            state.error = action.error.message
         })
         .addCase(removeCartItem.fulfilled, (state, action)=>{
-            // const removedProduct = state.items.find((product)=>product._id === action.payload.product._id && product.size === action.payload.product.size)
-            const {parseCartItem, removedProductIndex:index} = action.payload
-            const newCost = state.totalCost - state.items[index].sellingPrice * state.items[index].qty
-            const newQty = state.totalQty - state.items[index].qty
-            console.log(parseCartItem,index, newCost, newQty)
+            // const filteredCartItems = state.cartItems.filter((item)=> item.productId !== action.payload._id && item.size !== action.payload.size)
+            const removedProductIndex = state.cartItems.findIndex((item)=> item._id === action.payload._id && item.size === action.payload.size)
+            state.cartItems.splice(removedProductIndex,1)
 
-            return {
-                ...state,
-                items: [...parseCartItem],
-                totalCost: newCost,
-                totalQty: newQty
-            }
+        })
+        .addCase(removeCartItem.rejected, (state, action)=>{
+            state.error = action.error.message
         })
     }
     

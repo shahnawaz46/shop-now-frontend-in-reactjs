@@ -11,12 +11,9 @@ import { addToCart, removeCartItem } from "../../redux/slices/CartSlice";
 // import { getCartItem, addToCart, removeCartMessage, removeCartItem } from '../../actions/CartAction';
 
 const Cart = ({ show, setShow }) => {
-  // const { allCartItem, message } = useSelector((state) => state.cart)
-  const {items, totalCost} = useSelector((state) => state.cart);
+  const { cartItems } = useSelector((state) => state.cart);
   const dispatch = useDispatch()
-  // console.log(cart);
-  // const user = useSelector((state)=> state.user)
-  // const History = useHistory()
+
 
   const itemIncrementFnc = (_id, size, sellingPrice) => {
     const product = { _id, size, qty: 1, sellingPrice };
@@ -77,8 +74,8 @@ const Cart = ({ show, setShow }) => {
         </div>
 
         <div className="cart-second-box">
-          {items?.length > 0 ? (
-            items.map((product, index) => {
+          {cartItems?.length > 0 ? (
+            cartItems.map((product, index) => {
               return (
                 <div key={index} className="cart-image-product-details">
                   <img
@@ -145,7 +142,7 @@ const Cart = ({ show, setShow }) => {
           <div className="cart-price">
             <h3>SUBTOTAL</h3>
             <h3>
-              Rs. {totalCost}
+              Rs. {cartItems?.length > 0 ? cartItems.reduce((total, item)=> total + (item.sellingPrice * item.qty), 0) : 0 }
             </h3>
           </div>
           <p>Shipping, taxes, and discounts calculated at checkout.</p>

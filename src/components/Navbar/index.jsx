@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./style.css";
-import { Link, NavLink, Redirect, useNavigate } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { BiSearch } from "react-icons/bi";
 import { FiShoppingBag } from "react-icons/fi";
 import { RiMenu2Line } from "react-icons/ri";
@@ -20,23 +20,13 @@ const Navbar = () => {
   const [condition, setCondition] = useState(false);
   const [search, setSearch] = useState(false);
   const [cartShow, setShowCart] = useState(false);
-  const navigate = useNavigate();
 
-  // const userState = useSelector((state) => state.user)
-  const {totalQty} = useSelector((state) => state.cart)
+  const { cartItems } = useSelector((state) => state.cart)
 
-  // const checkUserIsLogin = () => {
-  //     if (userState.authenticate) {
-  //         navigate("/my-account/address")
-  //     } else {
-  //         navigate("/login")
-  //     }
-  // }
-
-  // const cartQuantity = (allCartItem) => {
-  //     const quantity = allCartItem.reduce((total, value) => total + value.qty, 0)
-  //     return quantity > 99 ? '99+' : quantity
-  // }
+  const cartQuantity = () => {
+      const quantity = cartItems.reduce((total, value) => total + value.qty, 0)
+      return quantity > 99 ? '99+' : quantity
+  }
 
   useEffect(() => {
     if (condition) {
@@ -99,7 +89,7 @@ const Navbar = () => {
                 className="icon"
                 onClick={() => setShowCart(true)}
               />
-              <span>{totalQty}</span> 
+              <span>{cartQuantity()}</span> 
             </div>
             <Link to={"/my-account/address"}>
               <MdPerson className="icon profile-icon" />

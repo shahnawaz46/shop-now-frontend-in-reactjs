@@ -23,7 +23,7 @@ const Login = () => {
     try {
       const res = await axiosInstance.post("/user/signin", { email, password });
       // console.log(res)
-      localStorage.setItem("_f_id", res.data.userId);
+      localStorage.setItem("__f_id", res.data.userId);
       navigate("/home", { replace: true });
       
     } catch (err) {
@@ -39,7 +39,7 @@ const Login = () => {
   };
 
   useEffect(() => {
-    if (localStorage.getItem("_f_id")) navigate(-1);
+    if (localStorage.getItem("__f_id")) navigate(-1);
   }, []);
 
   return (

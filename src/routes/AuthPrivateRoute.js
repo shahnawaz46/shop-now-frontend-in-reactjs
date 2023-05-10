@@ -5,7 +5,7 @@ const AuthPrivateRoute = ({ children }) => {
   const navigate = useNavigate();
 
 //   console.log(param)
-  const isAuthenticated = localStorage.getItem("_f_id");
+  const isAuthenticated = localStorage.getItem("__f_id");
 
   if (isAuthenticated) return <Navigate to={-1} />;
     

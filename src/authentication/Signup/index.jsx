@@ -41,7 +41,7 @@ const Signup = () => {
     try {
       const res = await axiosInstance.post("/user/signup", { ...user });
     //   console.log(res.data.userId);
-      localStorage.setItem("_f_id", res.data.userId);
+      localStorage.setItem("__f_id", res.data.userId);
       navigate("/home", { replace: true });
 
     } catch (err) {

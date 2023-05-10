@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { NavLink, useNavigate, useParams } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { BsFillCameraFill } from "react-icons/bs";
+import { toast } from "react-toastify";
+import imageCompression from "browser-image-compression";
 
 // components
 import "./style.css";
@@ -29,35 +31,46 @@ const User = ({ userData }) => {
 
   const updateProfileFnc = async (e) => {
     const file = e.target.files[0];
+
+    const options = {
+      maxSizeMB: 0.5,
+      useWebWorker: true,
+    };
+
     if (file) {
-      const fileReader = new FileReader();
-      let imageBase64 = "";
-      // console.log(imageBase64);
-      // console.log()
+      try {
+        const compressImage = await imageCompression(file, options);
 
-      fileReader.readAsDataURL(file);
-      fileReader.onloadend = async () => {
-        imageBase64 = fileReader.result;
-        // console.log(imageBase64)
-        if (imageBase64) {
-          try {
-            const res = await axiosInstance.patch("/user/updateProfilePic", {
-              imageBase64: JSON.stringify(imageBase64),
-              userName: userData.firstName,
-            });
-            dispatch(updatePersonDetail(res.data.userDetails));
+        const fileReader = new FileReader();
+        let imageBase64 = "";
+        // console.log(imageBase64);
+        // console.log()
 
-          } catch (error) {
-            if (error?.response?.data?.msg) {
-              // console.log(error?.response?.data?.msg)
-              toast.error(error?.response?.data?.msg);
-
-            } else {
-              // console.log(error);
-              toast.error(error.message);
+        fileReader.readAsDataURL(compressImage);
+        fileReader.onloadend = async () => {
+          imageBase64 = fileReader.result;
+          // console.log(imageBase64)
+          if (imageBase64) {
+            try {
+              const res = await axiosInstance.patch("/user/updateProfilePic", {
+                imageBase64: JSON.stringify(imageBase64),
+                userName: userData.firstName,
+              });
+              toast.success("successfully");
+              dispatch(updatePersonDetail(res.data.userDetails));
+            } catch (error) {
+              if (error?.response?.data?.msg) {
+                // console.log(error?.response?.data?.msg)
+                toast.error(error?.response?.data?.msg);
+              } else {
+                // console.log(error);
+                toast.error(error.message);
+              }
             }
           }
-        }
+        };
+      } catch (err) {
+        toast.error(err);
       }
     }
 
@@ -83,8 +96,8 @@ const User = ({ userData }) => {
             alt="Remy Sharp"
             src={
               userData?.profilePicture
-              ? userData.profilePicture
-              : "https://media.istockphoto.com/id/1288129985/vector/missing-image-of-a-person-placeholder.jpg?s=612x612&w=0&k=20&c=9kE777krx5mrFHsxx02v60ideRWvIgI1RWzR1X4MG2Y="
+                ? userData.profilePicture
+                : "https://media.istockphoto.com/id/1288129985/vector/missing-image-of-a-person-placeholder.jpg?s=612x612&w=0&k=20&c=9kE777krx5mrFHsxx02v60ideRWvIgI1RWzR1X4MG2Y="
             }
             style={{
               width: "100%",
