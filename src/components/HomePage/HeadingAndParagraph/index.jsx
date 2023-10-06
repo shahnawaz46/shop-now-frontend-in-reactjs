@@ -1,15 +1,15 @@
-import React from "react";
-import "./style.css";
+import React from 'react';
+import './style.css';
 
 const HeadingAndParagraph = ({ heading, para }) => {
   return (
-    <div style={{marginBottom:'20px'}}>
-      <div className="product-heading-container">
-        <div className="product-heading-border" />
-        <h2 className="product-heading">{heading}</h2>
-        <div className="product-heading-border" />
+    <div style={{ marginBottom: '20px' }}>
+      <div className="heading-container">
+        <div className="heading-border" />
+        <h2 className="heading">{heading}</h2>
+        <div className="heading-border" />
       </div>
-      <p className="product-para">{para}</p>
+      <p className="paragraph">{para}</p>
     </div>
   );
 };

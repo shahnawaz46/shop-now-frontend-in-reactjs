@@ -1,9 +1,9 @@
-.top-selling-container{
+.top-rated-container {
     margin: 20px 10px;
     text-align: center;
 }
 
-.top-selling-image-container{
+.top-rated-image-container {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -12,7 +12,7 @@
     margin-top: 10px;
 }
 
-.top-selling-images{
+.top-rated-images {
     width: 200px;
     height: 250px;
     object-fit: cover;
@@ -24,14 +24,14 @@
 
 
 @media screen and (max-width:500px) {
-    .top-selling-images{
+    .top-rated-images {
         width: 180px;
         height: 230px;
     }
 }
 
 @media screen and (max-width:390px) {
-    .top-selling-images{
+    .top-rated-images {
         width: 150px;
         height: 200px;
     }
@@ -39,7 +39,7 @@
 
 
 @media screen and (max-width:330px) {
-    .top-selling-images{
+    .top-rated-images {
         width: 120px;
         height: 180px;
     }

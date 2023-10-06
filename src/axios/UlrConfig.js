@@ -1,6 +1,8 @@
-export const apiUrl = 'https://ecommerce-server-1cz2.onrender.com/api';
+export const apiUrl =
+  window.location.hostname === 'localhost'
+    ? 'http://localhost:9000/api'
+    : 'https://ecommerce-server-1cz2.onrender.com/api';
 const apiUlr2 = 'https://ecommerce-server-1cz2.onrender.com';
-// export const apiUrl = 'http://localhost:9000/api';
 
 export const giveMeImages = (image_link) => {
   return `${apiUlr2}//productImages/${image_link}`;

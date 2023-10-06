@@ -14,7 +14,7 @@ const Preview = () => {
   const getProductForPreview = async () => {
     const [previewRes, trendingRes] = await Promise.all([
       axiosInstance.get(`/product/single/${productId}`),
-      axiosInstance.post('/product/top/trending', {
+      axiosInstance.post('/product/top-trending', {
         productId,
         userId: localStorage.getItem('__f_id'),
         eventType: 'visit',

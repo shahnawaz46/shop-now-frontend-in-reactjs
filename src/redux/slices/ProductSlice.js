@@ -25,14 +25,14 @@ const initialState = {
 export const fetchHomePageProducts = createAsyncThunk(
   'homePageProducts/fetch',
   async () => {
-    const [topRatingProductRes, topTrendingProductRes] = await Promise.all([
-      axiosInstance.get('/product/top/rating'),
-      axiosInstance.get('/product/top/trending'),
+    const [topTrendingProductRes, topRatingProductRes] = await Promise.all([
+      axiosInstance.get('/product/top-trending'),
+      axiosInstance.get('/product/top-rated'),
     ]);
 
     return {
-      topRatingProductRes: topRatingProductRes.data.products,
       topTrendingProductRes: topTrendingProductRes.data.products,
+      topRatingProductRes: topRatingProductRes.data.products,
     };
   }
 );
@@ -40,7 +40,7 @@ export const fetchHomePageProducts = createAsyncThunk(
 export const fetchMenProducts = createAsyncThunk(
   'menProduct/fetch',
   async () => {
-    const res = await axiosInstance.get("/product/Men's-Wardrobe");
+    const res = await axiosInstance.get("/product/all/Men's-Wardrobe");
     return res.data;
   }
 );
@@ -48,7 +48,7 @@ export const fetchMenProducts = createAsyncThunk(
 export const fetchWomenProducts = createAsyncThunk(
   'womenProduct/fetch',
   async () => {
-    const res = await axiosInstance.get("/product/Women's-Wardrobe");
+    const res = await axiosInstance.get("/product/all/Women's-Wardrobe");
     return res.data;
   }
 );
@@ -60,10 +60,10 @@ export const productSlice = createSlice({
     builder
       .addCase(fetchHomePageProducts.fulfilled, (state, action) => {
         state.homePageProducts.status = 'success';
-        state.homePageProducts.topRatingProducts =
-          action.payload.topRatingProductRes;
         state.homePageProducts.topTrendingProducs =
           action.payload.topTrendingProductRes;
+        state.homePageProducts.topRatingProducts =
+          action.payload.topRatingProductRes;
       })
       .addCase(fetchHomePageProducts.rejected, (state, action) => {
         state.homePageProducts.status = 'failed';

@@ -31,7 +31,7 @@ const TopTrending = () => {
       const filtered = topTrendingProducs.find(
         (item) => item.targetAudience === targetAudience
       );
-      setProducts(filtered.trendingProducts);
+      setProducts(filtered ? filtered.trendingProducts : []);
     }
   }, [topTrendingProducs, targetAudience]);
 
@@ -47,9 +47,10 @@ const TopTrending = () => {
         heading={'Our Best Collections'}
         para={'Pick up for outfit inspiration and must have looks'}
       />
-      <div className="product-button-container">
+
+      <div className="trending-button-container">
         <button
-          className="product-button"
+          className="trending-toggle-button"
           style={{
             backgroundColor: targetAudience === 'Men' && '#030342',
             color: targetAudience === 'Men' && 'white',
@@ -59,7 +60,7 @@ const TopTrending = () => {
           Men
         </button>
         <button
-          className="product-button"
+          className="trending-toggle-button"
           style={{
             backgroundColor: targetAudience === 'Women' && '#030342',
             color: targetAudience === 'Women' && 'white',
@@ -80,12 +81,12 @@ const TopTrending = () => {
           disableButtonsControls={true}
           mouseTracking
           items={products.map((product) => (
-            <Link to={`/preview/${product?._id}`} key={product?._id}>
+            <Link to={`/preview/${product?.productId}`} key={product?._id}>
               <img
                 src={giveMeImages(product?.productPicture?.img)}
                 onDragStart={handleDragStart}
                 role="presentation"
-                className="product-images"
+                className="trending-product-images"
                 alt="product-not-found"
               />
             </Link>

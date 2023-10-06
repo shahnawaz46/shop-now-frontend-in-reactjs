@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { AiFillStar } from "react-icons/ai";
-import AliceCarousel from "react-alice-carousel";
-import { toast } from "react-toastify";
-import { useDispatch } from "react-redux";
+import React, { useState } from 'react';
+import { AiFillStar } from 'react-icons/ai';
+import AliceCarousel from 'react-alice-carousel';
+import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux';
 
 // components
-import "./style.css";
-import { giveMeImages } from "../../../axios/UlrConfig";
-import Sizes from "../Sizes";
-import { addToCart } from "../../../redux/slices/CartSlice";
-import Reviews from "../../Review";
-import { totalRating } from "../../../common/TotalRating";
+import './style.css';
+import { giveMeImages } from '../../../axios/UlrConfig';
+import Sizes from '../Sizes';
+import { addToCart } from '../../../redux/slices/CartSlice';
+import Reviews from '../../Review';
+import { totalRating } from '../../../common/TotalRating';
 
 const responsive = {
   0: { items: 1 },
@@ -25,7 +25,7 @@ const PreviewProduct = ({ product }) => {
 
   const addToCartFnc = () => {
     if (!productSize) {
-      return toast.error("Please Select The Size");
+      return toast.error('Please Select The Size');
     }
     dispatch(
       addToCart({
@@ -38,8 +38,6 @@ const PreviewProduct = ({ product }) => {
       })
     );
   };
-
-  
 
   // const PlaceOrderPageFunc = (value) => {
   //     if (!condition) {
@@ -93,6 +91,7 @@ const PreviewProduct = ({ product }) => {
                 // onDragStart={handleDragStart}
                 role="presentation"
                 className="preview-mobile-image preview-image-space-box-one"
+                alt="not-found"
               />
             ))}
           />
@@ -103,9 +102,9 @@ const PreviewProduct = ({ product }) => {
           <div className="preview-product-rating">
             <AiFillStar
               style={{
-                fontSize: "22px",
-                color: "#f8a41b",
-                marginRight: "1px",
+                fontSize: '22px',
+                color: '#f8a41b',
+                marginRight: '1px',
               }}
             />
             <span>{totalRating(product?.reviews)}</span>
