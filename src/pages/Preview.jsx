@@ -1,20 +1,27 @@
-import React, { useEffect, useState } from "react";
-import Layout from "../components/Layout";
-import PreviewProduct from "../components/Preview/PreviewProduct";
-import { useParams } from "react-router-dom";
-import ReturnPolicy from "../components/ReturnPolicy";
-import Loading from "../components/Loading";
-import axiosInstance from "../axios/AxiosInstance";
+import React, { useEffect, useState } from 'react';
+import Layout from '../components/Layout';
+import PreviewProduct from '../components/Preview/PreviewProduct';
+import { useParams } from 'react-router-dom';
+import ReturnPolicy from '../components/ReturnPolicy';
+import Loading from '../components/Loading';
+import axiosInstance from '../axios/AxiosInstance';
 
 const Preview = () => {
   const { productId } = useParams();
+
   const [previewProduct, setPreviewProduct] = useState({});
-  // console.log(productId);
 
   const getProductForPreview = async () => {
-    const res = await axiosInstance.get(`/product/single/${productId}`);
-    // console.log(res.data.product);
-    setPreviewProduct({ ...res.data.product });
+    const [previewRes, trendingRes] = await Promise.all([
+      axiosInstance.get(`/product/single/${productId}`),
+      axiosInstance.post('/product/top/trending', {
+        productId,
+        userId: localStorage.getItem('__f_id'),
+        eventType: 'visit',
+      }),
+    ]);
+
+    setPreviewProduct({ ...previewRes.data.product });
   };
 
   useEffect(() => {

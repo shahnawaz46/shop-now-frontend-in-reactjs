@@ -1,11 +1,11 @@
-import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import ScrollTop from "./components/ScrollTop";
-import Toastify from "./utils/Toastify";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import ScrollTop from './components/ScrollTop';
+import Toastify from './utils/Toastify';
+import { useDispatch, useSelector } from 'react-redux';
 
 // components
-import Loader from "./components/Loader";
+import Loader from './components/Loader';
 import {
   HomePage,
   MenProducts,
@@ -15,11 +15,11 @@ import {
   PageNotFound,
   Preview,
   Profile,
-} from "./pages";
-import { fetchTopSellingProducts } from "./redux/slices/ProductSlice";
-import { getCartItem } from "./redux/slices/CartSlice";
-import { Login, Signup } from "./authentication";
-import { AuthPrivateRoute, PrivateRoute } from "./routes";
+} from './pages';
+import { fetchHomePageProducts } from './redux/slices/ProductSlice';
+import { getCartItem } from './redux/slices/CartSlice';
+import { Login, Signup } from './authentication';
+import { AuthPrivateRoute, PrivateRoute } from './routes';
 
 function App() {
   const dispatch = useDispatch();
@@ -63,7 +63,7 @@ function App() {
 
   useEffect(() => {
     // console.log("useEffect App.js");
-    dispatch(fetchTopSellingProducts());
+    dispatch(fetchHomePageProducts());
     dispatch(getCartItem());
   }, []);
 
