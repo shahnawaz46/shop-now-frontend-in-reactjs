@@ -1,13 +1,15 @@
-import React from "react";
-import Layout from "../components/Layout";
+import React from 'react';
+import RootLayout from '../components/Layout/RooLayout';
 
 const TopSelling = () => {
   return (
-    <Layout>
-      <div style={{ fontSize: "30px", margin: "20px 0px", textAlign:'center' }}>
+    <RootLayout>
+      <div
+        style={{ fontSize: '30px', margin: '20px 0px', textAlign: 'center' }}
+      >
         Work on progress
       </div>
-    </Layout>
+    </RootLayout>
   );
 };
 

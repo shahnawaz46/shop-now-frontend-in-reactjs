@@ -1,0 +1,40 @@
+/* loader */
+.men-loader {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 40px;
+}
+
+.product-card-container {
+    border-radius: 5px;
+    overflow: hidden;
+    box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+    background-color: white;
+    transition: all ease-in 0.2s;
+}
+
+.product-card-container:hover {
+    scale: 1.02;
+}
+
+.product-card-image {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+}
+
+.product-card-details {
+    padding: 10px 10px 20px 10px;
+    height: 100%;
+}
+
+.product-card-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    margin-bottom: 5px;
+    font-size: 14px;
+    font-weight: 500
+}

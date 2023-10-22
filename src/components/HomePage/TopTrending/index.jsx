@@ -44,7 +44,7 @@ const TopTrending = () => {
       }}
     >
       <HeadingAndParagraph
-        heading={'Our Best Collections'}
+        heading={'Top Trending Products'}
         para={'Pick up for outfit inspiration and must have looks'}
       />
 

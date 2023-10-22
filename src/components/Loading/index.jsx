@@ -1,14 +1,14 @@
-import React from "react";
-import LoaderAnimation from "../../asset/Hourglass.gif";
+import React from 'react';
+import LoaderAnimation from '../../asset/Hourglass.gif';
 
 const Loading = () => {
   return (
     <div
       style={{
-        position: "fixed",
-        top: "50%",
-        left: "50%",
-        transform: "translate(-50%,-50%)",
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%,-50%)',
       }}
     >
       <img src={LoaderAnimation} alt="loader" />

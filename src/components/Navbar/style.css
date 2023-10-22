@@ -1,15 +1,15 @@
 /* close icon disabled in desktop navbar */
-.close-icon{
+.close-icon {
     display: none;
 }
 
-.navbar-container{
+.navbar-container {
     position: sticky;
     top: 0px;
     z-index: 2;
 }
 
-.navbar{
+.navbar {
     width: 100%;
     height: 80px;
     background: #fff;
@@ -20,7 +20,7 @@
     padding: 0px 100px;
 }
 
-.website-name{
+.website-name {
     flex: 1;
     font-size: 25px;
     display: flex;
@@ -28,48 +28,49 @@
     font-family: 'Spectral SC', serif;
 }
 
-.navbar-item{
+.navbar-item {
     display: flex;
     justify-content: center;
     gap: 25px;
     margin-right: 40px;
 }
 
-.navbar-link{
+.navbar-link {
     /* margin: 0px 15px; */
     font-size: 14px;
     font-weight: 500;
     text-transform: uppercase;
 }
 
-.navbar-link > a{
+.navbar-link>a {
     text-decoration: none;
     color: #1e1e27;
 }
 
-.navbar-link > a:hover{
+.navbar-link>a:hover {
     color: orangered;
 }
 
-.nav-link-class{
+.nav-link-class {
     border-bottom: 1px solid orangered;
 }
 
-.navbar-icons{
+.navbar-icons {
     display: flex;
     align-items: center;
     gap: 16px;
 }
-.icon{
+
+.icon {
     font-size: 19px;
     cursor: pointer;
 }
 
-.profile-icon{
+.profile-icon {
     font-size: 24px;
 }
 
-.navbar-cart{
+.navbar-cart {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -80,7 +81,7 @@
     height: 40px;
 }
 
-.navbar-cart > span{
+.navbar-cart>span {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -96,33 +97,33 @@
     color: white;
 }
 
-a{
+a {
     text-decoration: none;
     color: black;
 }
 
-.menu-icon{
+.menu-icon {
     display: none;
     margin-left: 10px;
     cursor: pointer;
 }
 
-.search-field{
+.search-field {
     display: flex;
     align-items: center;
     position: absolute;
     top: 0px;
     width: 100%;
     z-index: 2;
-    padding:  28px 10px;
+    padding: 28px 10px;
     box-sizing: border-box;
-    background-color:#fff;
+    background-color: #fff;
 }
 
-.search-field > input{
+.search-field>input {
     width: 100%;
     border: none;
-    background-color:#fff;
+    background-color: #fff;
     padding: 10px;
     font-size: 15px;
     outline: none;
@@ -131,21 +132,21 @@ a{
 /* media queries */
 
 @media only screen and (max-width: 1190px) {
-    .navbar{
+    .navbar {
         padding: 0px 60px;
     }
 }
 
 
 @media only screen and (max-width: 1120px) {
-    .navbar{
+    .navbar {
         padding: 0px 40px;
     }
 }
 
 
 @media only screen and (max-width: 1050px) {
-    .navbar{
+    .navbar {
         padding: 0px 30px;
     }
 }
@@ -154,7 +155,7 @@ a{
 /* media query for mobile */
 @media only screen and (max-width: 950px) {
 
-    .navbar-item{
+    .navbar-item {
         background-color: #fff;
         z-index: 5;
         display: flex;
@@ -171,11 +172,11 @@ a{
         transition: all 0.5s;
     }
 
-    .mobile-navbar{
+    .mobile-navbar {
         transform: translateX(0%);
     }
 
-    .navbar-link{
+    .navbar-link {
         width: 100%;
         border-bottom: 1px solid #e4e4e4;
         font-size: 20px;
@@ -186,16 +187,16 @@ a{
         color: #1e1e27;
     }
 
-    .nav-link-class{
+    .nav-link-class {
         border-bottom: none;
     }
 
-    .menu-icon{
+    .menu-icon {
         display: block;
         font-size: 24px;
     }
 
-    .close-icon{
+    .close-icon {
         display: block;
         margin: 20px;
         font-size: 1.5rem;
@@ -204,39 +205,39 @@ a{
 }
 
 @media only screen and (max-width: 676px) {
-    .navbar{
-        padding:0px 10px;
+    .navbar {
+        padding: 0px 10px;
     }
 }
 
 
 @media only screen and (max-width: 360px) {
-    .website-name{
+    .website-name {
         font-size: 20px;
     }
 
-    .navbar-icons{
+    .navbar-icons {
         gap: 8px;
     }
 
-    .icon{
+    .icon {
         font-size: 17px;
     }
 
-    .profile-icon{
+    .profile-icon {
         font-size: 20px;
     }
 
-    .menu-icon{
+    .menu-icon {
         font-size: 20px;
         margin-left: 5px;
     }
 
-    .navbar-cart{
+    .navbar-cart {
         margin: 0px 6px;
     }
-    
-    .navbar-cart > span{
+
+    .navbar-cart>span {
         width: 17px;
         height: 17px;
         font-size: 9px;

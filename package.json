@@ -11,6 +11,7 @@
     "browser-image-compression": "^2.0.2",
     "framer-motion": "^10.11.2",
     "npm": "^9.6.3",
+    "rc-slider": "^10.3.1",
     "react": "^18.2.0",
     "react-alice-carousel": "^2.7.1",
     "react-dom": "^18.2.0",

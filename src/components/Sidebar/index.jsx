@@ -1,15 +1,17 @@
-import React, { useState } from "react";
-import {IoMdArrowDropright, IoMdArrowDropleft} from 'react-icons/io'
-import { NavLink } from "react-router-dom";
-import './style.css'
+import React, { useState } from 'react';
+import { IoMdArrowDropright, IoMdArrowDropleft } from 'react-icons/io';
+import { NavLink } from 'react-router-dom';
+import './style.css';
 
-
-const SideBar = ({subCategory, urlSlug}) => {
-    const [category, setCategory] = useState(false);
+const SideBar = ({ subCategory, urlSlug }) => {
+  const [category, setCategory] = useState(false);
   return (
     <>
+      <div>
+        <h2>Filters</h2>
+      </div>
       {/* desktop sub-category */}
-      <div className="desktop-category-container">
+      {/* <div className="desktop-category-container">
         {subCategory.map((value, index) => (
           <NavLink
             to={`/collections/${urlSlug}/${value.slug}`}
@@ -21,10 +23,10 @@ const SideBar = ({subCategory, urlSlug}) => {
             {value.categoryName}
           </NavLink>
         ))}
-      </div>
+      </div> */}
 
       {/* mobile sub-category */}
-      <div className="mobile-category-container">
+      {/* <div className="mobile-category-container">
         <div className="men-category-button-box">
           <button className="men-category-button">{urlSlug}</button>
           <div className="men-category-drop-down">
@@ -53,10 +55,10 @@ const SideBar = ({subCategory, urlSlug}) => {
         ))}
           <div className="men-category-drop-up">
             <IoMdArrowDropleft style={{fontSize:'22px'}} onClick={() => setCategory(false)} />
-            {/* <AiOutlineArrowLeft /> */}
+            <AiOutlineArrowLeft />
           </div>
         </div>
-      </div>
+      </div>   */}
     </>
   );
 };

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import Layout from '../components/Layout';
+import RootLayout from '../components/Layout/RooLayout';
 import PreviewProduct from '../components/Preview/PreviewProduct';
 import { useParams } from 'react-router-dom';
 import ReturnPolicy from '../components/ReturnPolicy';
@@ -33,10 +33,10 @@ const Preview = () => {
   if (Object.keys(previewProduct).length === 0) return <Loading />;
 
   return (
-    <Layout>
+    <RootLayout>
       <PreviewProduct product={previewProduct} />
       <ReturnPolicy />
-    </Layout>
+    </RootLayout>
   );
 };
 
