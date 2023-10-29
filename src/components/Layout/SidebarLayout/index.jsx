@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './style.css';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -20,12 +20,13 @@ const SidebarLayout = ({ children, subCategory }) => {
   const [range, setRange] = useState([0, 2500]);
   const [showFilter, setShowFilter] = useState(false);
 
-  const updateSliderDebounce = useCallback(
-    debounce((e) => appendQuery('price', e.join('-')), 500),
+  const updateSliderDebounce = useMemo(
+    () => debounce((e) => appendQuery('price', e.join('-')), 500),
     []
   );
 
   const appendQuery = (key, value) => {
+    console.log('appendQuery');
     searchParam.has(key)
       ? searchParam.set(key, value)
       : searchParam.append(key, value);
