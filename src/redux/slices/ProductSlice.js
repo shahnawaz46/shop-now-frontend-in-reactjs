@@ -40,16 +40,30 @@ export const fetchHomePageProducts = createAsyncThunk(
 export const fetchMenProducts = createAsyncThunk(
   'menProduct/fetch',
   async () => {
-    const res = await axiosInstance.get("/product/all/Men's-Wardrobe");
-    return res.data;
+    const [categoriesRes, productRes] = await Promise.all([
+      axiosInstance.get("/category/Men's-Wardrobe"),
+      axiosInstance.get('/product/all/Men'),
+    ]);
+
+    return {
+      categories: categoriesRes.data.categories,
+      product: productRes.data.allProducts,
+    };
   }
 );
 
 export const fetchWomenProducts = createAsyncThunk(
   'womenProduct/fetch',
   async () => {
-    const res = await axiosInstance.get("/product/all/Women's-Wardrobe");
-    return res.data;
+    const [categoriesRes, productRes] = await Promise.all([
+      axiosInstance.get("/category/Women's-Wardrobe"),
+      axiosInstance.get('/product/all/Women'),
+    ]);
+
+    return {
+      categories: categoriesRes.data.categories,
+      product: productRes.data.allProducts,
+    };
   }
 );
 
@@ -74,8 +88,8 @@ export const productSlice = createSlice({
       })
       .addCase(fetchMenProducts.fulfilled, (state, action) => {
         state.menProducts.status = 'success';
-        state.menProducts.products.push(...action.payload.products);
-        state.menProducts.subCategory.push(...action.payload.subCategory);
+        state.menProducts.products.push(...action.payload.product);
+        state.menProducts.subCategory.push(...action.payload.categories);
       })
       .addCase(fetchMenProducts.rejected, (state, action) => {
         state.womenProducts.status = 'failed';
@@ -86,8 +100,8 @@ export const productSlice = createSlice({
       })
       .addCase(fetchWomenProducts.fulfilled, (state, action) => {
         state.womenProducts.status = 'success';
-        state.womenProducts.products.push(...action.payload.products);
-        state.womenProducts.subCategory.push(...action.payload.subCategory);
+        state.womenProducts.products.push(...action.payload.product);
+        state.womenProducts.subCategory.push(...action.payload.categories);
       })
       .addCase(fetchWomenProducts.rejected, (state, action) => {
         state.womenProducts.status = 'failed';

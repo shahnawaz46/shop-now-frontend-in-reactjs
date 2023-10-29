@@ -4,16 +4,18 @@ const NotFound = ({ children }) => {
   return (
     <div
       style={{
+        position: 'absolute',
+        top: '45%',
+        left: '50%',
+        transform: 'translate(-50%,-50%)',
         width: '100%',
-        height: '100%',
         display: 'flex',
-        alignItems: 'center',
         justifyContent: 'center',
         padding: '20px',
         textAlign: 'center',
       }}
     >
-      <h2>{children}</h2>
+      <h2 style={{ fontSize: '22px' }}>{children}</h2>
     </div>
   );
 };

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 // components
 import RootLayout from '../components/Layout/RooLayout';
@@ -12,21 +13,32 @@ import SidebarLayout from '../components/Layout/SidebarLayout';
 import NotFound from '../components/NotFound';
 
 const WomenProducts = () => {
+  const dispatch = useDispatch();
   const {
     womenProducts: { products, subCategory, status },
   } = useSelector((state) => state.allProducts);
-  const dispatch = useDispatch();
 
-  const [subProducts, setSubProducts] = useState({
-    status: 'loading',
+  const [filterProducts, setFilterProducts] = useState({
+    status: 'idle',
     item: [],
   });
-  const { subSlug } = useParams();
 
-  const fetchSubCategoryProducts = async () => {
-    setSubProducts((prev) => ({ ...prev, status: 'loading' }));
-    const res = await axiosInstance.get(`/product/all/${subSlug}`);
-    setSubProducts({ status: 'success', item: res.data.products });
+  const location = useLocation();
+  const searchParam = new URLSearchParams(location.search);
+
+  const fetchFilteredProducts = async (filteredParam) => {
+    setFilterProducts((prev) => ({ ...prev, status: 'loading' }));
+    try {
+      const res = await axiosInstance.get(
+        `/product/filtered?${filteredParam}&targetAudience=Women`
+      );
+      setFilterProducts({
+        status: 'success',
+        item: res.data.subCategoryProducts,
+      });
+    } catch (err) {
+      toast.error(err?.response?.data?.error || err?.message);
+    }
   };
 
   useEffect(() => {
@@ -34,8 +46,9 @@ const WomenProducts = () => {
   }, []);
 
   useEffect(() => {
-    if (subSlug) fetchSubCategoryProducts();
-  }, [subSlug]);
+    const filteredQuery = searchParam.toString();
+    if (filteredQuery) fetchFilteredProducts(filteredQuery);
+  }, [searchParam.toString()]);
 
   if (status === 'pending')
     return (
@@ -46,17 +59,17 @@ const WomenProducts = () => {
 
   return (
     <RootLayout>
-      <SidebarLayout subCategory={subCategory} subSlug={"Women's-Wardrobe"}>
-        {subSlug ? (
-          subProducts.status === 'loading' ? (
+      <SidebarLayout subCategory={subCategory}>
+        {location.search ? (
+          filterProducts.status === 'loading' ? (
             <div
               style={{ width: '100%', height: '100%', position: 'relative' }}
             >
               <Loading />
             </div>
-          ) : subProducts.item.length > 0 ? (
+          ) : filterProducts.item.length > 0 ? (
             <div className="product-container">
-              {subProducts.item.map((product) => (
+              {filterProducts.item.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
             </div>
