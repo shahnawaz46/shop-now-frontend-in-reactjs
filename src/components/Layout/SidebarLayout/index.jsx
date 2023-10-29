@@ -26,7 +26,6 @@ const SidebarLayout = ({ children, subCategory }) => {
   );
 
   const appendQuery = (key, value) => {
-    console.log('appendQuery');
     searchParam.has(key)
       ? searchParam.set(key, value)
       : searchParam.append(key, value);
