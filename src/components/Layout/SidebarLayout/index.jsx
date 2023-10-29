@@ -1,9 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './style.css';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { IoMdClose } from 'react-icons/io';
-import debounce from 'lodash/debounce';
 
 // slider
 import Slider from 'rc-slider';
@@ -19,11 +18,6 @@ const SidebarLayout = ({ children, subCategory }) => {
 
   const [range, setRange] = useState([0, 2500]);
   const [showFilter, setShowFilter] = useState(false);
-
-  const updateSliderDebounce = useMemo(
-    () => debounce((e) => appendQuery('price', e.join('-')), 500),
-    []
-  );
 
   const appendQuery = (key, value) => {
     searchParam.has(key)
@@ -85,7 +79,7 @@ const SidebarLayout = ({ children, subCategory }) => {
               count={1}
               onChange={(e) => {
                 setRange(e);
-                updateSliderDebounce(e);
+                appendQuery('price', e.join('-'));
               }}
             />
           </div>

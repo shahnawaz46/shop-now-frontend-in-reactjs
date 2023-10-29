@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -11,6 +11,7 @@ import Loading from '../components/Loading';
 import axiosInstance from '../axios/AxiosInstance';
 import SidebarLayout from '../components/Layout/SidebarLayout';
 import NotFound from '../components/NotFound';
+import { debounce } from 'lodash';
 
 const WomenProducts = () => {
   const dispatch = useDispatch();
@@ -26,20 +27,23 @@ const WomenProducts = () => {
   const location = useLocation();
   const searchParam = new URLSearchParams(location.search);
 
-  const fetchFilteredProducts = async (filteredParam) => {
-    setFilterProducts((prev) => ({ ...prev, status: 'loading' }));
-    try {
-      const res = await axiosInstance.get(
-        `/product/filtered?${filteredParam}&targetAudience=Women`
-      );
-      setFilterProducts({
-        status: 'success',
-        item: res.data.subCategoryProducts,
-      });
-    } catch (err) {
-      toast.error(err?.response?.data?.error || err?.message);
-    }
-  };
+  const fetchFilteredProducts = useCallback(
+    debounce(async (filteredParam) => {
+      setFilterProducts((prev) => ({ ...prev, status: 'loading' }));
+      try {
+        const res = await axiosInstance.get(
+          `/product/filtered?${filteredParam}&targetAudience=Women`
+        );
+        setFilterProducts({
+          status: 'success',
+          item: res.data.subCategoryProducts,
+        });
+      } catch (err) {
+        toast.error(err?.response?.data?.error || err?.message);
+      }
+    }, 500),
+    []
+  );
 
   useEffect(() => {
     if (status === 'idle') dispatch(fetchWomenProducts());
