@@ -79,7 +79,6 @@ function App() {
 
         <Route path="collections">
           <Route path="Men's-Wardrobe" element={<MenProducts />} />
-          <Route path="Men's-Wardrobe/:subSlug" element={<MenProducts />} />
           <Route path="Women's-Wardrobe" element={<WomenProducts />} />
           <Route path="Women's-Wardrobe/:subSlug" element={<WomenProducts />} />
         </Route>

@@ -1,18 +1,44 @@
-import React, { useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import './style.css';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { IoMdClose } from 'react-icons/io';
+import debounce from 'lodash/debounce';
+
+// slider
 import Slider from 'rc-slider';
 import 'rc-slider/assets/index.css';
-import { Link, useParams } from 'react-router-dom';
-import { IoMdClose } from 'react-icons/io';
 
 // components
 import FilterIcon from '../../../asset/filter.png';
 
-const SidebarLayout = ({ children, subCategory, subSlug }) => {
+const SidebarLayout = ({ children, subCategory }) => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const searchParam = new URLSearchParams(location.search);
+
   const [range, setRange] = useState([0, 2500]);
-  const param = useParams();
   const [showFilter, setShowFilter] = useState(false);
+
+  const updateSliderDebounce = useCallback(
+    debounce((e) => appendQuery('price', e.join('-')), 500),
+    []
+  );
+
+  const appendQuery = (key, value) => {
+    searchParam.has(key)
+      ? searchParam.set(key, value)
+      : searchParam.append(key, value);
+
+    navigate(`?${searchParam.toString()}`);
+  };
+
+  const getQuery = (key) => searchParam.get(key);
+
+  useEffect(() => {
+    const price = searchParam.get('price');
+    price && setRange(price.split('-').map((item) => parseInt(item)));
+  }, [searchParam.toString()]);
 
   return (
     <div className="sidebar-container">
@@ -22,13 +48,13 @@ const SidebarLayout = ({ children, subCategory, subSlug }) => {
         onClick={() => setShowFilter(true)}
       >
         <img src={FilterIcon} alt="filter-icon" />
-        <h2 style={{ fontSize: '20px', fontWeight: 500 }}>Filter</h2>
+        <h2 style={{ fontSize: '20px', fontWeight: 400 }}>Filter</h2>
       </div>
 
       <div className={showFilter ? 'filter show-filter' : 'filter'}>
         {/* filter heading */}
         <div className="filter-space filter-close-icon-container">
-          <h2 style={{ fontSize: '20px', fontWeight: 500 }}>Filters</h2>
+          <h2 style={{ fontSize: '22px', fontWeight: 500 }}>Filters</h2>
           <IoMdClose
             className="filter-close-icon"
             onClick={() => setShowFilter(false)}
@@ -39,7 +65,7 @@ const SidebarLayout = ({ children, subCategory, subSlug }) => {
         <div className="filter-space">
           <h3
             style={{
-              fontSize: '15px',
+              fontSize: '16px',
               fontWeight: 500,
               textTransform: 'uppercase',
             }}
@@ -50,14 +76,17 @@ const SidebarLayout = ({ children, subCategory, subSlug }) => {
           <div className="slider-container">
             <Slider
               range
-              defaultValue={[0, 2500]}
+              value={[...range]}
               min={0}
               max={2500}
               step={500}
               allowCross={false}
               pushable={true}
               count={1}
-              onChange={(e) => setRange(e)}
+              onChange={(e) => {
+                setRange(e);
+                updateSliderDebounce(e);
+              }}
             />
           </div>
 
@@ -82,7 +111,7 @@ const SidebarLayout = ({ children, subCategory, subSlug }) => {
         <div className="filter-space">
           <h3
             style={{
-              fontSize: '15px',
+              fontSize: '16px',
               fontWeight: 500,
               textTransform: 'uppercase',
             }}
@@ -90,20 +119,22 @@ const SidebarLayout = ({ children, subCategory, subSlug }) => {
             Categories
           </h3>
           <div className="category">
-            {subCategory.map((item) => (
-              <Link
-                key={item.slug}
-                to={`/collections/${subSlug}/${item.slug}`}
-                className="category-name"
-                style={{
-                  color: param?.subSlug === item.slug ? '#000' : '#878787',
-                  fontWeight: param?.subSlug === item.slug ? 500 : 400,
-                }}
-              >
-                <MdOutlineKeyboardArrowLeft style={{ fontSize: '18px' }} />
-                <span style={{ fontSize: '16px' }}>{item.categoryName}</span>
-              </Link>
-            ))}
+            {subCategory.length > 0 &&
+              subCategory[0].children.map((item) => (
+                <div
+                  key={item.slug}
+                  onClick={() => appendQuery('category', item.slug)}
+                  className="category-name"
+                  style={{
+                    color:
+                      getQuery('category') === item.slug ? '#000' : '#878787',
+                    fontWeight: getQuery('category') === item.slug ? 500 : 400,
+                  }}
+                >
+                  <MdOutlineKeyboardArrowLeft style={{ fontSize: '18px' }} />
+                  <span style={{ fontSize: '16px' }}>{item.categoryName}</span>
+                </div>
+              ))}
           </div>
         </div>
       </div>
