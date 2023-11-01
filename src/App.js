@@ -18,7 +18,8 @@ import {
 } from './pages';
 import { fetchHomePageProducts } from './redux/slices/ProductSlice';
 import { getCartItem } from './redux/slices/CartSlice';
-import { Login, Signup } from './authentication';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 import { AuthPrivateRoute, PrivateRoute } from './routes';
 
 function App() {
@@ -72,17 +73,12 @@ function App() {
       <ScrollTop />
       <Toastify />
       <Routes>
-        {/* <Route path="/" exact component={Loader} /> */}
         <Route index element={<Loader />} />
-
         <Route path="/home" element={<HomePage />} />
-
         <Route path="collections">
           <Route path="Men's-Wardrobe" element={<MenProducts />} />
           <Route path="Women's-Wardrobe" element={<WomenProducts />} />
-          <Route path="Women's-Wardrobe/:subSlug" element={<WomenProducts />} />
         </Route>
-
         <Route path="/top-selling" element={<TopSelling />} />
         <Route path="/new-products" element={<NewProducts />} />
         <Route path="/preview/:productId" element={<Preview />} />
@@ -95,10 +91,6 @@ function App() {
           }
         />
         <Route path="*" element={<PageNotFound />} />
-
-        {/* <Route path="/collections/:categorySlug" exact component={MenAndWomenCategoryPage} /> */}
-
-        {/* <Route path="/collections/:categorySlug/:subCategorySlug" exact component={MenAndWomenCategoryPage} /> */}
 
         {/* <Route path="/place-order/:productIdAndSize" component={placeOrder}/> */}
 

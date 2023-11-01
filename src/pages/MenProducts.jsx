@@ -20,7 +20,7 @@ const MenProducts = () => {
   } = useSelector((state) => state.allProducts);
 
   const [filterProducts, setFilterProducts] = useState({
-    status: 'idle',
+    status: 'loading',
     item: [],
   });
 
@@ -29,7 +29,6 @@ const MenProducts = () => {
 
   const fetchFilteredProducts = useCallback(
     debounce(async (filteredParam) => {
-      setFilterProducts((prev) => ({ ...prev, status: 'loading' }));
       try {
         const res = await axiosInstance.get(
           `/product/filtered?${filteredParam}&targetAudience=Men`
@@ -39,6 +38,7 @@ const MenProducts = () => {
           item: res.data.subCategoryProducts,
         });
       } catch (err) {
+        setFilterProducts((prev) => ({ ...prev, status: 'failed' }));
         toast.error(err?.response?.data?.error || err?.message);
       }
     }, 500),
@@ -51,7 +51,10 @@ const MenProducts = () => {
 
   useEffect(() => {
     const filteredQuery = searchParam.toString();
-    if (filteredQuery) fetchFilteredProducts(filteredQuery);
+    if (filteredQuery) {
+      setFilterProducts((prev) => ({ ...prev, status: 'loading' }));
+      fetchFilteredProducts(filteredQuery);
+    }
   }, [searchParam.toString()]);
 
   if (status === 'pending')

@@ -11,18 +11,8 @@ const initialState = {
 export const fetchPersonalDetails = createAsyncThunk(
   'personalDetail/fetch',
   async () => {
-    try {
-      const res = await axiosInstance.get('/user/profile');
-      return res.data;
-    } catch (error) {
-      if (error?.response?.data?.msg) {
-        // console.log(error?.response?.data?.msg)
-        throw new Error(error?.response?.data?.msg);
-      } else {
-        // console.log(error)
-        throw new Error(error);
-      }
-    }
+    const res = await axiosInstance.get('/user/profile');
+    return res.data;
   }
 );
 
@@ -36,11 +26,6 @@ const userSlice = createSlice({
 
     updateAddress: (state, action) => {
       state.addressDetails = action.payload;
-    },
-
-    removeErrorMsg: (state, action) => {
-      state.error = null;
-      state.status = 'idle';
     },
 
     logout: (state) => {
@@ -64,7 +49,6 @@ const userSlice = createSlice({
   },
 });
 
-export const { updatePersonDetail, updateAddress, logout, removeErrorMsg } =
-  userSlice.actions;
+export const { updatePersonDetail, updateAddress, logout } = userSlice.actions;
 
 export default userSlice.reducer;
