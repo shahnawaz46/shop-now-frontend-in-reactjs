@@ -1,146 +1,146 @@
-.address-main-box{
-    width: 100%;
+.address-main-box {
+  width: 100%;
 }
 
-.address-not-available{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding-top: 20px;
+.address-not-available {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-top: 20px;
 }
 
-.address-icon{
-    font-size: 40px;
+.address-icon {
+  font-size: 40px;
 }
 
-.address-not-available-content{
-    text-align: center;
-    margin-top: 10px;
+.address-not-available-content {
+  text-align: center;
+  margin-top: 10px;
 }
 
-.address-not-available-content > h3{
-    font-weight: 400;
+.address-not-available-content > h3 {
+  font-weight: 400;
 }
 
-.address-add-button-1{
-    width: 160px;
-    height: 30px;
-    font-size: 16px;
-    border: 1px solid #E4E4E4;
-    cursor: pointer;
-    margin: 10px 0px;
+.address-add-button-1 {
+  width: 160px;
+  height: 30px;
+  font-size: 16px;
+  border: 1px solid #e4e4e4;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0px;
 }
 
-.address-available{
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    padding: 5px 5px 0px 5px;
+.address-available {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 5px 5px 0px 5px;
 }
 
-.address-data-show{
-    border: 1px solid #d4d4d9;
-    margin: 5px;
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
+.address-data-show {
+  border: 1px solid #d4d4d9;
+  margin: 5px;
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 5px;
 }
 
-.address-person-name{
-    font-size: 20px;
-    font-weight: 500;
-    text-transform: capitalize;
-    margin-bottom: 8px;
+.address-person-name {
+  font-size: 20px;
+  font-weight: 500;
+  text-transform: capitalize;
+  margin-bottom: 8px;
 }
 
-.address-person-mobile-no{
-    margin: 10px 0px;
+.address-person-mobile-no {
+  margin: 10px 0px;
 }
 
-.address-edit-remove-button{
-    width: 100%;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
+.address-edit-remove-button {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
 }
 
-.address-edit-remove-button > button{
-    height: 35px;
-    border: 1px solid #E4E4E4;
-    cursor: pointer;
+.address-edit-remove-button > button {
+  height: 35px;
+  border: 1px solid #e4e4e4;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.address-edit-remove-button > button:hover{
-    background-color: rgb(213,212,212);
+.address-edit-remove-button > button:hover {
+  background-color: rgb(213, 212, 212);
 }
 
-.address-add-button-box{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-top: 10px;
-    padding-right: 10px;
-    padding-left: 12px;
+.address-add-button-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+  padding-right: 10px;
+  padding-left: 12px;
 }
 
-.address-add-button-box > h3{
-    font-size: 20px;
-    font-weight: 500;
+.address-add-button-box > h3 {
+  font-size: 20px;
+  font-weight: 500;
 }
 
 .address-add-button-2 {
-    width: 160px;
-    height: 30px;
-    font-size: 16px;
-    border: 1px solid #E4E4E4;
-    cursor: pointer;
+  width: 160px;
+  height: 30px;
+  font-size: 16px;
+  border: 1px solid #e4e4e4;
+  border-radius: 5px;
+  cursor: pointer;
 }
 
-.address-add-button-2:hover{
-    background-color: #ff0000;
-    color: white;
+.address-add-button-2:hover {
+  background-color: #ff0000;
+  color: white;
 }
-
-
-
 
 /* media query */
 
-@media only screen and (max-width: 768px) {   
-    .address-available{
-        grid-template-columns: 1fr;
-    }
+@media only screen and (max-width: 768px) {
+  .address-available {
+    grid-template-columns: 1fr;
+  }
 }
 
-@media only screen and (max-width: 500px) {   
-    .address-person-name{
-        font-size: 17px;
-    }
-    
-    .address-detail{
-        font-size: 15px;
-    }
+@media only screen and (max-width: 500px) {
+  .address-person-name {
+    font-size: 17px;
+  }
 
-    .address-person-mobile-no{
-        font-size: 15px;
-    }
+  .address-detail {
+    font-size: 15px;
+  }
 
-    .address-edit-remove-button > button {
-        height: 30px;
-    }
+  .address-person-mobile-no {
+    font-size: 15px;
+  }
 
-    .address-add-button-box > h3{
-        font-size: 18px;
-    }
+  .address-edit-remove-button > button {
+    height: 30px;
+  }
+
+  .address-add-button-box > h3 {
+    font-size: 18px;
+  }
 }
 
+@media only screen and (max-width: 360px) {
+  .address-add-button-box > h3 {
+    font-size: 17px;
+  }
 
-@media only screen and (max-width: 360px){
-    .address-add-button-box > h3{
-        font-size: 17px;
-    }
-
-    .address-add-button-2 {
-        width: 115px;
-        font-size: 15px;
-    }
+  .address-add-button-2 {
+    width: 115px;
+    font-size: 15px;
+  }
 }

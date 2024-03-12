@@ -33,7 +33,19 @@ const Signup = () => {
     if (!result.validation) return toast.error(result.msg);
 
     try {
-      const res = await axiosInstance.post('/user/signup', { ...user });
+      const {
+        first_name: firstName,
+        last_name: lastName,
+        phone_no: phoneNo,
+        ...rest
+      } = user;
+
+      const res = await axiosInstance.post('/user/signup', {
+        firstName,
+        lastName,
+        phoneNo,
+        ...rest,
+      });
       localStorage.setItem('__f_id', res.data.userId);
       navigate('/home', { replace: true });
     } catch (err) {
@@ -42,86 +54,86 @@ const Signup = () => {
   };
 
   return (
-    <div className="signup-container">
-      <form onSubmit={handleForm} className="signup-form-container">
+    <div className='signup-container'>
+      <form onSubmit={handleForm} className='signup-form-container'>
         <h3>Create Your Account</h3>
 
-        <div className="signup-input-container">
-          <label htmlFor="first-name">First Name</label>
+        <div className='signup-input-container'>
+          <label htmlFor='first-name'>First Name</label>
           <input
-            id="first-name"
-            type="text"
-            name="first_name"
+            id='first-name'
+            type='text'
+            name='first_name'
             onChange={handleInput}
           />
         </div>
 
-        <div className="signup-input-container">
-          <label htmlFor="last-name">Last Name</label>
+        <div className='signup-input-container'>
+          <label htmlFor='last-name'>Last Name</label>
           <input
-            id="last-name"
-            type="text"
-            name="last_name"
+            id='last-name'
+            type='text'
+            name='last_name'
             onChange={handleInput}
           />
         </div>
 
-        <div className="signup-input-container">
-          <label htmlFor="email">Email Address</label>
-          <input id="email" type="email" name="email" onChange={handleInput} />
+        <div className='signup-input-container'>
+          <label htmlFor='email'>Email Address</label>
+          <input id='email' type='email' name='email' onChange={handleInput} />
         </div>
 
-        <div className="signup-input-container">
-          <label htmlFor="phone">Phone</label>
+        <div className='signup-input-container'>
+          <label htmlFor='phone'>Phone</label>
           <input
-            id="phone"
-            type="number"
-            name="phone_no"
+            id='phone'
+            type='number'
+            name='phone_no'
             onChange={handleInput}
           />
         </div>
 
-        <div className="signup-input-container">
-          <label htmlFor="password">Password</label>
+        <div className='signup-input-container'>
+          <label htmlFor='password'>Password</label>
           <input
-            id="password"
+            id='password'
             type={showPassword ? 'text' : 'password'}
-            name="password"
+            name='password'
             onChange={handleInput}
           />
         </div>
 
-        <div className="signup-input-container">
-          <label htmlFor="confirm-password">Confirm Password</label>
+        <div className='signup-input-container'>
+          <label htmlFor='confirm-password'>Confirm Password</label>
           <input
-            id="confirm-password"
+            id='confirm-password'
             type={showPassword ? 'text' : 'password'}
-            name="confirm_password"
+            name='confirm_password'
             onChange={handleInput}
           />
           {showPassword ? (
             <BiShow
-              className="confirm-password-icon"
+              className='confirm-password-icon'
               onClick={() => setShowPassword(false)}
             />
           ) : (
             <BiHide
-              className="confirm-password-icon"
+              className='confirm-password-icon'
               onClick={() => setShowPassword(true)}
             />
           )}
         </div>
 
         <div>
-          <input type="checkbox" required className="checkbox" />
-          <span className="signup-terms-box">
+          <input type='checkbox' required className='checkbox' />
+          <span className='signup-terms-box'>
             I agree to the Terms and condition
           </span>
         </div>
-        <button className="signup-button">Sign Up</button>
+        <button className='signup-button'>Sign Up</button>
         <h5>
           Already have account{' '}
-          <Link to="/login">
+          <Link to='/login'>
             <span style={{ color: '#478ccd' }}>Click here</span>
           </Link>
         </h5>

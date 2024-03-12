@@ -5,12 +5,12 @@ export const apiUrl =
 const apiUlr2 = 'https://ecommerce-server-1cz2.onrender.com';
 
 export const giveMeImages = (image_link) => {
-  return `${apiUlr2}//productImages/${image_link}`;
+  return `${apiUlr2}/productImages/${image_link}`;
   // return `http://localhost:9000/productImages/${image_link}`
 };
 
 export const giveMeBannerImages = (image_link) => {
-  return `https://fuzicon-backend-server.herokuapp.com//BannerImages/${image_link}`;
+  return `https://fuzicon-backend-server.herokuapp.com/BannerImages/${image_link}`;
 };
 
 export const giveMeProfileImage = (image_link) => {

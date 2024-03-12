@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import AliceCarousel from 'react-alice-carousel';
 import { toast } from 'react-toastify';
@@ -9,7 +9,7 @@ import './style.css';
 import { giveMeImages } from '../../../axios/UlrConfig';
 import Sizes from '../Sizes';
 import { addToCart } from '../../../redux/slices/CartSlice';
-import Reviews from '../../Review';
+import AllReviews from '../../Review/allReviews';
 import { totalRating } from '../../../common/TotalRating';
 
 const responsive = {
@@ -17,7 +17,7 @@ const responsive = {
   500: { items: 2 },
 };
 
-const PreviewProduct = ({ product }) => {
+const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
   const dispatch = useDispatch();
 
   const [productSize, setProductSize] = useState();
@@ -29,10 +29,10 @@ const PreviewProduct = ({ product }) => {
     }
     dispatch(
       addToCart({
-        _id: product._id,
-        productName: product.productName,
-        productImage: product.productPictures[0]?.img,
-        sellingPrice: product.sellingPrice,
+        _id: previewProduct._id,
+        productName: previewProduct.productName,
+        productImage: previewProduct.productPictures[0]?.img,
+        sellingPrice: previewProduct.sellingPrice,
         size: productSize,
         qty: 1,
       })
@@ -56,26 +56,22 @@ const PreviewProduct = ({ product }) => {
   //     }
   // }
 
-  // useEffect(() => {
-  //     dispatch(getSingleProductById(productId))
-  // }, [productId])
-
   return (
     <>
-      <div className="preview-main-box">
-        <div className="preview-pc-image-box">
+      <div className='preview-main-box'>
+        <div className='preview-pc-image-box'>
           {true &&
-            product.productPictures.map((item, index) => (
+            previewProduct.productPictures.map((item, index) => (
               <img
                 key={index}
                 src={giveMeImages(item.img)}
-                loading="lazy"
-                alt="not found"
-                className="preview-image preview-image-space-box-one"
+                loading='lazy'
+                alt='not found'
+                className='preview-image preview-image-space-box-one'
               />
             ))}
         </div>
-        <div className="preview-mobile-image-box">
+        <div className='preview-mobile-image-box'>
           <AliceCarousel
             responsive={responsive}
             autoPlay={true}
@@ -84,22 +80,22 @@ const PreviewProduct = ({ product }) => {
             // disableDotsControls={true}
             disableButtonsControls={true}
             mouseTracking
-            items={product.productPictures.map((item) => (
+            items={previewProduct.productPictures.map((item) => (
               <img
                 key={item._id}
                 src={giveMeImages(item.img)}
                 // onDragStart={handleDragStart}
-                role="presentation"
-                className="preview-mobile-image preview-image-space-box-one"
-                alt="not-found"
+                role='presentation'
+                className='preview-mobile-image preview-image-space-box-one'
+                alt='not-found'
               />
             ))}
           />
         </div>
 
-        <div className="preview-box-two">
-          <h3>{product?.productName}</h3>
-          <div className="preview-product-rating">
+        <div className='preview-box-two'>
+          <h3>{previewProduct?.productName}</h3>
+          <div className='preview-product-rating'>
             <AiFillStar
               style={{
                 fontSize: '22px',
@@ -107,21 +103,24 @@ const PreviewProduct = ({ product }) => {
                 marginRight: '1px',
               }}
             />
-            <span>{totalRating(product?.reviews)}</span>
-            <div className="product-review">
-              <span>{product?.reviews.length} Reviews</span>
+            <span>{totalRating(previewProduct?.reviews)}</span>
+            <div className='product-review'>
+              <span>{previewProduct?.reviews.length} Reviews</span>
             </div>
           </div>
-          <div className="preview-price-box">
-            <h2>&#8377; {product?.sellingPrice}</h2>
-            {product?.actualPrice > 0 && (
-              <strike>&#8377; {product?.actualPrice}</strike>
+          <div className='preview-price-box'>
+            <h2>&#8377; {previewProduct?.sellingPrice}</h2>
+            {previewProduct?.actualPrice > 0 && (
+              <strike>&#8377; {previewProduct?.actualPrice}</strike>
             )}
             <h4>
               Save &#8377;
-              {product?.actualPrice - product?.sellingPrice} (
+              {previewProduct?.actualPrice - previewProduct?.sellingPrice} (
               {100 -
-                parseInt((product?.sellingPrice / product?.actualPrice) * 100)}
+                parseInt(
+                  (previewProduct?.sellingPrice / previewProduct?.actualPrice) *
+                    100
+                )}
               %)
             </h4>
           </div>
@@ -129,34 +128,39 @@ const PreviewProduct = ({ product }) => {
           {/* products sizes */}
           <Sizes productSize={productSize} setProductSize={setProductSize} />
 
-          <div className="preview-page-main-button-box">
-            <button className="preview-page-main-button" onClick={addToCartFnc}>
+          <div className='preview-page-main-button-box'>
+            <button className='preview-page-main-button' onClick={addToCartFnc}>
               ADD TO SHOP
             </button>
             <button
-              className="preview-page-main-button"
+              className='preview-page-main-button'
               //   onClick={() => PlaceOrderPageFunc(singleProduct)}
             >
               BUY NOW
             </button>
           </div>
-          <div className="preview-shiping-page-box">
+          <div className='preview-shiping-page-box'>
             <p>
               Free Shipping on orders above ₹1500. Will ship within 3-6 days.
             </p>
           </div>
-          <div className="preview-product-description-box">
+          <div className='preview-product-description-box'>
             <h4>Description</h4>
-            <p>{product?.description}</p>
+            <p>{previewProduct?.description}</p>
           </div>
         </div>
       </div>
 
-      <Reviews productReview={product?.reviews} size={reviewSize} />
+      <AllReviews
+        allReviews={previewProduct?.reviews}
+        productId={previewProduct?._id}
+        size={reviewSize}
+        setPreviewProduct={setPreviewProduct}
+      />
 
-      {reviewSize < product?.reviews?.length && (
+      {reviewSize < previewProduct?.reviews?.length && (
         <button
-          className="review-all-review"
+          className='review-all-review'
           onClick={() => setReviewSize((prev) => prev + 5)}
         >
           See More

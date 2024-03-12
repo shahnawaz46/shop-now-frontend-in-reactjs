@@ -24,8 +24,8 @@ const MenProducts = () => {
     item: [],
   });
 
-  const location = useLocation();
-  const searchParam = new URLSearchParams(location.search);
+  const location = useLocation(); // useLocation will return object with multiple key and value like pathname, search query parameters and etc.
+  const searchParam = new URLSearchParams(location.search); // searchParam is used for manipulation query parameters like get, append, set and etc.
 
   const fetchFilteredProducts = useCallback(
     debounce(async (filteredParam) => {
@@ -45,10 +45,12 @@ const MenProducts = () => {
     []
   );
 
+  // fetching men products after landing on Men Product Page
   useEffect(() => {
     if (status === 'idle') dispatch(fetchMenProducts());
   }, []);
 
+  // fetching filtered products after user use filter(like price range and category)
   useEffect(() => {
     const filteredQuery = searchParam.toString();
     if (filteredQuery) {
@@ -75,7 +77,7 @@ const MenProducts = () => {
               <Loading />
             </div>
           ) : filterProducts.item.length > 0 ? (
-            <div className="product-container">
+            <div className='product-container'>
               {filterProducts.item.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
@@ -84,7 +86,7 @@ const MenProducts = () => {
             <NotFound>Currently No Products Available</NotFound>
           )
         ) : products.length > 0 ? (
-          <div className="product-container">
+          <div className='product-container'>
             {products.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}

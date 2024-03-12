@@ -1,19 +1,19 @@
-import React, { useState, useEffect } from "react";
-import "./style.css";
-import { Link, NavLink } from "react-router-dom";
-import { BiSearch } from "react-icons/bi";
-import { FiShoppingBag } from "react-icons/fi";
-import { RiMenu2Line } from "react-icons/ri";
-import { MdClose, MdPerson } from "react-icons/md";
-import Cart from "../Cart";
-import { useSelector } from "react-redux";
+import React, { useState, useEffect } from 'react';
+import './style.css';
+import { Link, NavLink } from 'react-router-dom';
+import { BiSearch } from 'react-icons/bi';
+import { FiShoppingBag } from 'react-icons/fi';
+import { RiMenu2Line } from 'react-icons/ri';
+import { MdClose, MdPerson } from 'react-icons/md';
+import Cart from '../Cart';
+import { useSelector } from 'react-redux';
 
 const navLinks = [
-  { name: "Home", link: "/home" },
+  { name: 'Home', link: '/home' },
   { name: "Men's", link: "/collections/Men's-Wardrobe" },
   { name: "Women's", link: "/collections/Women's-Wardrobe" },
-  { name: "Top Selling", link: "/top-selling" },
-  { name: "Newest", link: "/new-products" },
+  { name: 'Top Selling', link: '/top-selling' },
+  { name: 'Newest', link: '/new-products' },
 ];
 
 const Navbar = () => {
@@ -21,30 +21,30 @@ const Navbar = () => {
   const [search, setSearch] = useState(false);
   const [cartShow, setShowCart] = useState(false);
 
-  const { cartItems } = useSelector((state) => state.cart)
+  const { cartItems } = useSelector((state) => state.cart);
 
   const cartQuantity = () => {
-      const quantity = cartItems.reduce((total, value) => total + value.qty, 0)
-      return quantity > 99 ? '99+' : quantity
-  }
+    const quantity = cartItems.reduce((total, value) => total + value.qty, 0);
+    return quantity > 99 ? '99+' : quantity;
+  };
 
   useEffect(() => {
     if (condition) {
-      document.body.style.overflow = "hidden";
+      document.body.style.overflow = 'hidden';
     }
-    return () => (document.body.style.overflow = "unset");
+    return () => (document.body.style.overflow = 'unset');
   }, [condition]);
 
   return (
     <>
-      <div style={{ backgroundColor: "black" }}>
+      <div style={{ backgroundColor: 'black' }}>
         <marquee
-          direction="left"
+          direction='left'
           style={{
-            color: "white",
-            margin: "-4px",
-            padding: "5px 0px",
-            width: "100%",
+            color: 'white',
+            margin: '-4px',
+            padding: '5px 0px',
+            width: '100%',
           }}
         >
           Free Shipping All Over The India
@@ -52,27 +52,29 @@ const Navbar = () => {
       </div>
 
       {/* desktop and tab navbar */}
-      <div className="navbar-container">
-        <div className="navbar">
-          <div className="website-name">
-            <Link to="/home">
+      <div className='navbar-container'>
+        <div className='navbar'>
+          <div className='website-name'>
+            <Link to='/home'>
               <h3>
-                <span style={{ color: "red" }}>FUZ</span>ICON
+                <span style={{ color: 'red' }}>Shop</span>Now
               </h3>
             </Link>
           </div>
 
-          <div className={condition ? "navbar-item mobile-navbar" : "navbar-item"}>
+          <div
+            className={condition ? 'navbar-item mobile-navbar' : 'navbar-item'}
+          >
             {/* this icon show only in mobile Navbar */}
-            <div className="close-icon" onClick={() => setCondition(false)}>
+            <div className='close-icon' onClick={() => setCondition(false)}>
               <MdClose />
             </div>
             {navLinks.map((nav, index) => (
-              <div className="navbar-link" key={index}>
+              <div className='navbar-link' key={index}>
                 <NavLink
                   to={nav.link}
                   className={({ isActive }) =>
-                    isActive ? "nav-link-class" : ""
+                    isActive ? 'nav-link-class' : ''
                   }
                   onClick={() => setCondition(false)}
                 >
@@ -82,37 +84,37 @@ const Navbar = () => {
             ))}
           </div>
 
-          <div className="navbar-icons">
-            <BiSearch className="icon" onClick={() => setSearch(true)} />
-            <div className="navbar-cart" onClick={() => setShowCart(true)}>
+          <div className='navbar-icons'>
+            <BiSearch className='icon' onClick={() => setSearch(true)} />
+            <div className='navbar-cart' onClick={() => setShowCart(true)}>
               <FiShoppingBag
-                className="icon"
+                className='icon'
                 onClick={() => setShowCart(true)}
               />
-              <span>{cartQuantity()}</span> 
+              <span>{cartQuantity()}</span>
             </div>
-            <Link to={"/my-account/address"}>
-              <MdPerson className="icon profile-icon" />
+            <Link to={'/my-account/address'}>
+              <MdPerson className='icon profile-icon' />
             </Link>
             <RiMenu2Line
-              className="menu-icon"
+              className='menu-icon'
               onClick={() => setCondition(true)}
             />
           </div>
         </div>
 
         {search ? (
-          <div className="search-field">
+          <div className='search-field'>
             <BiSearch
               style={{
-                fontSize: "25px",
-                color: "black",
-                cursor: "pointer",
+                fontSize: '25px',
+                color: 'black',
+                cursor: 'pointer',
               }}
             />
-            <input type="text" placeholder="Search item" />
+            <input type='text' placeholder='Search item' />
             <MdClose
-              style={{ fontSize: "25px", cursor: "pointer" }}
+              style={{ fontSize: '25px', cursor: 'pointer' }}
               onClick={() => setSearch(false)}
             />
           </div>

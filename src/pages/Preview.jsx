@@ -12,6 +12,9 @@ const Preview = () => {
   const [previewProduct, setPreviewProduct] = useState({});
 
   const getProductForPreview = async () => {
+    // using promise.all for calling multiple api paralleley
+    // 1st API for getting single product based on productId
+    // 2nd API for updating top-trending product count based on event
     const [previewRes, trendingRes] = await Promise.all([
       axiosInstance.get(`/product/single/${productId}`),
       axiosInstance.post('/product/top-trending', {
@@ -20,7 +23,6 @@ const Preview = () => {
         eventType: 'visit',
       }),
     ]);
-
     setPreviewProduct({ ...previewRes.data.product });
   };
 
@@ -34,7 +36,10 @@ const Preview = () => {
 
   return (
     <RootLayout>
-      <PreviewProduct product={previewProduct} />
+      <PreviewProduct
+        previewProduct={previewProduct}
+        setPreviewProduct={setPreviewProduct}
+      />
       <ReturnPolicy />
     </RootLayout>
   );
