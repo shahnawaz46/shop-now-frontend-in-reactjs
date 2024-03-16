@@ -21,6 +21,7 @@ import { getCartItem } from './redux/slices/CartSlice';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { AuthPrivateRoute, PrivateRoute } from './routes';
+import PlaceOrder from './pages/PlaceOrder';
 
 function App() {
   const dispatch = useDispatch();
@@ -74,28 +75,28 @@ function App() {
       <Toastify />
       <Routes>
         <Route index element={<Loader />} />
-        <Route path="/home" element={<HomePage />} />
-        <Route path="collections">
+        <Route path='/home' element={<HomePage />} />
+        <Route path='collections'>
           <Route path="Men's-Wardrobe" element={<MenProducts />} />
           <Route path="Women's-Wardrobe" element={<WomenProducts />} />
         </Route>
-        <Route path="/top-selling" element={<TopSelling />} />
-        <Route path="/new-products" element={<NewProducts />} />
-        <Route path="/preview/:productId" element={<Preview />} />
+        <Route path='/top-selling' element={<TopSelling />} />
+        <Route path='/new-products' element={<NewProducts />} />
+        <Route path='/preview/:productId' element={<Preview />} />
+        <Route path='/place-order' element={<PlaceOrder />} />
+        <Route path='*' element={<PageNotFound />} />
+
         <Route
-          path="/my-account/:page"
+          path='/my-account/:page'
           element={
             <PrivateRoute>
               <Profile />
             </PrivateRoute>
           }
         />
-        <Route path="*" element={<PageNotFound />} />
-
-        {/* <Route path="/place-order/:productIdAndSize" component={placeOrder}/> */}
 
         <Route
-          path="/login"
+          path='/login'
           element={
             <AuthPrivateRoute>
               <Login />
@@ -103,7 +104,7 @@ function App() {
           }
         />
         <Route
-          path="/signup"
+          path='/signup'
           element={
             <AuthPrivateRoute>
               <Signup />

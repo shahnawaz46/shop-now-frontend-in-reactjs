@@ -2,12 +2,12 @@ import React from 'react';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 
-const RootLayout = ({ children }) => {
+const RootLayout = ({ children, footer = true }) => {
   return (
     <>
       <Navbar />
       {children}
-      <Footer />
+      {footer && <Footer />}
     </>
   );
 };

@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import AliceCarousel from 'react-alice-carousel';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 // components
 import './style.css';
@@ -19,7 +20,10 @@ const responsive = {
 
 const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
   const dispatch = useDispatch();
+  const { personalDetails } = useSelector((state) => state.user);
+  console.log(personalDetails);
 
+  const navigate = useNavigate();
   const [productSize, setProductSize] = useState();
   const [reviewSize, setReviewSize] = useState(5);
 
@@ -39,22 +43,30 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
     );
   };
 
-  // const PlaceOrderPageFunc = (value) => {
-  //     if (!condition) {
-  //         return alert("Please select size")
-  //     }
-  //     if(user.authenticate){
-  //         const Data = allCartItem?.length > 0 && allCartItem.find(value => value.productId._id === singleProduct._id && value.size === condition)
-  //         if(Data){
-  //             History.push(`/place-order/${value._id}-${condition}`)
-  //         }else{
-  //             addToCartFnc(value)
-  //             History.push(`/place-order/${value._id}-${condition}`)
-  //         }
-  //     }else{
-  //         History.push("/login")
-  //     }
-  // }
+  const PlaceOrderPageFunc = () => {
+    if (!productSize) {
+      return toast.error('Please Select The Size');
+    }
+    if (Object.keys(personalDetails).length > 0) {
+      // const Data =
+      //   allCartItem?.length > 0 &&
+      //   allCartItem.find(
+      //     (value) =>
+      //       value.productId._id === singleProduct._id &&
+      //       value.size === condition
+      //   );
+      if (false) {
+        navigate(`/place-order/${value._id}-${condition}`);
+      } else {
+        // addToCartFnc(value);
+        navigate(
+          `/place-order/?product=${previewProduct._id}&size=${productSize}`
+        );
+      }
+    } else {
+      navigate('/login');
+    }
+  };
 
   return (
     <>
@@ -134,7 +146,7 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
             </button>
             <button
               className='preview-page-main-button'
-              //   onClick={() => PlaceOrderPageFunc(singleProduct)}
+              onClick={PlaceOrderPageFunc}
             >
               BUY NOW
             </button>

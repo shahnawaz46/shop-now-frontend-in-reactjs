@@ -20,32 +20,32 @@ const Login = () => {
     try {
       const res = await axiosInstance.post('/user/signin', { email, password });
       localStorage.setItem('__f_id', res.data.userId);
-      navigate('/home', { replace: true });
+      navigate('/my-account/address', { replace: true });
     } catch (err) {
       toast.error(err?.response?.data?.error || err?.message);
     }
   };
 
   return (
-    <div className="login-container">
-      <div className="login-form-container">
+    <div className='login-container'>
+      <div className='login-form-container'>
         <h3>Login to your Account</h3>
         <form onSubmit={formHandle}>
-          <div className="login-input-container">
-            <label htmlFor="email">Email Address</label>
+          <div className='login-input-container'>
+            <label htmlFor='email'>Email Address</label>
             <input
-              id="email"
-              type="text"
-              name="email"
+              id='email'
+              type='text'
+              name='email'
               onChange={(e) => setEmail(e.target.value)}
             />
           </div>
-          <div className="login-input-container">
-            <label htmlFor="password">Password</label>
+          <div className='login-input-container'>
+            <label htmlFor='password'>Password</label>
             <input
-              id="password"
-              type="password"
-              name="password"
+              id='password'
+              type='password'
+              name='password'
               onChange={(e) => setPassword(e.target.value)}
             />
           </div>
@@ -56,7 +56,7 @@ const Login = () => {
         <span>or</span>
         <h5>
           Don't have account{' '}
-          <Link to="/signup" style={{ color: '#478ccd' }}>
+          <Link to='/signup' style={{ color: '#478ccd' }}>
             Click here
           </Link>
         </h5>
