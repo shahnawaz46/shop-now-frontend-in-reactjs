@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axiosInstance from '../../axios/AxiosInstance';
 
 const initialState = {
+  status: 'idle',
   cartItems: [],
   error: null,
 };
@@ -82,6 +83,11 @@ export const removeCartItem = createAsyncThunk(
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
+  reducers: {
+    emptyCart: () => {
+      return initialState;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(addToCart.fulfilled, (state, action) => {
@@ -99,10 +105,15 @@ const cartSlice = createSlice({
       .addCase(addToCart.rejected, (state, action) => {
         state.error = action.error.message;
       })
+      .addCase(getCartItem.pending, (state, action) => {
+        state.status = 'pending';
+      })
       .addCase(getCartItem.fulfilled, (state, action) => {
-        state.cartItems.push(...action.payload);
+        state.cartItems = action.payload;
+        state.status = 'success';
       })
       .addCase(getCartItem.rejected, (state, action) => {
+        state.status = 'failed';
         state.error = action.error.message;
       })
       .addCase(removeCartItem.fulfilled, (state, action) => {
@@ -119,6 +130,6 @@ const cartSlice = createSlice({
   },
 });
 
-// export const {addToCart} = cartSlice.actions
+export const { emptyCart } = cartSlice.actions;
 
 export default cartSlice.reducer;

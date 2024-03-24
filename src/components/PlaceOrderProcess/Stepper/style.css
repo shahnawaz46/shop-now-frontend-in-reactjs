@@ -1,0 +1,72 @@
+.stepper_container {
+  /* background-color: aquamarine; */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 100%;
+}
+
+.stepper_process {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.stepper_number {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.stepper_title {
+  position: absolute;
+  top: 37px;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.stepper_progress_bar {
+  /* width: 300px; */
+  width: 100%;
+  height: 5px;
+  background-color: #a9cdf9;
+  border-radius: 5px;
+  overflow: hidden;
+  /* transition: all 0.5s; */
+}
+
+.stepper_progress {
+  height: 100%;
+  background-color: #3ec43e;
+  transition: all 0.3s;
+}
+
+@media only screen and (max-width: 1000px) {
+  /* .stepper_progress_bar {
+    width: 200px;
+  } */
+}
+
+@media only screen and (max-width: 600px) {
+  /* .stepper_progress_bar {
+    width: 140px;
+  } */
+}
+
+@media only screen and (max-width: 460px) {
+  /* .stepper_progress_bar {
+    width: 90px;
+  } */
+}
+
+@media only screen and (max-width: 360px) {
+  /* .stepper_progress_bar {
+    width: 70px;
+  } */
+}

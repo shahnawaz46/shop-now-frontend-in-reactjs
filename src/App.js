@@ -1,8 +1,6 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import ScrollTop from './components/ScrollTop';
-import Toastify from './utils/Toastify';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 
 // components
 import Loader from './components/Loader';
@@ -16,57 +14,24 @@ import {
   Preview,
   Profile,
 } from './pages';
+import ScrollTop from './components/ScrollTop';
+import Toastify from './utils/Toastify';
 import { fetchHomePageProducts } from './redux/slices/ProductSlice';
 import { getCartItem } from './redux/slices/CartSlice';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { AuthPrivateRoute, PrivateRoute } from './routes';
 import PlaceOrder from './pages/PlaceOrder';
+import { fetchPersonalDetails } from './redux/slices/UserSlice';
 
 function App() {
   const dispatch = useDispatch();
-  // const userState = useSelector((state) => state.user)
-
-  // useEffect(() => {
-  //   if (!userState.authenticate) {
-  //     dispatch(isUserLogin())
-  //   }
-  //   dispatch(getAllCategory())
-  //   dispatch(getFeaturedProducts())
-  //   dispatch(getBanner())
-  // }, [])
-
-  // after login or logout this useEffect will execute and call action for get cartItem through api
-  // useEffect(() => {
-  //   const cartItem = localStorage.getItem("cartItem") ? JSON.parse(localStorage.getItem("cartItem")) : null
-  //   if (userState.authenticate) {
-  //     if (cartItem) {
-  //       let cart = []
-  //       cartItem.forEach((item) => {
-  //         cart.push({ productId: item.productId._id, qty: item.qty, size: item.size })
-  //       })
-  //       localStorage.removeItem("cartItem")
-  //       dispatch(addToCart(cart))
-  //     }
-  //     dispatch(getCartItem())
-  //   }
-  //   else if (!userState.authenticate) {
-  //     dispatch(clearCartState())
-  //     if (cartItem) {
-  //       dispatch({
-  //         type: cartConstant.GET_ITEM_FROM_CART_SUCCESS,
-  //         payload: {
-  //           allCartItem: JSON.parse(localStorage.getItem("cartItem"))
-  //         }
-  //       })
-  //     }
-  //   }
-  // }, [userState.authenticate])
 
   useEffect(() => {
     // console.log("useEffect App.js");
     dispatch(fetchHomePageProducts());
     dispatch(getCartItem());
+    localStorage.getItem('__f_id') && dispatch(fetchPersonalDetails());
   }, []);
 
   return (

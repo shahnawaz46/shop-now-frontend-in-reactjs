@@ -14,7 +14,7 @@ import FilterIcon from '../../../asset/filter.png';
 const SidebarLayout = ({ children, subCategory }) => {
   const navigate = useNavigate();
 
-  const location = useLocation(); // useLocation will return object with multiple key and value like pathname, search query parameters and etc.
+  const location = useLocation(); // useLocation will return object with multiple key and value like pathname, search query and etc.
   const searchParam = new URLSearchParams(location.search); // searchParam is used for manipulation query parameters like get, append, set and etc.
 
   const [range, setRange] = useState([0, 2500]);

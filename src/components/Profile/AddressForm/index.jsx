@@ -7,7 +7,7 @@ import { toast } from 'react-toastify';
 // components
 import './style.css';
 import Modal from '../../../common/Modal';
-import { updateAddress } from '../../../redux/slices/UserSlice';
+import { addAddress, updateAddress } from '../../../redux/slices/UserSlice';
 import axiosInstance from '../../../axios/AxiosInstance';
 import Loading from '../../Loading';
 
@@ -57,16 +57,21 @@ const AddressForm = (props) => {
 
   const handleForm = async (e, type) => {
     e.preventDefault();
-    console.log(type);
+    // return console.log(type, userAddress);
 
     try {
-      const res =
-        type === 'Update Address'
-          ? await axiosInstance.patch('/user/updateAddress', { ...userAddress })
-          : await axiosInstance.post('/user/addAddress', { ...userAddress });
+      let res;
+      if (type === 'Update Address') {
+        res = await axiosInstance.patch('/user/updateAddress', {
+          ...userAddress,
+        });
+        dispatch(updateAddress(res.data.address));
+      } else {
+        res = await axiosInstance.post('/user/addAddress', { ...userAddress });
+        dispatch(addAddress(res.data.address));
+      }
 
       toast.success(res.data.msg);
-      dispatch(updateAddress(res.data.address));
     } catch (error) {
       if (error?.response?.data?.msg) {
         // console.log(error?.response?.data?.msg);
@@ -86,7 +91,7 @@ const AddressForm = (props) => {
       {laodingForPinCode && <Loading />}
 
       <Modal
-        open={showAddress}
+        open={showAddress?.show}
         onClose={() => setShowAddress({ type: '', show: false })}
       >
         <form
@@ -100,7 +105,7 @@ const AddressForm = (props) => {
           <div className='address-form-box-part-II'>
             <div className='address-form-input-filed-box'>
               <div style={{ marginRight: '5px', width: '100%' }}>
-                <h4 className='address-form-input-field-name'>Name</h4>
+                <h4 className='address-form-input-field-name'>Full Name</h4>
                 <input
                   type='text'
                   value={userAddress.name || ''}
@@ -114,7 +119,7 @@ const AddressForm = (props) => {
               <div style={{ width: '100%' }}>
                 <h4 className='address-form-input-field-name'>Mobile Number</h4>
                 <input
-                  type='text'
+                  type='number'
                   value={userAddress.mobileNumber || ''}
                   name='mobileNumber'
                   className='address-form-input'
@@ -280,6 +285,7 @@ const AddressForm = (props) => {
                 onChange={(e) =>
                   setUserAddress({ ...userAddress, [e.target.name]: 'home' })
                 }
+                required
               />
               <span>Home</span>
             </div>
@@ -292,6 +298,7 @@ const AddressForm = (props) => {
                 onChange={(e) =>
                   setUserAddress({ ...userAddress, [e.target.name]: 'work' })
                 }
+                required
               />
               <span>Work</span>
             </div>

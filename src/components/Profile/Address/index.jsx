@@ -8,12 +8,11 @@ import './style.css';
 import AddressForm from '../AddressForm';
 import ShowError from '../../ShowError';
 import axiosInstance from '../../../axios/AxiosInstance';
-import { updateAddress } from '../../../redux/slices/UserSlice';
+import { deleteAddress, updateAddress } from '../../../redux/slices/UserSlice';
 
 const Address = () => {
   const dispatch = useDispatch();
   const { addressDetails } = useSelector((state) => state.user);
-  console.log(addressDetails);
 
   const [showAddress, setShowAddress] = useState({ type: '', show: false });
   const [userAddress, setUserAddress] = useState({});
@@ -22,7 +21,7 @@ const Address = () => {
     try {
       const res = await axiosInstance.delete(`/user/deleteAddress/${_id}`);
       toast.success(res.data.msg);
-      dispatch(updateAddress(res.data.address));
+      dispatch(deleteAddress(_id));
     } catch (error) {
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);

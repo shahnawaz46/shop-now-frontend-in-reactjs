@@ -1,0 +1,29 @@
+.trackOrder_modal {
+  width: 500px;
+  min-height: 220px;
+  background-color: #fff;
+  border-radius: 5px;
+  padding: 12px;
+  position: relative;
+}
+
+.trackOrder_modal > h1 {
+  font-size: 22px;
+  font-weight: 500;
+}
+
+.trackOrder_Id {
+  font-size: 17px;
+  font-weight: 500;
+  color: #888889;
+}
+
+.trackOrder_stepper {
+  padding: 5px 20px;
+}
+
+@media only screen and (max-width: 600px) {
+  .trackOrder_modal {
+    width: 95%;
+  }
+}

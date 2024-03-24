@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
 // components
-import User from '../components/profile/User';
+import User from '../components/Profile/User';
 import RootLayout from '../components/Layout/RooLayout';
 import Loading from '../components/Loading';
 import { fetchPersonalDetails } from '../redux/slices/UserSlice';
@@ -20,7 +20,7 @@ const Profile = () => {
       ? clearStateAndStorage()
       : null;
   }, [status]);
-  console.log(status);
+
   if (status === 'idle' || status === 'pending') return <Loading />;
 
   if (status === 'failed') {

@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import AliceCarousel from 'react-alice-carousel';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // components
 import './style.css';
@@ -12,6 +12,7 @@ import Sizes from '../Sizes';
 import { addToCart } from '../../../redux/slices/CartSlice';
 import AllReviews from '../../Review/allReviews';
 import { totalRating } from '../../../common/TotalRating';
+import { clearStateAndStorage } from '../../../utils/ClearStateAndStorage';
 
 const responsive = {
   0: { items: 1 },
@@ -20,10 +21,10 @@ const responsive = {
 
 const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
   const dispatch = useDispatch();
-  const { personalDetails } = useSelector((state) => state.user);
-  console.log(personalDetails);
+  const { status, personalDetails } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
+  const location = useLocation();
   const [productSize, setProductSize] = useState();
   const [reviewSize, setReviewSize] = useState(5);
 
@@ -47,25 +48,22 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
     if (!productSize) {
       return toast.error('Please Select The Size');
     }
-    if (Object.keys(personalDetails).length > 0) {
-      // const Data =
-      //   allCartItem?.length > 0 &&
-      //   allCartItem.find(
-      //     (value) =>
-      //       value.productId._id === singleProduct._id &&
-      //       value.size === condition
-      //   );
-      if (false) {
-        navigate(`/place-order/${value._id}-${condition}`);
-      } else {
-        // addToCartFnc(value);
-        navigate(
-          `/place-order/?product=${previewProduct._id}&size=${productSize}`
-        );
-      }
-    } else {
-      navigate('/login');
+
+    // status failed means user is not authenticated then removing id from localStorage and setting redux to initialState and redirecting to the login page
+    if (status === 'failed') {
+      clearStateAndStorage();
+      navigate('/login', { state: { from: location.pathname } });
+      return null;
     }
+
+    navigate(`/place-order?step=1`, {
+      state: {
+        productId: previewProduct._id,
+        size: productSize,
+        qty: 1,
+        price: previewProduct.sellingPrice,
+      },
+    });
   };
 
   return (

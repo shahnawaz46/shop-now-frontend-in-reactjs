@@ -23,9 +23,20 @@ const userSlice = createSlice({
     updatePersonDetail: (state, action) => {
       state.personalDetails = action.payload;
     },
-
+    addAddress: (state, action) => {
+      state.addressDetails.push(action.payload);
+    },
     updateAddress: (state, action) => {
-      state.addressDetails = action.payload;
+      const index = state.addressDetails.findIndex(
+        (item) => item._id === action.payload._id
+      );
+      state.addressDetails.splice(index, 1, action.payload);
+    },
+    deleteAddress: (state, action) => {
+      const updatedAddress = state.addressDetails.filter(
+        (item) => item._id !== action.payload
+      );
+      state.addressDetails = updatedAddress;
     },
 
     logout: (state) => {
@@ -49,6 +60,12 @@ const userSlice = createSlice({
   },
 });
 
-export const { updatePersonDetail, updateAddress, logout } = userSlice.actions;
+export const {
+  updatePersonDetail,
+  addAddress,
+  updateAddress,
+  deleteAddress,
+  logout,
+} = userSlice.actions;
 
 export default userSlice.reducer;

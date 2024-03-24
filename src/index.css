@@ -19,6 +19,14 @@ code {
     monospace;
 }
 
+.close_modal {
+  position: absolute;
+  top: 1px;
+  right: 1px;
+  font-size: 24px;
+  cursor: pointer;
+}
+
 /* product card container */
 .product-container {
   display: grid;
@@ -27,14 +35,42 @@ code {
   padding: 10px;
 }
 
+.placeOrderProcess_container {
+  padding: 30px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.placeOrderProcess_sub_container {
+  width: 900px;
+}
+
 @media screen and (max-width: 1100px) {
   .product-container {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
+@media screen and (max-width: 1000px) {
+  .placeOrderProcess_sub_container {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  .placeOrderProcess_container {
+    padding: 30px 20px;
+  }
+}
+
 @media screen and (max-width: 600px) {
   .product-container {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .placeOrderProcess_container {
+    padding: 30px 12px;
   }
 }
