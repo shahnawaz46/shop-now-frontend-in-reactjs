@@ -15,18 +15,18 @@ const PlaceOrder = () => {
 
   const [currentStep, setCurrentStep] = useState(1);
 
-  useEffect(() => {
-    const handleBeforeUnload = (e) => {
-      e.preventDefault();
-      e.returnValue =
-        'Are you sure you want to leave? All unsaved changes will be lost.';
+  // useEffect(() => {
+  //   const handleBeforeUnload = (e) => {
+  //     e.preventDefault();
+  //     e.returnValue =
+  //       'Are you sure you want to leave? All unsaved changes will be lost.';
 
-      return e.returnValue;
-    };
+  //     return e.returnValue;
+  //   };
 
-    window.addEventListener('beforeunload', handleBeforeUnload);
-    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
-  });
+  //   window.addEventListener('beforeunload', handleBeforeUnload);
+  //   return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  // });
 
   useEffect(() => {
     query.get('step')

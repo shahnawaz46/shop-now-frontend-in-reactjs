@@ -93,7 +93,8 @@
 }
 
 .placeOrder_item_container {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 12px;
   border-top: 2px solid #eeeeeb;
   border-bottom: 2px solid #eeeeeb;
@@ -105,8 +106,9 @@
   display: flex;
   align-items: center;
   gap: 12px;
-  width: 50%;
-  max-width: 50%;
+  width: 100%;
+  /* width: 50%;
+  max-width: 50%; */
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
 }
 
@@ -149,7 +151,7 @@
   font-size: 18px;
   font-weight: 500;
   margin-bottom: 12px;
-  text-decoration: underline;
+  /* text-decoration: underline; */
 }
 
 .placeOrder_payment > div > p {
@@ -184,7 +186,7 @@
 
 @media only screen and (max-width: 700px) {
   .placeOrder_item_container {
-    flex-direction: column;
+    grid-template-columns: 1fr;
   }
 
   .placeOrder_hide_in_smalldevice {

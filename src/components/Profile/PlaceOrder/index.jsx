@@ -65,28 +65,29 @@ const PlaceOrders = () => {
 
                 {/* only for large device */}
                 <div className='placeOrder_hide_in_smalldevice'>
-                  {value?.status === 'delivered' ? (
-                    <div className='placeOrder_delivered'>
-                      <FaFileInvoiceDollar />
-                      <span>Invoice</span>
-                    </div>
-                  ) : (
-                    <div
-                      className='placeOrder_tack'
-                      onClick={() =>
-                        setTrackOrderModal({
-                          show: true,
-                          data: {
-                            status: value?.status,
-                            orderId: value?.orderId,
-                          },
-                        })
-                      }
-                    >
-                      <span>Track Order</span>
-                      <TbViewfinder />
-                    </div>
-                  )}
+                  {value?.paymentStatus !== 'failed' &&
+                    (value?.status === 'delivered' ? (
+                      <div className='placeOrder_delivered'>
+                        <FaFileInvoiceDollar />
+                        <span>Invoice</span>
+                      </div>
+                    ) : (
+                      <div
+                        className='placeOrder_tack'
+                        onClick={() =>
+                          setTrackOrderModal({
+                            show: true,
+                            data: {
+                              status: value?.status,
+                              orderId: value?.orderId,
+                            },
+                          })
+                        }
+                      >
+                        <span>Track Order</span>
+                        <TbViewfinder />
+                      </div>
+                    ))}
                 </div>
               </div>
 
@@ -146,14 +147,19 @@ const PlaceOrders = () => {
 
               <div className='placeOrder_delivery_details'>
                 <div className='placeOrder_payment'>
-                  <h4>Payment</h4>
+                  <h4>
+                    <span style={{ textDecoration: 'underline' }}>Payment</span>{' '}
+                    {value?.paymentStatus === 'failed' && (
+                      <span style={{ color: '#FF0000' }}>(Failed)</span>
+                    )}
+                  </h4>
                   <div>
                     <p>{paymentMethod[value?.paymentMethod]} </p>
                     <span>Total Amount: Rs.{value?.totalPrice}</span>
                   </div>
                 </div>
                 <div className='placeOrder_delivery'>
-                  <h4>Delivery</h4>
+                  <h4 style={{ textDecoration: 'underline' }}>Delivery</h4>
                   {value?.status === 'delivered' && (
                     <div className='placeOrder_delivery_date'>
                       <p>
