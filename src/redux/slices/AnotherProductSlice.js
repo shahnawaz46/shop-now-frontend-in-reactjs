@@ -22,6 +22,14 @@ export const fetchTopSellingProducts = createAsyncThunk(
   }
 );
 
+export const fetchNewestProducts = createAsyncThunk(
+  'newestProducts/fetch',
+  async () => {
+    const res = await axiosInstance.get('/product/newest');
+    return res.data.newestProducts;
+  }
+);
+
 export const anotherProductSlice = createSlice({
   name: 'anotherProducts',
   initialState,
@@ -37,6 +45,17 @@ export const anotherProductSlice = createSlice({
       .addCase(fetchTopSellingProducts.rejected, (state, action) => {
         state.topSellingProducts.status = 'failed';
         state.topSellingProducts.error = action.error.message;
+      })
+      .addCase(fetchNewestProducts.pending, (state, action) => {
+        state.newestProducts.status = 'pending';
+      })
+      .addCase(fetchNewestProducts.fulfilled, (state, action) => {
+        state.newestProducts.status = 'success';
+        state.newestProducts.products = action.payload;
+      })
+      .addCase(fetchNewestProducts.rejected, (state, action) => {
+        state.newestProducts.status = 'failed';
+        state.newestProducts.error = action.error.message;
       });
   },
 });

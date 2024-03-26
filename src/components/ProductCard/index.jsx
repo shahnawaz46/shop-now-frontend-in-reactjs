@@ -8,16 +8,16 @@ import { giveMeImages } from '../../axios/UlrConfig';
 const ProductCard = ({ product }) => {
   // console.log('ProductCard: ', product);
   return (
-    <div className="product-card-container">
+    <div className='product-card-container'>
       <Link to={`/preview/${product._id}`}>
         <img
           src={giveMeImages(product.productPictures[0].img)}
-          loading="lazy"
-          alt="not found"
-          className="product-card-image"
+          loading='lazy'
+          alt='not found'
+          className='product-card-image'
         />
-        <div className="product-card-details">
-          <h4 className="product-card-name">{product.productName}</h4>
+        <div className='product-card-details'>
+          <h4 className='product-card-name'>{product.productName}</h4>
           <div>
             <span style={{ fontSize: '15px', fontWeight: 600 }}>
               &#8377;{product?.sellingPrice}

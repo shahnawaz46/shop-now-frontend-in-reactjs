@@ -66,6 +66,8 @@ const MenProducts = () => {
       </div>
     );
 
+  // first i am checking if query is present in url then showing products that i am getting based on query
+  // if query is not present in url then i am showing products that is present in redux
   return (
     <RootLayout>
       <SidebarLayout subCategory={subCategory}>
