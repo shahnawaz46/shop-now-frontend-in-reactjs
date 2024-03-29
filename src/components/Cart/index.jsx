@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 
 // components
 import './style.css';
-import { giveMeImages } from '../../axios/UlrConfig';
 import { addToCart, removeCartItem } from '../../redux/slices/CartSlice';
 
 // action
@@ -83,7 +82,7 @@ const Cart = ({ show, setShow }) => {
             cartItems.map((product, index) => {
               return (
                 <div key={index} className='cart-image-product-details'>
-                  <img src={giveMeImages(product.productImage)} alt='' />
+                  <img src={product.productImage} alt='' />
                   <div className='cart-product-details'>
                     <Link to={`/preview/${product._id}`}>
                       <h3 onClick={() => setShow(false)}>

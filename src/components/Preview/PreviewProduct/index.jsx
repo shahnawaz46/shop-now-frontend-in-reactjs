@@ -7,7 +7,6 @@ import { useLocation, useNavigate } from 'react-router-dom';
 
 // components
 import './style.css';
-import { giveMeImages } from '../../../axios/UlrConfig';
 import Sizes from '../Sizes';
 import { addToCart } from '../../../redux/slices/CartSlice';
 import AllReviews from '../../Review/allReviews';
@@ -69,18 +68,20 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
   return (
     <>
       <div className='preview-main-box'>
+        {/* only for large device */}
         <div className='preview-pc-image-box'>
-          {true &&
-            previewProduct.productPictures.map((item, index) => (
-              <img
-                key={index}
-                src={giveMeImages(item.img)}
-                loading='lazy'
-                alt='not found'
-                className='preview-image preview-image-space-box-one'
-              />
-            ))}
+          {previewProduct.productPictures.map((item, index) => (
+            <img
+              key={index}
+              src={item.img}
+              loading='lazy'
+              alt='not found'
+              className='preview-image preview-image-space-box-one'
+            />
+          ))}
         </div>
+
+        {/* only for mobile device */}
         <div className='preview-mobile-image-box'>
           <AliceCarousel
             responsive={responsive}
@@ -93,7 +94,7 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
             items={previewProduct.productPictures.map((item) => (
               <img
                 key={item._id}
-                src={giveMeImages(item.img)}
+                src={item.img}
                 // onDragStart={handleDragStart}
                 role='presentation'
                 className='preview-mobile-image preview-image-space-box-one'

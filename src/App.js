@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 
 // components
-import Loader from './components/Loader';
+import { IndexPageLoading } from './components/Loaders';
 import {
   HomePage,
   MenProducts,
@@ -39,7 +39,7 @@ function App() {
       <ScrollTop />
       <Toastify />
       <Routes>
-        <Route index element={<Loader />} />
+        <Route index element={<IndexPageLoading />} />
         <Route path='/home' element={<HomePage />} />
         <Route path='collections'>
           <Route path="Men's-Wardrobe" element={<MenProducts />} />

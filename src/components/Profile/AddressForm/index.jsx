@@ -9,7 +9,7 @@ import './style.css';
 import Modal from '../../../common/Modal';
 import { addAddress, updateAddress } from '../../../redux/slices/UserSlice';
 import axiosInstance from '../../../axios/AxiosInstance';
-import Loading from '../../Loading';
+import { ScreenLoading } from '../../Loaders';
 
 const AddressForm = (props) => {
   const { showAddress, setShowAddress, userAddress, setUserAddress } = props;
@@ -88,7 +88,7 @@ const AddressForm = (props) => {
 
   return (
     <>
-      {laodingForPinCode && <Loading />}
+      {laodingForPinCode && <ScreenLoading />}
 
       <Modal
         open={showAddress?.show}

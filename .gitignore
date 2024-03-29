@@ -4,11 +4,13 @@ logs
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-firebase-debug.log*
-firebase-debug.*.log*
+build
+
 
 # Firebase cache
 .firebase/
+firebase-debug.log*
+firebase-debug.*.log*
 
 # Firebase config
 

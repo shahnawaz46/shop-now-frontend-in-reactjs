@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+
+// components
 import RootLayout from '../components/Layout/RooLayout';
 import PreviewProduct from '../components/Preview/PreviewProduct';
-import { useParams } from 'react-router-dom';
 import ReturnPolicy from '../components/ReturnPolicy';
-import Loading from '../components/Loading';
 import axiosInstance from '../axios/AxiosInstance';
+import { ScreenLoading } from '../components/Loaders';
 
 const Preview = () => {
   const { productId } = useParams();
@@ -32,7 +34,7 @@ const Preview = () => {
     }, 1000);
   }, []);
 
-  if (Object.keys(previewProduct).length === 0) return <Loading />;
+  if (Object.keys(previewProduct).length === 0) return <ScreenLoading />;
 
   return (
     <RootLayout>

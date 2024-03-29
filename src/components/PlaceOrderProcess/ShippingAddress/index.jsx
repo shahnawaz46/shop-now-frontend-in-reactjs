@@ -10,7 +10,7 @@ import './style.css';
 import AddressForm from '../../Profile/AddressForm';
 import axiosInstance from '../../../axios/AxiosInstance';
 import { updateAddress } from '../../../redux/slices/UserSlice';
-import Loading from '../../Loading';
+import { ScreenLoading } from '../../Loaders';
 
 const ShippingAddress = () => {
   const dispatch = useDispatch();
@@ -51,7 +51,7 @@ const ShippingAddress = () => {
   };
 
   if (status === 'idle' || status === 'pending') {
-    return <Loading />;
+    return <ScreenLoading />;
   }
 
   return (

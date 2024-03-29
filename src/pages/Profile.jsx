@@ -5,7 +5,7 @@ import { Navigate } from 'react-router-dom';
 // components
 import User from '../components/Profile/User';
 import RootLayout from '../components/Layout/RooLayout';
-import Loading from '../components/Loading';
+import { ScreenLoading } from '../components/Loaders';
 import { fetchPersonalDetails } from '../redux/slices/UserSlice';
 import { clearStateAndStorage } from '../utils/ClearStateAndStorage';
 
@@ -21,7 +21,7 @@ const Profile = () => {
       : null;
   }, [status]);
 
-  if (status === 'idle' || status === 'pending') return <Loading />;
+  if (status === 'idle' || status === 'pending') return <ScreenLoading />;
 
   if (status === 'failed') {
     return <Navigate to={'/login'} replace={true} />;

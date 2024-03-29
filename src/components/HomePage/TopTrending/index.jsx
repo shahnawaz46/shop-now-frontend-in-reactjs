@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import './style.css';
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
 import { useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 // components
+import './style.css';
 import HeadingAndParagraph from '../HeadingAndParagraph';
-import { giveMeImages } from '../../../axios/UlrConfig';
 
 const responsive = {
   0: { items: 1 },
@@ -85,7 +84,7 @@ const TopTrending = () => {
           items={products.map((product) => (
             <Link to={`/preview/${product?.productId}`} key={product?._id}>
               <img
-                src={giveMeImages(product?.productPicture?.img)}
+                src={product?.productPicture?.img}
                 onDragStart={handleDragStart}
                 role='presentation'
                 className='trending-product-images'

@@ -8,11 +8,11 @@ import { toast } from 'react-toastify';
 // components
 import './style.css';
 import axiosInstance from '../../../axios/AxiosInstance';
-import { giveMeImages } from '../../../axios/UlrConfig';
-import Loading from '../../Loading';
 import { getDate } from '../../../utils/Date';
 import Modal from '../../../common/Modal';
 import TrackOrder from '../TrackOrder';
+import { DELIVERY_CHARGE } from '../../PlaceOrderProcess/OrderSummary';
+import { ScreenLoading } from '../../Loaders';
 
 const paymentMethod = {
   cod: 'Cash on Delivery',
@@ -47,7 +47,7 @@ const PlaceOrders = () => {
       style={{ height: loading ? '120px' : '100%' }}
     >
       {loading ? (
-        <Loading />
+        <ScreenLoading />
       ) : !allOrders.length ? (
         <div className='placeorder-no-order'>
           <MdOutlineRemoveShoppingCart className='placeorder-icon' />
@@ -124,10 +124,7 @@ const PlaceOrders = () => {
               <div className='placeOrder_item_container'>
                 {value.items.map((item) => (
                   <div key={item?._id} className='placeOrder_item'>
-                    <img
-                      src={giveMeImages(item?.product?.productPictures[0]?.img)}
-                      alt=''
-                    />
+                    <img src={item?.product?.productPictures[0]?.img} alt='' />
                     <div>
                       <h3 className='placeOrder_product_name'>
                         {item?.product?.productName}
@@ -153,9 +150,41 @@ const PlaceOrders = () => {
                       <span style={{ color: '#FF0000' }}>(Failed)</span>
                     )}
                   </h4>
-                  <div>
+                  {/* price details */}
+                  <div className='placeOrder_item_price_container'>
                     <p>{paymentMethod[value?.paymentMethod]} </p>
-                    <span>Total Amount: Rs.{value?.totalPrice}</span>
+                    <div className='placeOrder_item_price'>
+                      <div>
+                        <span>
+                          Price (
+                          {value?.items?.length > 0
+                            ? value.items.reduce(
+                                (total, item) => total + item.qty,
+                                0
+                              )
+                            : 0}{' '}
+                          items)
+                        </span>
+                        <span>
+                          Rs.{' '}
+                          {value?.items?.length > 0
+                            ? value?.items.reduce(
+                                (total, item) => total + item.price * item.qty,
+                                0
+                              )
+                            : 0}
+                        </span>
+                      </div>
+                      <div>
+                        <span>Delivery Charges</span>
+                        <span>Rs. {DELIVERY_CHARGE}</span>
+                      </div>
+                    </div>
+
+                    <div className='placeOrder_total_price'>
+                      <span>Total Amount</span>
+                      <span>Rs. {value?.totalPrice}</span>
+                    </div>
                   </div>
                 </div>
                 <div className='placeOrder_delivery'>

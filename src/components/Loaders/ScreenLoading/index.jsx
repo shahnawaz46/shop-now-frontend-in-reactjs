@@ -1,7 +1,7 @@
 import React from 'react';
-import LoaderAnimation from '../../asset/Hourglass.gif';
+import { HashLoader } from 'react-spinners';
 
-const Loading = () => {
+const ScreenLoading = () => {
   return (
     <div
       style={{
@@ -9,12 +9,12 @@ const Loading = () => {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%,-50%)',
-        zIndex: 99999,
+        zIndex: 999,
       }}
     >
-      <img src={LoaderAnimation} alt='loader' />
+      <HashLoader color='#36d7b7' />
     </div>
   );
 };
 
-export default Loading;
+export default ScreenLoading;

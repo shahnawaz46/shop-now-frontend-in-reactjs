@@ -9,13 +9,13 @@ const initialState = {
     error: null,
   },
   menProducts: {
-    products: [],
+    products: { next: null, data: [] },
     subCategory: [],
     status: 'idle',
     error: null,
   },
   womenProducts: {
-    products: [],
+    products: { next: null, data: [] },
     subCategory: [],
     status: 'idle',
     error: null,
@@ -47,7 +47,7 @@ export const fetchMenProducts = createAsyncThunk(
 
     return {
       categories: categoriesRes.data.categories,
-      product: productRes.data.allProducts,
+      product: productRes.data,
     };
   }
 );
@@ -62,7 +62,7 @@ export const fetchWomenProducts = createAsyncThunk(
 
     return {
       categories: categoriesRes.data.categories,
-      product: productRes.data.allProducts,
+      product: productRes.data,
     };
   }
 );
@@ -70,6 +70,13 @@ export const fetchWomenProducts = createAsyncThunk(
 export const productSlice = createSlice({
   name: 'product',
   initialState,
+  reducers: {
+    updateProducts: (state, action) => {
+      const { stateName, data } = action.payload;
+      state[stateName].products.next = data.next;
+      state[stateName].products.data.push(...data.data);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchHomePageProducts.fulfilled, (state, action) => {
@@ -88,8 +95,8 @@ export const productSlice = createSlice({
       })
       .addCase(fetchMenProducts.fulfilled, (state, action) => {
         state.menProducts.status = 'success';
-        state.menProducts.products.push(...action.payload.product);
-        state.menProducts.subCategory.push(...action.payload.categories);
+        state.menProducts.products = action.payload.product;
+        state.menProducts.subCategory = action.payload.categories;
       })
       .addCase(fetchMenProducts.rejected, (state, action) => {
         state.womenProducts.status = 'failed';
@@ -100,8 +107,8 @@ export const productSlice = createSlice({
       })
       .addCase(fetchWomenProducts.fulfilled, (state, action) => {
         state.womenProducts.status = 'success';
-        state.womenProducts.products.push(...action.payload.product);
-        state.womenProducts.subCategory.push(...action.payload.categories);
+        state.womenProducts.products = action.payload.product;
+        state.womenProducts.subCategory = action.payload.categories;
       })
       .addCase(fetchWomenProducts.rejected, (state, action) => {
         state.womenProducts.status = 'failed';
@@ -109,5 +116,7 @@ export const productSlice = createSlice({
       });
   },
 });
+
+export const { updateProducts } = productSlice.actions;
 
 export default productSlice.reducer;

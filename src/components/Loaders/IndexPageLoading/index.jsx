@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import './style.css';
-import Logo from '../../asset/shopnow_logo.png';
+import Logo from '../../../asset/shopnow_logo.png';
 import { useNavigate } from 'react-router-dom';
 
-const Loader = () => {
+const IndexPageLoading = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,4 +19,4 @@ const Loader = () => {
   );
 };
 
-export default Loader;
+export default IndexPageLoading;

@@ -8,11 +8,10 @@ import { toast } from 'react-toastify';
 // components
 import './style.css';
 import axiosInstance from '../../../axios/AxiosInstance';
-import Loading from '../../Loading';
-import { giveMeImages } from '../../../axios/UlrConfig';
 import { addToCart, removeCartItem } from '../../../redux/slices/CartSlice';
+import { ScreenLoading } from '../../Loaders';
 
-const DELIVERY_CHARGE = 200;
+export const DELIVERY_CHARGE = 200;
 
 const OrderSummary = () => {
   const dispatch = useDispatch();
@@ -103,7 +102,7 @@ const OrderSummary = () => {
   }, [cartItems]);
 
   if (loading) {
-    return <Loading />;
+    return <ScreenLoading />;
   }
 
   return (
@@ -117,7 +116,7 @@ const OrderSummary = () => {
               allOrders.map((product, index) => {
                 return (
                   <div key={index} className='orderSummary_card'>
-                    <img src={giveMeImages(product.productImage)} alt='' />
+                    <img src={product.productImage} alt='' />
                     <div className='orderSummary_product_details'>
                       <h3>{product.productName}</h3>
 

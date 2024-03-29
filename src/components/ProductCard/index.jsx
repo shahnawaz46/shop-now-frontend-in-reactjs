@@ -1,9 +1,8 @@
 import React from 'react';
-import './style.css';
 import { Link } from 'react-router-dom';
 
 // components
-import { giveMeImages } from '../../axios/UlrConfig';
+import './style.css';
 
 const ProductCard = ({ product }) => {
   // console.log('ProductCard: ', product);
@@ -11,7 +10,7 @@ const ProductCard = ({ product }) => {
     <div className='product-card-container'>
       <Link to={`/preview/${product._id}`}>
         <img
-          src={giveMeImages(product.productPictures[0].img)}
+          src={product.productPictures[0].img}
           loading='lazy'
           alt='not found'
           className='product-card-image'

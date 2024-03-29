@@ -4,12 +4,12 @@ import axiosInstance from '../../axios/AxiosInstance';
 const initialState = {
   topSellingProducts: {
     status: 'idle',
-    products: [],
+    products: { next: null, item: [] },
     error: null,
   },
   newestProducts: {
     status: 'idle',
-    products: [],
+    products: { next: null, item: [] },
     error: null,
   },
 };
@@ -18,7 +18,7 @@ export const fetchTopSellingProducts = createAsyncThunk(
   'topSellingProducts/fetch',
   async () => {
     const res = await axiosInstance.get('/product/top-selling');
-    return res.data.topSellingProducts;
+    return res.data;
   }
 );
 
@@ -26,13 +26,20 @@ export const fetchNewestProducts = createAsyncThunk(
   'newestProducts/fetch',
   async () => {
     const res = await axiosInstance.get('/product/newest');
-    return res.data.newestProducts;
+    return res.data;
   }
 );
 
 export const anotherProductSlice = createSlice({
   name: 'anotherProducts',
   initialState,
+  reducers: {
+    anotherProductUpdate: (state, action) => {
+      const { stateName, data } = action.payload;
+      state[stateName].products.next = data.next;
+      state[stateName].products.item.push(...data.item);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchTopSellingProducts.pending, (state, action) => {
@@ -59,5 +66,7 @@ export const anotherProductSlice = createSlice({
       });
   },
 });
+
+export const { anotherProductUpdate } = anotherProductSlice.actions;
 
 export default anotherProductSlice.reducer;
