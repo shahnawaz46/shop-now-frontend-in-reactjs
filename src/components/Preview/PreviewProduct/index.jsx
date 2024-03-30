@@ -157,7 +157,7 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
           </div>
           <div className='preview-product-description-box'>
             <h4>Description</h4>
-            <p>{previewProduct?.description}</p>
+            <pre>{previewProduct?.description}</pre>
           </div>
         </div>
       </div>
