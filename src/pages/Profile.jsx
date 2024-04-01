@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Navigate } from 'react-router-dom';
 
@@ -13,19 +13,24 @@ const Profile = () => {
   const dispatch = useDispatch();
   const { status, personalDetails } = useSelector((state) => state.user);
 
+  const [notAuthenticated, setNotAuthenticated] = useState(false);
+
   useEffect(() => {
-    status === 'idle'
-      ? dispatch(fetchPersonalDetails())
-      : status === 'failed'
-      ? clearStateAndStorage()
-      : null;
+    if (status === 'idle') {
+      dispatch(fetchPersonalDetails());
+    }
+  }, []);
+
+  useEffect(() => {
+    if (status === 'failed') {
+      clearStateAndStorage();
+      setNotAuthenticated(true);
+    }
   }, [status]);
 
-  if (status === 'idle' || status === 'pending') return <ScreenLoading />;
+  if (notAuthenticated) return <Navigate to={'/login'} replace={true} />;
 
-  if (status === 'failed') {
-    return <Navigate to={'/login'} replace={true} />;
-  }
+  if (status === 'idle' || status === 'pending') return <ScreenLoading />;
 
   return (
     <RootLayout>

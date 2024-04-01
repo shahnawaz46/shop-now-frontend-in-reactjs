@@ -2,8 +2,8 @@ import React, { useState } from 'react';
 import { AiFillStar } from 'react-icons/ai';
 import AliceCarousel from 'react-alice-carousel';
 import { toast } from 'react-toastify';
-import { useDispatch, useSelector } from 'react-redux';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 
 // components
 import './style.css';
@@ -11,7 +11,6 @@ import Sizes from '../Sizes';
 import { addToCart } from '../../../redux/slices/CartSlice';
 import AllReviews from '../../Review/allReviews';
 import { totalRating } from '../../../common/TotalRating';
-import { clearStateAndStorage } from '../../../utils/ClearStateAndStorage';
 
 const responsive = {
   0: { items: 1 },
@@ -20,10 +19,8 @@ const responsive = {
 
 const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
   const dispatch = useDispatch();
-  const { status, personalDetails } = useSelector((state) => state.user);
 
   const navigate = useNavigate();
-  const location = useLocation();
   const [productSize, setProductSize] = useState();
   const [reviewSize, setReviewSize] = useState(5);
 
@@ -48,20 +45,15 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
       return toast.error('Please Select The Size');
     }
 
-    // status failed means user is not authenticated then removing id from localStorage and setting redux to initialState and redirecting to the login page
-    if (status === 'failed') {
-      clearStateAndStorage();
-      navigate('/login', { state: { from: location.pathname } });
-      return null;
-    }
+    const productDetails = {
+      productId: previewProduct._id,
+      size: productSize,
+      qty: 1,
+      price: previewProduct.sellingPrice,
+    };
 
     navigate(`/place-order?step=1`, {
-      state: {
-        productId: previewProduct._id,
-        size: productSize,
-        qty: 1,
-        price: previewProduct.sellingPrice,
-      },
+      state: productDetails,
     });
   };
 

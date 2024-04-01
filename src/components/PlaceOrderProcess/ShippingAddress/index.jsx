@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { MdDelete } from 'react-icons/md';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 // components
 import './style.css';
 import AddressForm from '../../Profile/AddressForm';
 import axiosInstance from '../../../axios/AxiosInstance';
-import { updateAddress } from '../../../redux/slices/UserSlice';
+import {
+  fetchPersonalDetails,
+  updateAddress,
+} from '../../../redux/slices/UserSlice';
 import { ScreenLoading } from '../../Loaders';
+import { clearStateAndStorage } from '../../../utils/ClearStateAndStorage';
 
 const ShippingAddress = () => {
   const dispatch = useDispatch();
@@ -26,6 +30,8 @@ const ShippingAddress = () => {
     show: false,
   });
   const [userAddress, setUserAddress] = useState({});
+
+  const [notAuthenticated, setNotAuthenticated] = useState(false);
 
   const removeAddress = async (_id) => {
     try {
@@ -50,9 +56,21 @@ const ShippingAddress = () => {
     });
   };
 
-  if (status === 'idle' || status === 'pending') {
-    return <ScreenLoading />;
-  }
+  useEffect(() => {
+    status === 'idle' && dispatch(fetchPersonalDetails());
+  }, []);
+
+  useEffect(() => {
+    if (status === 'failed') {
+      clearStateAndStorage();
+      setNotAuthenticated(true);
+    }
+  }, [status]);
+
+  if (notAuthenticated)
+    return <Navigate to={'/login'} state={location.state} replace={true} />;
+
+  if (status === 'idle' || status === 'pending') return <ScreenLoading />;
 
   return (
     <>

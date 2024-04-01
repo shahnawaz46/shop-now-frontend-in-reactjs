@@ -22,16 +22,14 @@ import Login from './pages/Login';
 import Signup from './pages/Signup';
 import { AuthPrivateRoute, PrivateRoute } from './routes';
 import PlaceOrder from './pages/PlaceOrder';
-import { fetchPersonalDetails } from './redux/slices/UserSlice';
 
 function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
     // console.log("useEffect App.js");
-    dispatch(fetchHomePageProducts());
     dispatch(getCartItem());
-    localStorage.getItem('__f_id') && dispatch(fetchPersonalDetails());
+    dispatch(fetchHomePageProducts());
   }, []);
 
   return (

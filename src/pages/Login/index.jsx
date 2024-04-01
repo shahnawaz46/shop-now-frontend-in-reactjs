@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
-import './style.css';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
 
 // components
+import './style.css';
 import axiosInstance from '../../axios/AxiosInstance';
-import { fetchPersonalDetails } from '../../redux/slices/UserSlice';
 
 const Login = () => {
-  const dispatch = useDispatch();
-
   const navigate = useNavigate();
   const location = useLocation();
   const [email, setEmail] = useState();
@@ -24,9 +20,12 @@ const Login = () => {
     try {
       const res = await axiosInstance.post('/user/signin', { email, password });
       localStorage.setItem('__f_id', res.data.userId);
+
       if (location.state) {
-        dispatch(fetchPersonalDetails());
-        navigate(location.state.from, { replace: true });
+        navigate(`/place-order?step=1`, {
+          state: location.state,
+          replace: true,
+        });
       } else {
         navigate('/my-account/address', { replace: true });
       }
