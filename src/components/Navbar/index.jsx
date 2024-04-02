@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
-import './style.css';
 import { Link, NavLink } from 'react-router-dom';
 import { BiSearch } from 'react-icons/bi';
 import { FiShoppingBag } from 'react-icons/fi';
 import { RiMenu2Line } from 'react-icons/ri';
 import { MdClose, MdPerson } from 'react-icons/md';
-import Cart from '../Cart';
 import { useSelector } from 'react-redux';
+import { debounce } from 'lodash';
+import { toast } from 'react-toastify';
+
+// components
+import './style.css';
+import Cart from '../Cart';
+import SearchResults from '../SearchResults';
+import axiosInstance from '../../axios/AxiosInstance';
 
 const navLinks = [
   { name: 'Home', link: '/home' },
@@ -17,16 +23,33 @@ const navLinks = [
 ];
 
 const Navbar = () => {
+  const { cartItems } = useSelector((state) => state.cart);
+
   const [condition, setCondition] = useState(false);
   const [search, setSearch] = useState(false);
   const [cartShow, setShowCart] = useState(false);
-
-  const { cartItems } = useSelector((state) => state.cart);
+  const [searchItems, setSearchItems] = useState({ status: false, result: [] });
 
   const cartQuantity = () => {
     const quantity = cartItems.reduce((total, value) => total + value.qty, 0);
     return quantity > 99 ? '99+' : quantity;
   };
+
+  const handleSearchBar = async (search) => {
+    if (search === '') {
+      setSearchItems({ status: false, result: [] });
+      return;
+    }
+
+    try {
+      const res = await axiosInstance.get(`/search/category?search=${search}`);
+      setSearchItems({ status: true, result: res.data.result });
+    } catch (err) {
+      toast.error(err?.reponse?.data?.error || err?.message);
+    }
+  };
+
+  const handleChange = debounce(handleSearchBar, 500);
 
   useEffect(() => {
     if (condition) {
@@ -65,10 +88,11 @@ const Navbar = () => {
           <div
             className={condition ? 'navbar-item mobile-navbar' : 'navbar-item'}
           >
-            {/* this icon show only in mobile Navbar */}
+            {/* this icon will show only in mobile Navbar */}
             <div className='close-icon' onClick={() => setCondition(false)}>
               <MdClose />
             </div>
+
             {navLinks.map((nav, index) => (
               <div className='navbar-link' key={index}>
                 <NavLink
@@ -85,7 +109,35 @@ const Navbar = () => {
           </div>
 
           <div className='navbar-icons'>
-            <BiSearch className='icon' onClick={() => setSearch(true)} />
+            {/* search bar for large device */}
+            <div style={{ position: 'relative' }}>
+              <div className='navbar_search_bar'>
+                <BiSearch
+                  style={{
+                    fontSize: '25px',
+                    color: 'black',
+                    cursor: 'pointer',
+                  }}
+                />
+                <input
+                  type='text'
+                  placeholder='Search item'
+                  onChange={(e) => handleChange(e.target.value)}
+                />
+              </div>
+
+              {/* show search Results */}
+              <div className='navbar_search_item'>
+                {searchItems.status && (
+                  <SearchResults result={searchItems.result} />
+                )}
+              </div>
+
+              <BiSearch
+                className='icon navbar_search_bar_icon'
+                onClick={() => setSearch(true)}
+              />
+            </div>
             <div className='navbar-cart' onClick={() => setShowCart(true)}>
               <FiShoppingBag
                 className='icon'
@@ -103,22 +155,36 @@ const Navbar = () => {
           </div>
         </div>
 
-        {search ? (
-          <div className='search-field'>
-            <BiSearch
-              style={{
-                fontSize: '25px',
-                color: 'black',
-                cursor: 'pointer',
-              }}
-            />
-            <input type='text' placeholder='Search item' />
-            <MdClose
-              style={{ fontSize: '25px', cursor: 'pointer' }}
-              onClick={() => setSearch(false)}
-            />
+        {/* only for mobile screen */}
+        <div>
+          {search ? (
+            <div className='search-field'>
+              <BiSearch
+                style={{
+                  fontSize: '25px',
+                  color: 'black',
+                  cursor: 'pointer',
+                }}
+              />
+              <input
+                type='text'
+                placeholder='Search item'
+                onChange={(e) => handleChange(e.target.value)}
+              />
+              <MdClose
+                style={{ fontSize: '25px', cursor: 'pointer' }}
+                onClick={() => setSearch(false)}
+              />
+            </div>
+          ) : null}
+
+          {/* show search Results */}
+          <div className='navbar_search_item_mobile'>
+            {searchItems.status && (
+              <SearchResults result={searchItems.result} />
+            )}
           </div>
-        ) : null}
+        </div>
       </div>
 
       <Cart show={cartShow} setShow={setShowCart} />
