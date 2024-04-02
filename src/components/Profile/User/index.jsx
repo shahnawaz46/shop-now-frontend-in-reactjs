@@ -3,7 +3,6 @@ import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { BsFillCameraFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
-import imageCompression from 'browser-image-compression';
 
 // components
 import './style.css';
@@ -34,42 +33,18 @@ const User = ({ userData }) => {
   const updateProfileFnc = async (e) => {
     const file = e.target.files[0];
 
-    const options = {
-      maxSizeMB: 0.5,
-      useWebWorker: true,
-    };
+    const formData = new FormData();
+    formData.append('profilePicture', file);
 
-    if (file) {
-      try {
-        const compressImage = await imageCompression(file, options);
-
-        const fileReader = new FileReader();
-        let imageBase64 = '';
-
-        fileReader.readAsDataURL(compressImage);
-        fileReader.onloadend = async () => {
-          imageBase64 = fileReader.result;
-          if (imageBase64) {
-            try {
-              const res = await axiosInstance.patch('/user/updateProfilePic', {
-                imageBase64: JSON.stringify(imageBase64),
-                userName: userData.firstName,
-              });
-              toast.success('successfully');
-              dispatch(updatePersonDetail(res.data.userDetails));
-            } catch (error) {
-              if (error?.response?.data?.msg) {
-                // console.log(error?.response?.data?.msg)
-                toast.error(error?.response?.data?.msg);
-              } else {
-                // console.log(error);
-                toast.error(error.message);
-              }
-            }
-          }
-        };
-      } catch (err) {
-        toast.error(err);
+    try {
+      const res = await axiosInstance.patch('/user/updateProfilePic', formData);
+      toast.success('successfully');
+      dispatch(updatePersonDetail(res.data.userDetails));
+    } catch (error) {
+      if (error?.response?.data?.msg) {
+        toast.error(error?.response?.data?.msg);
+      } else {
+        toast.error(error.message);
       }
     }
 
