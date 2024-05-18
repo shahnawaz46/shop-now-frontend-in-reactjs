@@ -7,15 +7,16 @@ const IndexPageLoading = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    setTimeout(() => {
-      navigate('/home');
-    }, 2000);
+    // setTimeout(() => {
+    navigate('/home');
+    // }, 2000);
   }, []);
 
   return (
-    <div className='container'>
-      <img src={Logo} alt='' className='loader-image' />
-    </div>
+    // <div className='container'>
+    //   <img src={Logo} alt='' className='loader-image' />
+    // </div>
+    <></>
   );
 };
 

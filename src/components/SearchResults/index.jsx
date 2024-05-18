@@ -4,13 +4,19 @@ import { Link } from 'react-router-dom';
 // components
 import './style.css';
 
-const SearchResults = ({ result }) => {
+const SearchResults = ({ result, activeSuggestion }) => {
   return (
     <div>
       <ul className='searchResult_ul_container'>
         {result.length > 0 ? (
-          result.map((item) => (
-            <li className='searchResult_li'>
+          result.map((item, index) => (
+            <li
+              key={index}
+              className='searchResult_li'
+              style={{
+                backgroundColor: activeSuggestion === index ? 'aliceblue' : '',
+              }}
+            >
               <Link
                 to={`/collections/${
                   item?.slug?.includes('Men')

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { BiSearch } from 'react-icons/bi';
 import { FiShoppingBag } from 'react-icons/fi';
 import { RiMenu2Line } from 'react-icons/ri';
@@ -26,11 +26,13 @@ const Navbar = () => {
   const { cartItems } = useSelector((state) => state.cart);
 
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [condition, setCondition] = useState(false);
   const [search, setSearch] = useState(false);
   const [cartShow, setShowCart] = useState(false);
   const [searchItems, setSearchItems] = useState({ status: false, result: [] });
+  const [activeSuggestion, setActiveSuggestion] = useState(0);
 
   const cartQuantity = () => {
     const quantity = cartItems.reduce((total, value) => total + value.qty, 0);
@@ -46,12 +48,35 @@ const Navbar = () => {
     try {
       const res = await axiosInstance.get(`/search/category?search=${search}`);
       setSearchItems({ status: true, result: res.data.result });
+      setActiveSuggestion(0);
     } catch (err) {
       toast.error(err?.reponse?.data?.error || err?.message);
     }
   };
 
+  // calling handleSearchBar with the help of debouce for improve search
   const handleChange = debounce(handleSearchBar, 500);
+
+  // for move and select the suggestion of search result
+  const handleMoveAndSelect = (e) => {
+    if (!searchItems.status) return null;
+    if (
+      e.key === 'ArrowDown' &&
+      activeSuggestion < searchItems.result.length - 1
+    ) {
+      setActiveSuggestion((prev) => prev + 1);
+    } else if (e.key === 'ArrowUp' && activeSuggestion > 0) {
+      setActiveSuggestion((prev) => prev - 1);
+    } else if (e.key === 'Enter') {
+      const { slug } = searchItems.result[activeSuggestion];
+      navigate(
+        `/collections/${
+          slug?.includes('Men') ? "Men's-Wardrobe" : "Women's-Wardrobe"
+        }?category=${slug}`
+      );
+      setSearchItems({ status: false, result: [] });
+    }
+  };
 
   useEffect(() => {
     if (condition) {
@@ -59,6 +84,11 @@ const Navbar = () => {
     }
     return () => (document.body.style.overflow = 'unset');
   }, [condition]);
+
+  // after search query changed then removing search result
+  useEffect(() => {
+    setSearchItems({ status: false, result: [] });
+  }, [location.search]);
 
   return (
     <>
@@ -125,13 +155,17 @@ const Navbar = () => {
                   type='text'
                   placeholder='Search item'
                   onChange={(e) => handleChange(e.target.value)}
+                  onKeyDown={handleMoveAndSelect}
                 />
               </div>
 
               {/* show search Results */}
               <div className='navbar_search_item'>
                 {searchItems.status && (
-                  <SearchResults result={searchItems.result} />
+                  <SearchResults
+                    result={searchItems.result}
+                    activeSuggestion={activeSuggestion}
+                  />
                 )}
               </div>
 
@@ -175,6 +209,7 @@ const Navbar = () => {
                 type='text'
                 placeholder='Search item'
                 onChange={(e) => handleChange(e.target.value)}
+                onKeyDown={handleMoveAndSelect}
               />
               <MdClose
                 style={{ fontSize: '25px', cursor: 'pointer' }}
@@ -186,7 +221,10 @@ const Navbar = () => {
           {/* show search Results */}
           <div className='navbar_search_item_mobile'>
             {searchItems.status && (
-              <SearchResults result={searchItems.result} />
+              <SearchResults
+                result={searchItems.result}
+                activeSuggestion={activeSuggestion}
+              />
             )}
           </div>
         </div>
