@@ -1,10 +1,17 @@
 import React from 'react';
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 const PrivateRoute = ({ children }) => {
+  const location = useLocation();
   const isAuthenticated = localStorage.getItem('__f_id');
 
-  if (!isAuthenticated) return <Navigate to={'/login'} />;
+  // inside location.state.from, i am getting the route from where the user clicked on the profile icon to view the profile.
+  // If the user is not logged in then I am redirecting the user to the login page, but if the user clicks the back button.
+  // Then I am redirecting the user to the previous page from where the user clicked on the profile icon to view the profile.
+  const previousRoute = location?.state?.from || '/home';
+
+  if (!isAuthenticated)
+    return <Navigate to={'/login'} replace={previousRoute} />;
 
   return children;
 };

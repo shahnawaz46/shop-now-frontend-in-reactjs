@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link, NavLink, useLocation } from 'react-router-dom';
 import { BiSearch } from 'react-icons/bi';
 import { FiShoppingBag } from 'react-icons/fi';
 import { RiMenu2Line } from 'react-icons/ri';
@@ -24,6 +24,8 @@ const navLinks = [
 
 const Navbar = () => {
   const { cartItems } = useSelector((state) => state.cart);
+
+  const location = useLocation();
 
   const [condition, setCondition] = useState(false);
   const [search, setSearch] = useState(false);
@@ -145,7 +147,10 @@ const Navbar = () => {
               />
               <span>{cartQuantity()}</span>
             </div>
-            <Link to={'/my-account/address'}>
+            <Link
+              to={'/my-account/address'}
+              state={{ from: location.pathname }}
+            >
               <MdPerson className='icon profile-icon' />
             </Link>
             <RiMenu2Line
