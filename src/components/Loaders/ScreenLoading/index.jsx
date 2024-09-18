@@ -1,18 +1,29 @@
 import React from 'react';
 import { HashLoader } from 'react-spinners';
 
-const ScreenLoading = () => {
+const ScreenLoading = ({ backgroundColor = '#fff' }) => {
   return (
     <div
       style={{
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%,-50%)',
+        width: '100%',
+        height: '100%',
+        backgroundColor: backgroundColor,
+        position: 'fixed',
+        inset: 0,
         zIndex: 999,
       }}
     >
-      <HashLoader color='#36d7b7' />
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          width: '100%',
+          height: '100%',
+        }}
+      >
+        <HashLoader color="#36d7b7" />
+      </div>
     </div>
   );
 };

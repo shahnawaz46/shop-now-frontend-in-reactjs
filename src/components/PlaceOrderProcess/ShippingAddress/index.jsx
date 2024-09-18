@@ -1,25 +1,20 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { MdDelete } from 'react-icons/md';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 // components
 import './style.css';
 import AddressForm from '../../Profile/AddressForm';
 import axiosInstance from '../../../axios/AxiosInstance';
-import {
-  fetchPersonalDetails,
-  updateAddress,
-} from '../../../redux/slices/UserSlice';
-import { ScreenLoading } from '../../Loaders';
-import { clearStateAndStorage } from '../../../utils/ClearStateAndStorage';
+import { updateAddress } from '../../../redux/slices/UserSlice';
 
 const ShippingAddress = () => {
   const dispatch = useDispatch();
 
-  const { status, addressDetails } = useSelector((state) => state.user);
+  const { addressDetails } = useSelector((state) => state.user);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -30,8 +25,6 @@ const ShippingAddress = () => {
     show: false,
   });
   const [userAddress, setUserAddress] = useState({});
-
-  const [notAuthenticated, setNotAuthenticated] = useState(false);
 
   const removeAddress = async (_id) => {
     try {
@@ -56,41 +49,23 @@ const ShippingAddress = () => {
     });
   };
 
-  useEffect(() => {
-    status === 'idle' && dispatch(fetchPersonalDetails());
-  }, []);
-
-  useEffect(() => {
-    if (status === 'failed') {
-      clearStateAndStorage();
-      setNotAuthenticated(true);
-    }
-  }, [status]);
-
-  // location.stata have product data that i am passing from PreviewProduct component for buy product
-  // and the reason i am passing location.state to the login page is after the user login i will redirect the user to place order Page
-  if (notAuthenticated)
-    return <Navigate to={'/login'} state={location.state} replace={true} />;
-
-  if (status === 'idle' || status === 'pending') return <ScreenLoading />;
-
   return (
     <>
-      <div className='shippingAddress_container'>
+      <div className="shippingAddress_container">
         <h2>Shipping Address</h2>
         <div
-          className='shippingAddress_newaddress'
+          className="shippingAddress_newaddress"
           onClick={() => setAddNewAddress({ type: 'Add Address', show: true })}
         >
           <FaPlus />
           <span>Add Address</span>
         </div>
-        <div className='shippingAddress_card_container'>
+        <div className="shippingAddress_card_container">
           {addressDetails?.length > 0 ? (
             addressDetails?.map((item, index) => (
               <div
                 key={index}
-                className='shippingAddress_card'
+                className="shippingAddress_card"
                 style={{
                   backgroundColor:
                     selectedAddressId === item?._id
@@ -140,7 +115,7 @@ const ShippingAddress = () => {
           )}
         </div>
 
-        <div className='shippingAddress_btn'>
+        <div className="shippingAddress_btn">
           <button onClick={submitAddress}>Continue</button>
         </div>
       </div>

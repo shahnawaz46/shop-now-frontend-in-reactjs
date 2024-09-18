@@ -88,17 +88,20 @@ const OrderSummary = () => {
         _id: res?.data?.product?._id,
       },
     ]);
+    setLoading(false);
   };
 
   useEffect(() => {
-    // storing productId from location state to useRef, to indentify that
+    // storing productId from 'location state' to productIDRef, to indentify that
     // if user is directly buying the product then location state have productID
-    // otherwise if user is coming from checkout (cart) then there is no productId is present in location state
+    // otherwise if user is coming from checkout (cart) then there is no productId is present in 'location state'
     productIDRef.current = location.state?.productId;
-    productIDRef.current
-      ? fetchProduct(productIDRef.current)
-      : setAllOrder(cartItems);
-    setLoading(false);
+    if (productIDRef.current) {
+      fetchProduct(productIDRef.current);
+    } else {
+      setAllOrder(cartItems);
+      setLoading(false);
+    }
   }, [cartItems]);
 
   if (loading) {
@@ -107,22 +110,22 @@ const OrderSummary = () => {
 
   return (
     <>
-      <div className='orderSummary_container'>
-        <div className='orderSummary_left_card'>
+      <div className="orderSummary_container">
+        <div className="orderSummary_left_card">
           <h2>Your Order Summary</h2>
 
-          <div className='orderSummary_card_container'>
+          <div className="orderSummary_card_container">
             {allOrders?.length > 0 ? (
               allOrders.map((product, index) => {
                 return (
-                  <div key={index} className='orderSummary_card'>
-                    <img src={product.productImage} alt='' />
-                    <div className='orderSummary_product_details'>
+                  <div key={index} className="orderSummary_card">
+                    <img src={product.productImage} alt="" />
+                    <div className="orderSummary_product_details">
                       <h3>{product.productName}</h3>
 
                       <h4>Size: {product.size}</h4>
-                      <div className='orderSummary_product_count'>
-                        <div className='orderSummary_product_add_remove'>
+                      <div className="orderSummary_product_count">
+                        <div className="orderSummary_product_add_remove">
                           <button
                             style={{
                               borderRight: '1px solid #e8e8e1',
@@ -184,10 +187,10 @@ const OrderSummary = () => {
           </div>
         </div>
 
-        <div className='orderSummary_right_card'>
+        <div className="orderSummary_right_card">
           <h2>Price Details</h2>
 
-          <div className='orderSummary_item_price'>
+          <div className="orderSummary_item_price">
             <div>
               <span>
                 Price (
@@ -212,17 +215,17 @@ const OrderSummary = () => {
             </div>
           </div>
 
-          <div className='orderSummary_total_price'>
+          <div className="orderSummary_total_price">
             <span>Total Payable</span>
             <span>Rs. {totalPrice}</span>
           </div>
 
-          <p className='orderSummary_message'>
+          <p className="orderSummary_message">
             Delivery fee and taxes (if applicable) to be calculating during
             order summary
           </p>
 
-          <div className='orderSummary_btn'>
+          <div className="orderSummary_btn">
             <button onClick={handleOrderSummary}>Continue</button>
           </div>
         </div>

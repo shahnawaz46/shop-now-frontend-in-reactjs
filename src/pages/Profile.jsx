@@ -22,7 +22,7 @@ const Profile = () => {
   }, []);
 
   useEffect(() => {
-    if (status === 'failed') {
+    if (status === 'failed' || personalDetails == null) {
       clearStateAndStorage();
       setNotAuthenticated(true);
     }
