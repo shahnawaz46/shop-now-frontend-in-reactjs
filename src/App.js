@@ -16,7 +16,6 @@ import {
 } from './pages';
 import ScrollTop from './components/ScrollTop';
 import Toastify from './utils/Toastify';
-import { fetchHomePageProducts } from './redux/slices/ProductSlice';
 import { getCartItem } from './redux/slices/CartSlice';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -29,7 +28,6 @@ function App() {
   useEffect(() => {
     // console.log("useEffect App.js");
     dispatch(getCartItem());
-    dispatch(fetchHomePageProducts());
   }, []);
 
   return (
@@ -38,19 +36,19 @@ function App() {
       <Toastify />
       <Routes>
         <Route index element={<IndexPageLoading />} />
-        <Route path='/home' element={<HomePage />} />
-        <Route path='collections'>
+        <Route path="/home" element={<HomePage />} />
+        <Route path="collections">
           <Route path="Men's-Wardrobe" element={<MenProducts />} />
           <Route path="Women's-Wardrobe" element={<WomenProducts />} />
         </Route>
-        <Route path='/top-selling' element={<TopSelling />} />
-        <Route path='/new-products' element={<NewProducts />} />
-        <Route path='/preview/:productId' element={<Preview />} />
-        <Route path='/place-order' element={<PlaceOrder />} />
-        <Route path='*' element={<PageNotFound />} />
+        <Route path="/top-selling" element={<TopSelling />} />
+        <Route path="/new-products" element={<NewProducts />} />
+        <Route path="/preview/:productId" element={<Preview />} />
+        <Route path="/place-order" element={<PlaceOrder />} />
+        <Route path="*" element={<PageNotFound />} />
 
         <Route
-          path='/my-account/:page'
+          path="/my-account/:page"
           element={
             <PrivateRoute>
               <Profile />
@@ -59,7 +57,7 @@ function App() {
         />
 
         <Route
-          path='/login'
+          path="/login"
           element={
             <AuthPrivateRoute>
               <Login />
@@ -67,7 +65,7 @@ function App() {
           }
         />
         <Route
-          path='/signup'
+          path="/signup"
           element={
             <AuthPrivateRoute>
               <Signup />

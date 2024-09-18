@@ -2,12 +2,6 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axiosInstance from '../../axios/AxiosInstance';
 
 const initialState = {
-  homePageProducts: {
-    status: 'idle',
-    topRatingProducts: [],
-    topTrendingProducs: [],
-    error: null,
-  },
   menProducts: {
     products: { next: null, data: [] },
     subCategory: [],
@@ -21,21 +15,6 @@ const initialState = {
     error: null,
   },
 };
-
-export const fetchHomePageProducts = createAsyncThunk(
-  'homePageProducts/fetch',
-  async () => {
-    const [topTrendingProductRes, topRatingProductRes] = await Promise.all([
-      axiosInstance.get('/product/top-trending'),
-      axiosInstance.get('/product/top-rated'),
-    ]);
-
-    return {
-      topTrendingProductRes: topTrendingProductRes.data.products,
-      topRatingProductRes: topRatingProductRes.data.products,
-    };
-  }
-);
 
 export const fetchMenProducts = createAsyncThunk(
   'menProduct/fetch',
@@ -79,17 +58,6 @@ export const productSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchHomePageProducts.fulfilled, (state, action) => {
-        state.homePageProducts.status = 'success';
-        state.homePageProducts.topTrendingProducs =
-          action.payload.topTrendingProductRes;
-        state.homePageProducts.topRatingProducts =
-          action.payload.topRatingProductRes;
-      })
-      .addCase(fetchHomePageProducts.rejected, (state, action) => {
-        state.homePageProducts.status = 'failed';
-        state.homePageProducts.error = action.error.message;
-      })
       .addCase(fetchMenProducts.pending, (state, action) => {
         state.menProducts.status = 'pending';
       })

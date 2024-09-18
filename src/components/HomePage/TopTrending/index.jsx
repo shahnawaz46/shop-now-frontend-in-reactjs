@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { toast } from 'react-toastify';
+
+// carousel
 import AliceCarousel from 'react-alice-carousel';
 import 'react-alice-carousel/lib/alice-carousel.css';
-import { useSelector } from 'react-redux';
-import { Link } from 'react-router-dom';
 
 // components
 import './style.css';
 import HeadingAndParagraph from '../HeadingAndParagraph';
+import axiosInstance from '../../../axios/AxiosInstance';
 
 const responsive = {
   0: { items: 1 },
@@ -18,23 +21,33 @@ const responsive = {
 };
 
 const TopTrending = () => {
-  const {
-    homePageProducts: { topTrendingProducs },
-  } = useSelector((state) => state.allProducts);
-
+  const [allTrendingProducts, setAllTrendingProducts] = useState([]);
   const [targetAudience, settargetAudience] = useState('Men');
-  const [products, setProducts] = useState([]);
+  const [currentProducts, setCurrentProducts] = useState([]);
 
   const handleDragStart = (e) => e.preventDefault();
 
+  // assigning current products based on selected audience
   useEffect(() => {
-    if (topTrendingProducs.length > 0) {
-      const filtered = topTrendingProducs.find(
+    if (allTrendingProducts.length > 0) {
+      const filtered = allTrendingProducts.find(
         (item) => item.targetAudience === targetAudience
       );
-      setProducts(filtered ? filtered.trendingProducts : []);
+      setCurrentProducts(filtered ? filtered.trendingProducts : []);
     }
-  }, [topTrendingProducs, targetAudience]);
+  }, [allTrendingProducts, targetAudience]);
+
+  // fetching top trending products after the components mount
+  useEffect(() => {
+    (async function () {
+      try {
+        const res = await axiosInstance.get('/product/top-trending');
+        setAllTrendingProducts(res.data.products);
+      } catch (err) {
+        toast.error(err?.response?.data?.error || err?.message);
+      }
+    })();
+  }, []);
 
   return (
     <div
@@ -49,9 +62,9 @@ const TopTrending = () => {
         para={'Pick up for outfit inspiration and must have looks'}
       />
 
-      <div className='trending-button-container'>
+      <div className="trending-button-container">
         <button
-          className='trending-toggle-button'
+          className="trending-toggle-button"
           style={{
             backgroundColor: targetAudience === 'Men' && '#030342',
             color: targetAudience === 'Men' && 'white',
@@ -61,7 +74,7 @@ const TopTrending = () => {
           Men
         </button>
         <button
-          className='trending-toggle-button'
+          className="trending-toggle-button"
           style={{
             backgroundColor: targetAudience === 'Women' && '#030342',
             color: targetAudience === 'Women' && 'white',
@@ -81,14 +94,14 @@ const TopTrending = () => {
           disableDotsControls={true}
           disableButtonsControls={true}
           mouseTracking
-          items={products.map((product) => (
+          items={currentProducts.map((product) => (
             <Link to={`/preview/${product?.productId}`} key={product?._id}>
               <img
                 src={product?.productPicture?.img}
                 onDragStart={handleDragStart}
-                role='presentation'
-                className='trending-product-images'
-                alt='product-not-found'
+                role="presentation"
+                className="trending-product-images"
+                alt="product-not-found"
               />
             </Link>
           ))}
