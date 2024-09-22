@@ -50,64 +50,68 @@ const TopTrending = () => {
   }, []);
 
   return (
-    <div
-      style={{
-        textAlign: 'center',
-        marginBottom: '200px',
-        margin: '20px 10px 30px 10px',
-      }}
-    >
-      <HeadingAndParagraph
-        heading={'Top Trending Products'}
-        para={'Pick up for outfit inspiration and must have looks'}
-      />
-
-      <div className="trending-button-container">
-        <button
-          className="trending-toggle-button"
+    <>
+      {currentProducts.length > 0 ? (
+        <div
           style={{
-            backgroundColor: targetAudience === 'Men' && '#030342',
-            color: targetAudience === 'Men' && 'white',
+            textAlign: 'center',
+            marginBottom: '200px',
+            margin: '20px 10px 30px 10px',
           }}
-          onClick={() => settargetAudience('Men')}
         >
-          Men
-        </button>
-        <button
-          className="trending-toggle-button"
-          style={{
-            backgroundColor: targetAudience === 'Women' && '#030342',
-            color: targetAudience === 'Women' && 'white',
-          }}
-          onClick={() => settargetAudience('Women')}
-        >
-          Women
-        </button>
-      </div>
+          <HeadingAndParagraph
+            heading={'Top Trending Products'}
+            para={'Pick up for outfit inspiration and must have looks'}
+          />
 
-      <div style={{ marginTop: '20px' }}>
-        <AliceCarousel
-          responsive={responsive}
-          autoPlay={true}
-          animationDuration={1500}
-          infinite={true}
-          disableDotsControls={true}
-          disableButtonsControls={true}
-          mouseTracking
-          items={currentProducts.map((product) => (
-            <Link to={`/preview/${product?.productId}`} key={product?._id}>
-              <img
-                src={product?.productPicture?.img}
-                onDragStart={handleDragStart}
-                role="presentation"
-                className="trending-product-images"
-                alt="product-not-found"
-              />
-            </Link>
-          ))}
-        />
-      </div>
-    </div>
+          <div className="trending-button-container">
+            <button
+              className="trending-toggle-button"
+              style={{
+                backgroundColor: targetAudience === 'Men' && '#030342',
+                color: targetAudience === 'Men' && 'white',
+              }}
+              onClick={() => settargetAudience('Men')}
+            >
+              Men
+            </button>
+            <button
+              className="trending-toggle-button"
+              style={{
+                backgroundColor: targetAudience === 'Women' && '#030342',
+                color: targetAudience === 'Women' && 'white',
+              }}
+              onClick={() => settargetAudience('Women')}
+            >
+              Women
+            </button>
+          </div>
+
+          <div style={{ marginTop: '20px' }}>
+            <AliceCarousel
+              responsive={responsive}
+              autoPlay={true}
+              animationDuration={1500}
+              infinite={true}
+              disableDotsControls={true}
+              disableButtonsControls={true}
+              mouseTracking
+              items={currentProducts.map((product) => (
+                <Link to={`/preview/${product?.productId}`} key={product?._id}>
+                  <img
+                    src={product?.productPicture?.img}
+                    onDragStart={handleDragStart}
+                    role="presentation"
+                    className="trending-product-images"
+                    alt="product-not-found"
+                  />
+                </Link>
+              ))}
+            />
+          </div>
+        </div>
+      ) : null}
+    </>
   );
 };
 
