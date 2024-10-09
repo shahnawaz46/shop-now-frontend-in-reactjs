@@ -1,0 +1,54 @@
+.otpverification-container {
+  /* border: 1px solid black; */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  width: 100%;
+  padding: 20px 12px;
+  background-color: #fff;
+  width: 450px;
+  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+  border-radius: 16px;
+}
+
+.otpverification-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.otpverification-header > h2 {
+  text-align: center;
+  font-weight: 500;
+  margin-bottom: 12px;
+}
+
+.optverification-form {
+  margin-top: 20px;
+}
+
+.optverification-form > input {
+  width: 50px;
+  height: 40px;
+  font-size: 22px;
+  text-align: center;
+  border: none;
+  border-bottom: 1px solid;
+  outline: none;
+  margin: 0px 5px;
+}
+
+.otpverification-button {
+  width: 120px;
+  padding: 6px;
+  font-size: 16px;
+  background: #18556b;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  margin-top: 50px;
+  cursor: pointer;
+}

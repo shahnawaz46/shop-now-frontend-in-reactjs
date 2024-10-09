@@ -27,7 +27,7 @@ const Signup = () => {
   const handleInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    console.log(name, value);
+
     setUser((prev) => ({ ...prev, [name]: value }));
   };
 
@@ -52,11 +52,8 @@ const Signup = () => {
         phoneNo,
         ...rest,
       });
-      localStorage.setItem('__f_id', res.data.userId);
 
-      setLoading(false);
-
-      // navigate('/home', { replace: true });
+      navigate(`/account/verify?${res.data.email}`, { replace: true });
     } catch (err) {
       setLoading(false);
       toast.error(err?.response?.data?.error || err?.message);
