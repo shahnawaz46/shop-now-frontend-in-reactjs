@@ -1,3 +1,5 @@
+import moment from 'moment';
+
 export const FormValidation = (data) => {
   for (let value in data) {
     if (data[value] === '')
@@ -12,6 +14,17 @@ export const FormValidation = (data) => {
       validation: false,
       msg: 'Phone number must be 10 digit',
     };
+
+  // Users cannot select a date of birth that indicates an age is less than 10 years
+  // if user still able to select dob then this check will work
+  const dob = moment(data.dob);
+  const age = moment().diff(dob, 'years');
+  if (age < 10) {
+    return {
+      validation: false,
+      msg: 'You must be at least 10 years old to create an account',
+    };
+  }
 
   if (data.password.length < 8)
     return {

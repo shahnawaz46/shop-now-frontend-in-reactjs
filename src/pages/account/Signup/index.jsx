@@ -1,32 +1,34 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { BiHide, BiShow } from 'react-icons/bi';
 
 // components
 import './style.css';
-import axiosInstance from '../../axios/AxiosInstance';
-import { FormValidation } from '../../utils/FormValidation';
-import { ScreenLoading } from '../../components/Loaders';
+import axiosInstance from '../../../axios/AxiosInstance';
+import { FormValidation } from '../../../utils/FormValidation';
+import { ScreenLoading } from '../../../components/Loaders';
 
 const Signup = () => {
   const navigate = useNavigate();
-
   const [user, setUser] = useState({
     first_name: '',
     last_name: '',
     email: '',
     phone_no: '',
+    dob: '',
     password: '',
     confirm_password: '',
   });
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [maxDate, setMaxDate] = useState();
 
   const handleInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-    setUser({ ...user, [name]: value });
+    console.log(name, value);
+    setUser((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleForm = async (e) => {
@@ -54,12 +56,18 @@ const Signup = () => {
 
       setLoading(false);
 
-      navigate('/home', { replace: true });
+      // navigate('/home', { replace: true });
     } catch (err) {
       setLoading(false);
       toast.error(err?.response?.data?.error || err?.message);
     }
   };
+
+  useEffect(() => {
+    const date = new Date();
+    const lastYear = date.getFullYear() - 10;
+    setMaxDate(`${lastYear}-01-01`);
+  }, []);
 
   return (
     <>
@@ -110,6 +118,17 @@ const Signup = () => {
           </div>
 
           <div className="signup-input-container">
+            <label htmlFor="dob">Date of Birth</label>
+            <input
+              id="dob"
+              type="date"
+              name="dob"
+              onChange={handleInput}
+              max={maxDate}
+            />
+          </div>
+
+          <div className="signup-input-container">
             <label htmlFor="password">Password</label>
             <input
               id="password"
@@ -126,6 +145,7 @@ const Signup = () => {
               type={showPassword ? 'text' : 'password'}
               name="confirm_password"
               onChange={handleInput}
+              style={{ paddingRight: '40px' }}
             />
             {showPassword ? (
               <BiShow
@@ -149,7 +169,7 @@ const Signup = () => {
           <button className="signup-button">Sign Up</button>
           <h5>
             Already have account{' '}
-            <Link to="/login">
+            <Link to="/account/login">
               <span style={{ color: '#478ccd' }}>Click here</span>
             </Link>
           </h5>

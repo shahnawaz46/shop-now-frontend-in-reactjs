@@ -17,8 +17,8 @@ import {
 import ScrollTop from './components/ScrollTop';
 import Toastify from './utils/Toastify';
 import { getCartItem } from './redux/slices/CartSlice';
-import Login from './pages/Login';
-import Signup from './pages/Signup';
+import Login from './pages/account/Login';
+import Signup from './pages/account/Signup';
 import { AuthPrivateRoute, PrivateRoute } from './routes';
 import PlaceOrder from './pages/PlaceOrder';
 
@@ -57,7 +57,7 @@ function App() {
         />
 
         <Route
-          path="/login"
+          path="/account/login"
           element={
             <AuthPrivateRoute>
               <Login />
@@ -65,7 +65,7 @@ function App() {
           }
         />
         <Route
-          path="/signup"
+          path="/account/signup"
           element={
             <AuthPrivateRoute>
               <Signup />

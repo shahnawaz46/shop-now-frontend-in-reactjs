@@ -28,7 +28,8 @@ const Profile = () => {
     }
   }, [status]);
 
-  if (notAuthenticated) return <Navigate to={'/login'} replace={true} />;
+  if (notAuthenticated)
+    return <Navigate to={'/account/login'} replace={true} />;
 
   if (status === 'idle' || status === 'pending') return <ScreenLoading />;
 

@@ -11,7 +11,7 @@ const PrivateRoute = ({ children }) => {
   const previousRoute = location?.state?.from || '/home';
 
   if (!isAuthenticated)
-    return <Navigate to={'/login'} replace={previousRoute} />;
+    return <Navigate to={'/account/login'} replace={previousRoute} />;
 
   return children;
 };

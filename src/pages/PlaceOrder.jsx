@@ -42,7 +42,9 @@ const PlaceOrder = () => {
   // location.stata have product data that i am passing from PreviewProduct component for buy product
   // and the reason i am passing location.state to the login page is after the user login i will redirect the user to place order Page
   if (notAuthenticated)
-    return <Navigate to={'/login'} state={location.state} replace={true} />;
+    return (
+      <Navigate to={'/account/login'} state={location.state} replace={true} />
+    );
 
   if (status === 'idle' || status === 'pending') return <ScreenLoading />;
 

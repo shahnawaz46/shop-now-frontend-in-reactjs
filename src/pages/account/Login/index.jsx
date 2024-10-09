@@ -4,8 +4,8 @@ import { toast } from 'react-toastify';
 
 // components
 import './style.css';
-import axiosInstance from '../../axios/AxiosInstance';
-import { ScreenLoading } from '../../components/Loaders';
+import axiosInstance from '../../../axios/AxiosInstance';
+import { ScreenLoading } from '../../../components/Loaders';
 
 const Login = () => {
   const navigate = useNavigate();
@@ -73,7 +73,7 @@ const Login = () => {
           <span>or</span>
           <h5>
             Don't have account{' '}
-            <Link to="/signup" style={{ color: '#478ccd' }}>
+            <Link to="/account/signup" style={{ color: '#478ccd' }}>
               Click here
             </Link>
           </h5>

@@ -59,7 +59,7 @@ const Cart = ({ show, setShow }) => {
     if (Object.keys(personalDetails).length > 0) {
       navigate(`/place-order?step=1`);
     } else {
-      navigate('/login', { state: { from: location.pathname } });
+      navigate('/account/login', { state: { from: location.pathname } });
     }
   };
 
