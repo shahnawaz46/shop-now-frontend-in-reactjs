@@ -15,6 +15,7 @@
     "rc-slider": "^11.1.6",
     "react": "^18.2.0",
     "react-alice-carousel": "^2.7.1",
+    "react-device-detect": "^2.2.3",
     "react-dom": "^18.2.0",
     "react-icons": "^5.3.0",
     "react-intersection-observer": "^9.8.1",
@@ -26,7 +27,7 @@
     "web-vitals": "^4.2.3"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "set PORT=4001 && react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

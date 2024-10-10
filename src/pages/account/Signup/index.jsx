@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { BiHide, BiShow } from 'react-icons/bi';
+import { deviceDetect, browserName } from 'react-device-detect';
 
 // components
 import './style.css';
@@ -23,6 +24,7 @@ const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [maxDate, setMaxDate] = useState();
+  const [deviceInfo, setDeviceInfo] = useState({});
 
   const handleInput = (e) => {
     const name = e.target.name;
@@ -51,6 +53,7 @@ const Signup = () => {
         lastName,
         phoneNo,
         ...rest,
+        ...deviceInfo,
       });
 
       navigate(`/account/verify?${res.data.email}`, { replace: true });
@@ -64,6 +67,21 @@ const Signup = () => {
     const date = new Date();
     const lastYear = date.getFullYear() - 10;
     setMaxDate(`${lastYear}-01-01`);
+  }, []);
+
+  useEffect(() => {
+    (function () {
+      try {
+        const device = deviceDetect();
+        const info = {
+          device: device?.osName || device?.os,
+          browser: browserName,
+        };
+        setDeviceInfo(info);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
   }, []);
 
   return (

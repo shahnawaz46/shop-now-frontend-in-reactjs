@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { deviceDetect, browserName } from 'react-device-detect';
 
 // components
 import './style.css';
@@ -13,6 +14,7 @@ const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
+  const [deviceInfo, setDeviceInfo] = useState({});
 
   const formHandle = async (e) => {
     e.preventDefault();
@@ -21,7 +23,11 @@ const Login = () => {
 
     setLoading(true); // for show loading screen after clicked on Login button
     try {
-      const res = await axiosInstance.post('/user/signin', { email, password });
+      const res = await axiosInstance.post('/user/signin', {
+        email,
+        password,
+        ...deviceInfo,
+      });
       localStorage.setItem('__f_id', res.data.userId);
 
       setLoading(false);
@@ -37,8 +43,27 @@ const Login = () => {
     } catch (err) {
       setLoading(false);
       toast.error(err?.response?.data?.error || err?.message);
+
+      if (err?.response?.data?.error === 'User not verified, Please verify') {
+        navigate(`/account/verify?${email}`, { replace: true });
+      }
     }
   };
+
+  useEffect(() => {
+    (function () {
+      try {
+        const device = deviceDetect();
+        const info = {
+          device: device?.osName || device?.os,
+          browser: browserName,
+        };
+        setDeviceInfo(info);
+      } catch (err) {
+        console.log(err);
+      }
+    })();
+  }, []);
 
   return (
     <>
