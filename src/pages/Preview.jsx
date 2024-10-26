@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 // components
 import RootLayout from '../components/Layout/RooLayout';
@@ -14,18 +15,22 @@ const Preview = () => {
   const [previewProduct, setPreviewProduct] = useState({});
 
   const getProductForPreview = async () => {
-    // using promise.all for calling multiple api paralleley
-    // 1st API for getting single product based on productId
-    // 2nd API for updating top-trending product count based on event
-    const [previewRes, trendingRes] = await Promise.all([
-      axiosInstance.get(`/product/single/${productId}`),
-      axiosInstance.post('/product/top-trending', {
-        productId,
-        userId: localStorage.getItem('__f_id'),
-        eventType: 'visit',
-      }),
-    ]);
-    setPreviewProduct({ ...previewRes.data.product });
+    try {
+      // using promise.all for calling multiple api paralleley
+      // 1st API for getting single product based on productId
+      // 2nd API for updating top-trending product count based on event
+      const [previewRes, trendingRes] = await Promise.all([
+        axiosInstance.get(`/product/single/${productId}`),
+        axiosInstance.post('/product/top-trending', {
+          productId,
+          userId: localStorage.getItem('__f_id'),
+          eventType: 'visit',
+        }),
+      ]);
+      setPreviewProduct({ ...previewRes.data.product });
+    } catch (err) {
+      toast.error(err?.response?.data?.error || err?.message);
+    }
   };
 
   useEffect(() => {

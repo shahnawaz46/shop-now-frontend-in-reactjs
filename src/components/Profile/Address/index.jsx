@@ -23,62 +23,58 @@ const Address = () => {
       toast.success(res.data.msg);
       dispatch(deleteAddress(_id));
     } catch (error) {
-      if (error?.response?.data?.msg) {
-        toast.error(error?.response?.data?.msg);
-      } else {
-        toast.error(error?.message);
-      }
+      toast.error(error?.response?.data?.error || error?.message);
     }
   };
 
   return (
-    <div className='address_container'>
+    <div className="address_container">
       {addressDetails?.length === 0 ? (
-        <div className='address_not_available_container'>
-          <FaRegAddressBook className='address_icon' />
-          <div className='address_not_available_content'>
+        <div className="address_not_available_container">
+          <FaRegAddressBook className="address_icon" />
+          <div className="address_not_available_content">
             <h3>You haven't Added any Addresses</h3>
             <button
               onClick={() =>
                 setShowAddress({ type: 'Add Address', show: true })
               }
-              className='address_not_available_btn'
+              className="address_not_available_btn"
             >
               Add Address
             </button>
           </div>
         </div>
       ) : (
-        <div className='address_available_container'>
-          <div className='address_add_container'>
+        <div className="address_available_container">
+          <div className="address_add_container">
             <h3>Saved Addresses</h3>
             <button
               onClick={() =>
                 setShowAddress({ type: 'Add Address', show: true })
               }
-              className='address_add_button'
+              className="address_add_button"
             >
               Add Address
             </button>
           </div>
-          <div className='address_details_container'>
+          <div className="address_details_container">
             {addressDetails?.map((value, index) => (
-              <div key={index} className='address_details'>
-                <span className='address_user_name'>{value.name}</span>
-                <span className='address_detail'>{value.address}</span>
-                <span className='address_detail'>
+              <div key={index} className="address_details">
+                <span className="address_user_name">{value.name}</span>
+                <span className="address_detail">{value.address}</span>
+                <span className="address_detail">
                   {value.state} - {value.pinCode}
                 </span>
-                <span className='address_detail'>
+                <span className="address_detail">
                   {value.city_DistrictTown}
                 </span>
-                <span className='address_detail'>
+                <span className="address_detail">
                   Landmark : {value.landmark}
                 </span>
-                <span className='address-person-mobile-no'>
+                <span className="address-person-mobile-no">
                   Phone no : {value.mobileNumber}
                 </span>
-                <div className='address-edit-remove-button'>
+                <div className="address-edit-remove-button">
                   <button
                     style={{ marginRight: '5px' }}
                     onClick={() => {

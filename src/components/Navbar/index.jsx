@@ -50,7 +50,7 @@ const Navbar = () => {
       setSearchItems({ status: true, result: res.data.result });
       setActiveSuggestion(0);
     } catch (err) {
-      toast.error(err?.reponse?.data?.error || err?.message);
+      toast.error(err?.response?.data?.error || err?.message);
     }
   };
 
@@ -94,7 +94,7 @@ const Navbar = () => {
     <>
       <div style={{ backgroundColor: 'black' }}>
         <marquee
-          direction='left'
+          direction="left"
           style={{
             color: 'white',
             margin: '-4px',
@@ -107,10 +107,10 @@ const Navbar = () => {
       </div>
 
       {/* desktop and tab navbar */}
-      <div className='navbar-container'>
-        <div className='navbar'>
-          <div className='website-name'>
-            <Link to='/home'>
+      <div className="navbar-container">
+        <div className="navbar">
+          <div className="website-name">
+            <Link to="/home">
               <h3>
                 <span style={{ color: 'red' }}>Shop</span>Now
               </h3>
@@ -121,12 +121,12 @@ const Navbar = () => {
             className={condition ? 'navbar-item mobile-navbar' : 'navbar-item'}
           >
             {/* this icon will show only in mobile Navbar */}
-            <div className='close-icon' onClick={() => setCondition(false)}>
+            <div className="close-icon" onClick={() => setCondition(false)}>
               <MdClose />
             </div>
 
             {navLinks.map((nav, index) => (
-              <div className='navbar-link' key={index}>
+              <div className="navbar-link" key={index}>
                 <NavLink
                   to={nav.link}
                   className={({ isActive }) =>
@@ -140,10 +140,10 @@ const Navbar = () => {
             ))}
           </div>
 
-          <div className='navbar-icons'>
+          <div className="navbar-icons">
             {/* search bar for large device */}
             <div style={{ position: 'relative' }}>
-              <div className='navbar_search_bar'>
+              <div className="navbar_search_bar">
                 <BiSearch
                   style={{
                     fontSize: '25px',
@@ -152,15 +152,15 @@ const Navbar = () => {
                   }}
                 />
                 <input
-                  type='text'
-                  placeholder='Search item'
+                  type="text"
+                  placeholder="Search item"
                   onChange={(e) => handleChange(e.target.value)}
                   onKeyDown={handleMoveAndSelect}
                 />
               </div>
 
               {/* show search Results */}
-              <div className='navbar_search_item'>
+              <div className="navbar_search_item">
                 {searchItems.status && (
                   <SearchResults
                     result={searchItems.result}
@@ -170,13 +170,13 @@ const Navbar = () => {
               </div>
 
               <BiSearch
-                className='icon navbar_search_bar_icon'
+                className="icon navbar_search_bar_icon"
                 onClick={() => setSearch(true)}
               />
             </div>
-            <div className='navbar-cart' onClick={() => setShowCart(true)}>
+            <div className="navbar-cart" onClick={() => setShowCart(true)}>
               <FiShoppingBag
-                className='icon'
+                className="icon"
                 onClick={() => setShowCart(true)}
               />
               <span>{cartQuantity()}</span>
@@ -185,10 +185,10 @@ const Navbar = () => {
               to={'/my-account/address'}
               state={{ from: location.pathname }}
             >
-              <MdPerson className='icon profile-icon' />
+              <MdPerson className="icon profile-icon" />
             </Link>
             <RiMenu2Line
-              className='menu-icon'
+              className="menu-icon"
               onClick={() => setCondition(true)}
             />
           </div>
@@ -197,7 +197,7 @@ const Navbar = () => {
         {/* only for mobile screen */}
         <div>
           {search ? (
-            <div className='search-field'>
+            <div className="search-field">
               <BiSearch
                 style={{
                   fontSize: '25px',
@@ -206,8 +206,8 @@ const Navbar = () => {
                 }}
               />
               <input
-                type='text'
-                placeholder='Search item'
+                type="text"
+                placeholder="Search item"
                 onChange={(e) => handleChange(e.target.value)}
                 onKeyDown={handleMoveAndSelect}
               />
@@ -219,7 +219,7 @@ const Navbar = () => {
           ) : null}
 
           {/* show search Results */}
-          <div className='navbar_search_item_mobile'>
+          <div className="navbar_search_item_mobile">
             {searchItems.status && (
               <SearchResults
                 result={searchItems.result}

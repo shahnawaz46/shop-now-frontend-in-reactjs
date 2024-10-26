@@ -30,13 +30,7 @@ const EditProfile = () => {
       dispatch(updatePersonDetail(res.data.userDetail));
       // return res.data.userDetail
     } catch (error) {
-      if (error?.response?.data?.msg) {
-        // console.log(error?.response?.data?.msg)
-        toast.error(error?.response?.data?.msg);
-      } else {
-        // console.log(error);
-        toast.error(error.message);
-      }
+      toast.error(error?.response?.data?.error || error?.message);
     }
   };
 
@@ -46,15 +40,15 @@ const EditProfile = () => {
   };
 
   return (
-    <div className='editprofile_container'>
-      <div className='editprofile_form_container'>
+    <div className="editprofile_container">
+      <div className="editprofile_form_container">
         <h2>Edit Details</h2>
-        <form className='editprofile_form' onSubmit={EditFormhandle}>
-          <div className='editprofile_input'>
-            <label htmlFor='first_name'>First Name</label>
+        <form className="editprofile_form" onSubmit={EditFormhandle}>
+          <div className="editprofile_input">
+            <label htmlFor="first_name">First Name</label>
             <input
-              type='text'
-              id='first_name'
+              type="text"
+              id="first_name"
               value={editUserDetail?.firstName}
               onChange={(e) =>
                 setEditUserDetail({
@@ -65,11 +59,11 @@ const EditProfile = () => {
             />
           </div>
 
-          <div className='editprofile_input'>
-            <label htmlFor='last_name'>Last Name</label>
+          <div className="editprofile_input">
+            <label htmlFor="last_name">Last Name</label>
             <input
-              type='text'
-              id='last_name'
+              type="text"
+              id="last_name"
               value={editUserDetail?.lastName}
               onChange={(e) =>
                 setEditUserDetail({
@@ -80,11 +74,11 @@ const EditProfile = () => {
             />
           </div>
 
-          <div className='editprofile_input'>
-            <label htmlFor='phone_no'>Phone No</label>
+          <div className="editprofile_input">
+            <label htmlFor="phone_no">Phone No</label>
             <input
-              type='number'
-              id='phone_no'
+              type="number"
+              id="phone_no"
               value={editUserDetail?.phoneNo}
               readOnly
               onChange={(e) =>
@@ -96,18 +90,18 @@ const EditProfile = () => {
             />
 
             <button
-              className='editprofile-edit-phone-no-button'
+              className="editprofile-edit-phone-no-button"
               onClick={changeMobileNo}
             >
               Change
             </button>
           </div>
 
-          <div className='editprofile_input'>
-            <label htmlFor='email'>Email</label>
+          <div className="editprofile_input">
+            <label htmlFor="email">Email</label>
             <input
-              type='email'
-              id='email'
+              type="email"
+              id="email"
               value={editUserDetail?.email}
               onChange={(e) =>
                 setEditUserDetail({ ...editUserDetail, email: e.target.value })
@@ -115,11 +109,11 @@ const EditProfile = () => {
             />
           </div>
 
-          <div className='editprofile_input'>
-            <label htmlFor='location'>Location</label>
+          <div className="editprofile_input">
+            <label htmlFor="location">Location</label>
             <input
-              type='text'
-              id='location'
+              type="text"
+              id="location"
               value={editUserDetail?.location || ''}
               onChange={(e) =>
                 setEditUserDetail({
@@ -130,7 +124,7 @@ const EditProfile = () => {
             />
           </div>
 
-          <button className='editprofile_button'>Save Changes</button>
+          <button className="editprofile_button">Save Changes</button>
         </form>
       </div>
     </div>

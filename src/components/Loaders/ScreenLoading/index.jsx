@@ -1,14 +1,14 @@
 import React from 'react';
 import { HashLoader } from 'react-spinners';
 
-const ScreenLoading = ({ backgroundColor = '#fff' }) => {
+const ScreenLoading = ({ backgroundColor = '#fff', position = 'fixed' }) => {
   return (
     <div
       style={{
         width: '100%',
         height: '100%',
         backgroundColor: backgroundColor,
-        position: 'fixed',
+        position: position,
         inset: 0,
         zIndex: 999,
       }}

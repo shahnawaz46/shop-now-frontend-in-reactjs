@@ -32,11 +32,7 @@ const ShippingAddress = () => {
       toast.success(res.data.msg);
       dispatch(updateAddress(res.data.address));
     } catch (error) {
-      if (error?.response?.data?.msg) {
-        toast.error(error?.response?.data?.msg);
-      } else {
-        toast.error(error?.message);
-      }
+      toast.error(error?.response?.data?.error || error?.message);
     }
   };
 

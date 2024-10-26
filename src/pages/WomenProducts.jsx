@@ -96,9 +96,9 @@ const WomenProducts = () => {
       <SidebarLayout subCategory={subCategory}>
         {searchParam.toString() ? (
           filterProducts.status === 'loading' ? (
-            <ScreenLoading />
+            <ScreenLoading position="absolute" />
           ) : filterProducts.item.length > 0 ? (
-            <div className='product-container'>
+            <div className="product-container">
               {filterProducts.item.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
@@ -107,7 +107,7 @@ const WomenProducts = () => {
             <NotFound>No Filtered Products Available</NotFound>
           )
         ) : products.data.length > 0 ? (
-          <div className='product-container'>
+          <div className="product-container">
             {products.data.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}

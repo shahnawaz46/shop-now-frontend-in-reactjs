@@ -109,7 +109,7 @@ const Payment = () => {
             toast.error('Payment failed please try again');
             // razorPay.close();
           } catch (err) {
-            toast.error(err?.response?.error?.msg || err?.message);
+            toast.error(err?.response?.data?.error || err?.message);
           }
         });
       }
@@ -122,30 +122,30 @@ const Payment = () => {
   };
 
   return (
-    <div className='payment_container'>
+    <div className="payment_container">
       <h2>Payment Methods</h2>
-      <div className='payment_method_container'>
+      <div className="payment_method_container">
         <span>Choose One</span>
-        <div className='payment_method'>
+        <div className="payment_method">
           <input
-            type='radio'
-            name='payment_method'
-            id='cash_payment'
+            type="radio"
+            name="payment_method"
+            id="cash_payment"
             onChange={(e) => setPaymentMethod('cod')}
           />
-          <label htmlFor='cash_payment'>Cash on Delivery</label>
+          <label htmlFor="cash_payment">Cash on Delivery</label>
         </div>
-        <div className='payment_method'>
+        <div className="payment_method">
           <input
-            type='radio'
-            name='payment_method'
-            id='card_payment'
+            type="radio"
+            name="payment_method"
+            id="card_payment"
             onChange={(e) => setPaymentMethod('card')}
           />
-          <label htmlFor='card_payment'>Card Payment</label>
+          <label htmlFor="card_payment">Card Payment</label>
         </div>
       </div>
-      <div className='payment_placeOrder_btn'>
+      <div className="payment_placeOrder_btn">
         <button onClick={handleConfirmOrder}>Order Now</button>
       </div>
     </div>

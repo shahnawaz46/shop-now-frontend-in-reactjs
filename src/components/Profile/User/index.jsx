@@ -41,18 +41,14 @@ const User = ({ userData }) => {
       toast.success('successfully');
       dispatch(updatePersonDetail(res.data.userDetails));
     } catch (error) {
-      if (error?.response?.data?.msg) {
-        toast.error(error?.response?.data?.msg);
-      } else {
-        toast.error(error.message);
-      }
+      toast.error(error?.response?.data?.error || error?.message);
     }
 
     e.target.file = null;
   };
 
   return (
-    <div className='profile-main-box'>
+    <div className="profile-main-box">
       <h2
         style={{
           textAlign: 'center',
@@ -64,10 +60,10 @@ const User = ({ userData }) => {
       </h2>
 
       {/* user personal details */}
-      <div className='profile-detail-main-box'>
-        <div className='profile-picture-box'>
+      <div className="profile-detail-main-box">
+        <div className="profile-picture-box">
           <img
-            alt='Remy Sharp'
+            alt="Remy Sharp"
             src={
               userData?.profilePicture ||
               'https://media.istockphoto.com/id/1288129985/vector/missing-image-of-a-person-placeholder.jpg?s=612x612&w=0&k=20&c=9kE777krx5mrFHsxx02v60ideRWvIgI1RWzR1X4MG2Y='
@@ -79,53 +75,53 @@ const User = ({ userData }) => {
               borderRadius: '50%',
             }}
           />
-          <label htmlFor='for-upload-profile'>
-            <BsFillCameraFill className='profile-edit-icon' />
+          <label htmlFor="for-upload-profile">
+            <BsFillCameraFill className="profile-edit-icon" />
             <input
-              type='file'
-              accept='.png, .jpg, .jpeg, .avif, .webp'
-              id='for-upload-profile'
+              type="file"
+              accept=".png, .jpg, .jpeg, .avif, .webp"
+              id="for-upload-profile"
               style={{ display: 'none' }}
               onChange={updateProfileFnc}
             />
           </label>
         </div>
-        <div className='profile-detail-box'>
-          <h2 className='profile-name-box'>{`${userData?.firstName} ${userData?.lastName}`}</h2>
-          <div className='profile-details'>
+        <div className="profile-detail-box">
+          <h2 className="profile-name-box">{`${userData?.firstName} ${userData?.lastName}`}</h2>
+          <div className="profile-details">
             First Name - {userData?.firstName}
           </div>
-          <div className='profile-details'>
+          <div className="profile-details">
             Last Name - {userData?.lastName}
           </div>
-          <div className='profile-details'>Email - {userData?.email}</div>
-          <div className='profile-details'>
+          <div className="profile-details">Email - {userData?.email}</div>
+          <div className="profile-details">
             Mobile No. - {userData?.phoneNo}
           </div>
 
-          <button className='profile-user-button' onClick={logoutHandle}>
+          <button className="profile-user-button" onClick={logoutHandle}>
             Logout
           </button>
         </div>
       </div>
 
       {/* tabs */}
-      <div className='profile-main-features-box'>
-        <ul className='profile-main-features-ul'>
+      <div className="profile-main-features-box">
+        <ul className="profile-main-features-ul">
           <NavLink
-            to='/my-account/address'
+            to="/my-account/address"
             className={({ isActive }) => (isActive ? 'active-tab' : '')}
           >
             <li>Your Address</li>
           </NavLink>
           <NavLink
-            to='/my-account/edit-profile'
+            to="/my-account/edit-profile"
             className={({ isActive }) => (isActive ? 'active-tab' : '')}
           >
             <li>Edit Profile</li>
           </NavLink>
           <NavLink
-            to='/my-account/orders'
+            to="/my-account/orders"
             className={({ isActive }) => (isActive ? 'active-tab' : '')}
           >
             <li>Your Order</li>
@@ -146,7 +142,7 @@ const User = ({ userData }) => {
           </NavLink> */}
         </ul>
       </div>
-      <div className='profile-features-box'>
+      <div className="profile-features-box">
         {page === 'address' && <Address />}
 
         {page === 'edit-profile' && <EditProfile />}

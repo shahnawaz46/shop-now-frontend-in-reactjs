@@ -55,9 +55,7 @@ const TopSelling = () => {
           ...prev,
           status: 'success',
           next: res.data.next,
-          item: fetchMore
-            ? [...prev.item, ...res.data.topSellingProducts]
-            : res.data.topSellingProducts,
+          item: fetchMore ? [...prev.item, ...res.data.item] : res.data.item,
         }));
       } catch (err) {
         setFilterProducts((prev) => ({ ...prev, status: 'failed' }));
@@ -108,9 +106,9 @@ const TopSelling = () => {
       >
         {searchParam.toString() ? (
           filterProducts.status === 'loading' ? (
-            <ScreenLoading />
+            <ScreenLoading position="absolute" />
           ) : filterProducts.item.length > 0 ? (
-            <div className='product-container'>
+            <div className="product-container">
               {filterProducts.item.map((product) => (
                 <ProductCard key={product._id} product={product} />
               ))}
@@ -119,7 +117,7 @@ const TopSelling = () => {
             <NotFound>No Filtered Products Available</NotFound>
           )
         ) : products.item.length > 0 ? (
-          <div className='product-container'>
+          <div className="product-container">
             {products.item.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}

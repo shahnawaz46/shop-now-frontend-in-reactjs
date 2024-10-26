@@ -73,13 +73,7 @@ const AddressForm = (props) => {
 
       toast.success(res.data.msg);
     } catch (error) {
-      if (error?.response?.data?.msg) {
-        // console.log(error?.response?.data?.msg);
-        toast.error(error?.response?.data?.msg);
-      } else {
-        // console.log(error);
-        toast.error(error?.message);
-      }
+      toast.error(error?.response?.data?.error || error?.message);
     }
 
     setShowAddress({ type: '', show: false });
@@ -96,48 +90,48 @@ const AddressForm = (props) => {
       >
         <form
           onSubmit={(e) => handleForm(e, showAddress.type)}
-          className='address-form'
+          className="address-form"
           style={{ filter: laodingForPinCode ? 'blur(1px)' : 'blur(0)' }}
         >
-          <div className='address-form-delivery-tag'>
+          <div className="address-form-delivery-tag">
             <h2>Add New Address</h2>
           </div>
-          <div className='address-form-box-part-II'>
-            <div className='address-form-input-filed-box'>
+          <div className="address-form-box-part-II">
+            <div className="address-form-input-filed-box">
               <div style={{ marginRight: '5px', width: '100%' }}>
-                <h4 className='address-form-input-field-name'>Full Name</h4>
+                <h4 className="address-form-input-field-name">Full Name</h4>
                 <input
-                  type='text'
+                  type="text"
                   value={userAddress.name || ''}
-                  name='name'
-                  className='address-form-input'
+                  name="name"
+                  className="address-form-input"
                   onChange={handleInput}
                   required
                 />
               </div>
 
               <div style={{ width: '100%' }}>
-                <h4 className='address-form-input-field-name'>Mobile Number</h4>
+                <h4 className="address-form-input-field-name">Mobile Number</h4>
                 <input
-                  type='number'
+                  type="number"
                   value={userAddress.mobileNumber || ''}
-                  name='mobileNumber'
-                  className='address-form-input'
+                  name="mobileNumber"
+                  className="address-form-input"
                   onChange={handleInput}
                   required
                 />
               </div>
             </div>
 
-            <div className='address-form-input-filed-box'>
+            <div className="address-form-input-filed-box">
               <div style={{ marginRight: '5px', width: '100%' }}>
-                <h4 className='address-form-input-field-name'>Pincode</h4>
+                <h4 className="address-form-input-field-name">Pincode</h4>
                 <input
-                  type='text'
+                  type="text"
                   value={userAddress.pinCode || ''}
-                  name='pinCode'
-                  maxLength='6'
-                  className='address-form-input'
+                  name="pinCode"
+                  maxLength="6"
+                  className="address-form-input"
                   onChange={handleInput}
                   required
                 />
@@ -149,31 +143,31 @@ const AddressForm = (props) => {
               </div>
 
               <div style={{ width: '100%' }}>
-                <h4 className='address-form-input-field-name'>State</h4>
+                <h4 className="address-form-input-field-name">State</h4>
                 <input
-                  type='text'
+                  type="text"
                   value={userAddress.state || ''}
                   readOnly
-                  className='address-form-input'
+                  className="address-form-input"
                   required
                 />
               </div>
             </div>
 
             <div style={{ width: '100%' }}>
-              <h4 className='address-form-input-field-name'>Address</h4>
+              <h4 className="address-form-input-field-name">Address</h4>
               <input
-                type='text'
+                type="text"
                 value={userAddress.address || ''}
-                name='address'
-                placeholder='House no. 101 Block no 32'
-                className='address-form-input'
+                name="address"
+                placeholder="House no. 101 Block no 32"
+                className="address-form-input"
                 onChange={handleInput}
                 required
               />
             </div>
 
-            <div className='address-form-input-filed-box'>
+            <div className="address-form-input-filed-box">
               <div
                 style={{
                   marginRight: '5px',
@@ -181,13 +175,13 @@ const AddressForm = (props) => {
                   position: 'relative',
                 }}
               >
-                <h4 className='address-form-input-field-name'>Locality</h4>
+                <h4 className="address-form-input-field-name">Locality</h4>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <input
-                    type='text'
-                    name='locality'
+                    type="text"
+                    name="locality"
                     value={userAddress.locality || ''}
-                    className='address-form-input'
+                    className="address-form-input"
                     onChange={(e) =>
                       setUserAddress({
                         ...userAddress,
@@ -209,14 +203,14 @@ const AddressForm = (props) => {
                   )}
                 </div>
                 {showLocalityList && (
-                  <div className='address-form-show-locality-box'>
+                  <div className="address-form-show-locality-box">
                     {/* <ul> */}
                     {locality.length > 0 &&
                       locality.map((value, index) => {
                         return (
                           <span
                             key={index}
-                            className='address-form-show-locality'
+                            className="address-form-show-locality"
                             onClick={() => {
                               setUserAddress({
                                 ...userAddress,
@@ -235,53 +229,53 @@ const AddressForm = (props) => {
               </div>
 
               <div style={{ width: '100%' }}>
-                <h4 className='address-form-input-field-name'>
+                <h4 className="address-form-input-field-name">
                   City/District Town
                 </h4>
                 <input
-                  type='text'
+                  type="text"
                   value={userAddress.cityDistrictTown || ''}
                   readOnly
-                  className='address-form-input'
+                  className="address-form-input"
                   required
                 />
               </div>
             </div>
 
             <div>
-              <h4 className='address-form-input-field-name'>
+              <h4 className="address-form-input-field-name">
                 landmark <span style={{ fontSize: '15px' }}>(optional)</span>
               </h4>
               <input
-                type='text'
+                type="text"
                 value={userAddress.landmark || ''}
-                name='landmark'
-                placeholder='Near Apolo Hospital'
-                className='address-form-input'
+                name="landmark"
+                placeholder="Near Apolo Hospital"
+                className="address-form-input"
                 onChange={handleInput}
               />
 
-              <h4 className='address-form-input-field-name'>
+              <h4 className="address-form-input-field-name">
                 Alternate Phone Number{' '}
                 <span style={{ fontSize: '15px' }}>(optional)</span>
               </h4>
               <input
-                type='text'
+                type="text"
                 value={userAddress.alternatePhone || ''}
-                name='alternatePhone'
-                className='address-form-input'
+                name="alternatePhone"
+                className="address-form-input"
                 onChange={handleInput}
               />
             </div>
           </div>
-          <h4 className='address-form-input-field-name'>Addres Type</h4>
+          <h4 className="address-form-input-field-name">Addres Type</h4>
           <div style={{ display: 'flex', alignItems: 'center', gap: '20px' }}>
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <input
                 style={{ marginRight: '2px' }}
-                type='radio'
+                type="radio"
                 checked={userAddress.addressType == 'home' && true}
-                name='addressType'
+                name="addressType"
                 onChange={(e) =>
                   setUserAddress({ ...userAddress, [e.target.name]: 'home' })
                 }
@@ -292,9 +286,9 @@ const AddressForm = (props) => {
             <div style={{ display: 'flex', alignItems: 'center' }}>
               <input
                 style={{ marginRight: '2px' }}
-                type='radio'
+                type="radio"
                 checked={userAddress.addressType == 'work' && true}
-                name='addressType'
+                name="addressType"
                 onChange={(e) =>
                   setUserAddress({ ...userAddress, [e.target.name]: 'work' })
                 }
@@ -303,16 +297,16 @@ const AddressForm = (props) => {
               <span>Work</span>
             </div>
           </div>
-          <div className='address-form-buttons'>
+          <div className="address-form-buttons">
             <button
-              className='address-form-buttton'
+              className="address-form-buttton"
               id={invalidPinCodeMessage && 'disable-add-address-button'}
               disabled={invalidPinCodeMessage}
             >
               {showAddress.type}
             </button>
             <button
-              className='address-form-buttton'
+              className="address-form-buttton"
               onClick={() => {
                 setUserAddress({});
                 setShowAddress(false);
