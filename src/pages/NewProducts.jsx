@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { debounce } from 'lodash';
 import { toast } from 'react-toastify';
@@ -8,20 +7,19 @@ import { useInView } from 'react-intersection-observer';
 // components
 import RootLayout from '../components/Layout/RooLayout';
 import ProductCard from '../components/ProductCard';
-import {
-  anotherProductUpdate,
-  fetchNewestProducts,
-} from '../redux/slices/AnotherProductSlice';
 import { ScreenLoading, PaginationLoading } from '../components/Loaders';
 import NotFound from '../components/NotFound';
 import SidebarLayout from '../components/Layout/SidebarLayout';
 import axiosInstance from '../axios/AxiosInstance';
+import useFetch from '../common/useFetch';
+import { API_STATUS } from '../utils/Constants';
 
 const NewProducts = () => {
-  const dispatch = useDispatch();
-  const { status, products } = useSelector(
-    (state) => state.anotherProduct.newestProducts
-  );
+  const {
+    data: newestProducts,
+    status,
+    updateData,
+  } = useFetch('newestProducts', '/product/newest');
 
   const [filterProducts, setFilterProducts] = useState({
     status: 'loading',
@@ -36,12 +34,12 @@ const NewProducts = () => {
   const fetchMoreProducts = async (url) => {
     try {
       const res = await axiosInstance.get(url);
-      dispatch(
-        anotherProductUpdate({
-          stateName: 'newestProducts',
-          data: res.data,
-        })
-      );
+      let products = {
+        ...newestProducts?.products,
+        next: res.data?.products?.next,
+      };
+      products?.item?.push(...res.data?.products?.item);
+      updateData('newestProducts', 'products', products); // updating state
     } catch (err) {
       toast.error(err?.response?.data?.error || err?.message);
     }
@@ -79,18 +77,13 @@ const NewProducts = () => {
     if (inView) {
       if (searchParam.toString()) {
         fetchFilteredProducts(filterProducts.next, true);
-      } else if (products.next) {
-        fetchMoreProducts(products.next);
+      } else if (newestProducts?.products.next) {
+        fetchMoreProducts(newestProducts?.products.next);
       }
     }
   }, [inView]);
 
-  // fetching top selling products
-  useEffect(() => {
-    if (status === 'idle') dispatch(fetchNewestProducts());
-  }, []);
-
-  if (status === 'pending') return <ScreenLoading />;
+  if (status === API_STATUS.LOADING) return <ScreenLoading />;
 
   return (
     <RootLayout>
@@ -116,9 +109,9 @@ const NewProducts = () => {
           ) : (
             <NotFound>No Filtered Products Available</NotFound>
           )
-        ) : products.item.length > 0 ? (
+        ) : newestProducts?.products?.item?.length > 0 ? (
           <div className="product-container">
-            {products.item.map((product) => (
+            {newestProducts?.products?.item?.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
           </div>
@@ -133,7 +126,7 @@ const NewProducts = () => {
                 <PaginationLoading />
               </div>
             )
-          : products.next && (
+          : newestProducts?.products?.next && (
               <div ref={ref}>
                 <PaginationLoading />
               </div>

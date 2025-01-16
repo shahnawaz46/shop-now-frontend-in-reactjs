@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 // carousel
 import AliceCarousel from 'react-alice-carousel';
@@ -9,7 +8,7 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 // components
 import './style.css';
 import HeadingAndParagraph from '../HeadingAndParagraph';
-import axiosInstance from '../../../axios/AxiosInstance';
+import useFetch from '../../../common/useFetch';
 
 const responsive = {
   0: { items: 1 },
@@ -21,33 +20,25 @@ const responsive = {
 };
 
 const TopTrending = () => {
-  const [allTrendingProducts, setAllTrendingProducts] = useState([]);
   const [targetAudience, settargetAudience] = useState('Men');
   const [currentProducts, setCurrentProducts] = useState([]);
+  const { data: allTrendingProducts } = useFetch(
+    'allTrendingProducts',
+    '/product/top-trending',
+    2 * 60 * 1000
+  );
 
   const handleDragStart = (e) => e.preventDefault();
 
   // assigning current products based on selected audience
   useEffect(() => {
-    if (allTrendingProducts.length > 0) {
-      const filtered = allTrendingProducts.find(
+    if (allTrendingProducts?.products?.length > 0) {
+      const filtered = allTrendingProducts?.products.find(
         (item) => item.targetAudience === targetAudience
       );
       setCurrentProducts(filtered ? filtered.trendingProducts : []);
     }
   }, [allTrendingProducts, targetAudience]);
-
-  // fetching top trending products after the components mount
-  useEffect(() => {
-    (async function () {
-      try {
-        const res = await axiosInstance.get('/product/top-trending');
-        setAllTrendingProducts(res.data.products);
-      } catch (err) {
-        toast.error(err?.response?.data?.error || err?.message);
-      }
-    })();
-  }, []);
 
   return (
     <>

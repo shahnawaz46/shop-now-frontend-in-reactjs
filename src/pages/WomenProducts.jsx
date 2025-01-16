@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { debounce } from 'lodash';
@@ -8,20 +7,22 @@ import { useInView } from 'react-intersection-observer';
 // components
 import RootLayout from '../components/Layout/RooLayout';
 import ProductCard from '../components/ProductCard';
-import {
-  fetchWomenProducts,
-  updateProducts,
-} from '../redux/slices/ProductSlice';
 import axiosInstance from '../axios/AxiosInstance';
 import SidebarLayout from '../components/Layout/SidebarLayout';
 import NotFound from '../components/NotFound';
 import { ScreenLoading, PaginationLoading } from '../components/Loaders';
+import useFetch from '../common/useFetch';
+import { API_STATUS } from '../utils/Constants';
 
 const WomenProducts = () => {
-  const dispatch = useDispatch();
   const {
-    womenProducts: { products, subCategory, status },
-  } = useSelector((state) => state.allProducts);
+    data: womenProducts,
+    status,
+    updateData,
+  } = useFetch('womenProducts', [
+    "/category/Women's-Wardrobe",
+    '/product/all/Women',
+  ]);
 
   const [filterProducts, setFilterProducts] = useState({
     status: 'loading',
@@ -35,7 +36,12 @@ const WomenProducts = () => {
   const fetchMoreProducts = async (url) => {
     try {
       const res = await axiosInstance.get(url);
-      dispatch(updateProducts({ stateName: 'womenProducts', data: res.data }));
+      let products = {
+        ...womenProducts?.products,
+        next: res.data?.products?.next,
+      };
+      products?.data?.push(...res.data?.products?.data);
+      updateData('womenProducts', 'products', products); // updating state
     } catch (err) {
       toast.error(err?.response?.data?.error || err?.message);
     }
@@ -79,21 +85,17 @@ const WomenProducts = () => {
       if (searchParam.toString()) {
         filterProducts?.next &&
           fetchFilteredProducts(filterProducts.next, true);
-      } else if (products.next) {
-        fetchMoreProducts(products.next);
+      } else if (womenProducts?.products.next) {
+        fetchMoreProducts(womenProducts?.products.next);
       }
     }
   }, [inView]);
 
-  useEffect(() => {
-    if (status === 'idle') dispatch(fetchWomenProducts());
-  }, []);
-
-  if (status === 'pending') return <ScreenLoading />;
+  if (status === API_STATUS.LOADING) return <ScreenLoading />;
 
   return (
     <RootLayout>
-      <SidebarLayout subCategory={subCategory}>
+      <SidebarLayout subCategory={womenProducts?.categories || []}>
         {searchParam.toString() ? (
           filterProducts.status === 'loading' ? (
             <ScreenLoading position="absolute" />
@@ -106,9 +108,9 @@ const WomenProducts = () => {
           ) : (
             <NotFound>No Filtered Products Available</NotFound>
           )
-        ) : products.data.length > 0 ? (
+        ) : womenProducts?.products?.data?.length > 0 ? (
           <div className="product-container">
-            {products.data.map((product) => (
+            {womenProducts?.products?.data?.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
           </div>
@@ -123,7 +125,7 @@ const WomenProducts = () => {
                 <PaginationLoading />
               </div>
             )
-          : products.next && (
+          : womenProducts?.products?.next && (
               <div ref={ref}>
                 <PaginationLoading />
               </div>

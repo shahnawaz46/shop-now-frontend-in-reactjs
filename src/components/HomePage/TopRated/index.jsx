@@ -1,31 +1,22 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
-import { toast } from 'react-toastify';
 
 // components
 import './style.css';
 import HeadingAndParagraph from '../HeadingAndParagraph';
-import axiosInstance from '../../../axios/AxiosInstance';
+import useFetch from '../../../common/useFetch';
 
 const TopRated = () => {
-  const [topRatingProducts, setTopRatingProducts] = useState([]);
-
-  // fetching top trending products after the components mount
-  useEffect(() => {
-    (async function () {
-      try {
-        const res = await axiosInstance.get('/product/top-rated');
-        setTopRatingProducts(res.data.products);
-      } catch (err) {
-        toast.error(err?.response?.data?.error || err?.message);
-      }
-    })();
-  }, []);
+  const { data: topRatingProducts } = useFetch(
+    'topRatingProducts',
+    '/product/top-rated',
+    2 * 60 * 1000
+  );
 
   return (
     <>
-      {topRatingProducts.length > 0 ? (
+      {topRatingProducts?.products?.length > 0 ? (
         <div className="top-rated-container">
           <HeadingAndParagraph
             heading={'Top Rated Products'}
@@ -34,7 +25,7 @@ const TopRated = () => {
             }
           />
           <div className="top-rated-image-container">
-            {topRatingProducts.map((product, index) => (
+            {topRatingProducts?.products?.map((product, index) => (
               <Link to={`/preview/${product?._id}`} key={product?._id}>
                 <motion.img
                   whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}

@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { debounce } from 'lodash';
 import { toast } from 'react-toastify';
@@ -8,17 +7,19 @@ import { useInView } from 'react-intersection-observer';
 // components
 import RootLayout from '../components/Layout/RooLayout';
 import ProductCard from '../components/ProductCard';
-import { fetchMenProducts, updateProducts } from '../redux/slices/ProductSlice';
 import { ScreenLoading, PaginationLoading } from '../components/Loaders';
 import axiosInstance from '../axios/AxiosInstance';
 import SidebarLayout from '../components/Layout/SidebarLayout';
 import NotFound from '../components/NotFound';
+import useFetch from '../common/useFetch';
+import { API_STATUS } from '../utils/Constants';
 
 const MenProducts = () => {
-  const dispatch = useDispatch();
-  const { products, subCategory, status } = useSelector(
-    (state) => state.allProducts.menProducts
-  );
+  const {
+    data: menProducts,
+    status,
+    updateData,
+  } = useFetch('menProducts', ["/category/Men's-Wardrobe", '/product/all/Men']);
 
   const [filterProducts, setFilterProducts] = useState({
     status: 'loading',
@@ -33,7 +34,12 @@ const MenProducts = () => {
   const fetchMoreProducts = async (url) => {
     try {
       const res = await axiosInstance.get(url);
-      dispatch(updateProducts({ stateName: 'menProducts', data: res.data }));
+      let products = {
+        ...menProducts?.products,
+        next: res.data?.products?.next,
+      };
+      products?.data?.push(...res.data?.products?.data);
+      updateData('menProducts', 'products', products); // updating state
     } catch (err) {
       toast.error(err?.response?.data?.error || err?.message);
     }
@@ -76,24 +82,19 @@ const MenProducts = () => {
     if (inView) {
       if (searchParam.toString()) {
         fetchFilteredProducts(filterProducts.next, true);
-      } else if (products.next) {
-        fetchMoreProducts(products.next);
+      } else if (menProducts?.products.next) {
+        fetchMoreProducts(menProducts?.products.next);
       }
     }
   }, [inView]);
 
-  // fetching men products after landing on Men Product Page
-  useEffect(() => {
-    if (status === 'idle') dispatch(fetchMenProducts());
-  }, []);
-
-  if (status === 'pending') return <ScreenLoading />;
+  if (status === API_STATUS.LOADING) return <ScreenLoading />;
 
   // first i am checking if query is present in url then showing products that i am getting based on query
   // if query is not present in url then i am showing products that is present in redux
   return (
     <RootLayout>
-      <SidebarLayout subCategory={subCategory}>
+      <SidebarLayout subCategory={menProducts?.categories || []}>
         {searchParam.toString() ? (
           filterProducts.status === 'loading' ? (
             <ScreenLoading position="absolute" />
@@ -106,9 +107,9 @@ const MenProducts = () => {
           ) : (
             <NotFound>No Filtered Products Available</NotFound>
           )
-        ) : products?.data?.length > 0 ? (
+        ) : menProducts?.products?.data?.length > 0 ? (
           <div className="product-container">
-            {products?.data?.map((product) => (
+            {menProducts?.products?.data?.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
           </div>
@@ -123,7 +124,7 @@ const MenProducts = () => {
                 <PaginationLoading />
               </div>
             )
-          : products.next && (
+          : menProducts?.products?.next && (
               <div ref={ref}>
                 <PaginationLoading />
               </div>

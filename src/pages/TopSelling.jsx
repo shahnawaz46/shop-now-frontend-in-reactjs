@@ -1,5 +1,4 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { useSearchParams } from 'react-router-dom';
 import { debounce } from 'lodash';
 import { toast } from 'react-toastify';
@@ -8,20 +7,19 @@ import { useInView } from 'react-intersection-observer';
 // components
 import RootLayout from '../components/Layout/RooLayout';
 import ProductCard from '../components/ProductCard';
-import {
-  anotherProductUpdate,
-  fetchTopSellingProducts,
-} from '../redux/slices/AnotherProductSlice';
 import NotFound from '../components/NotFound';
 import SidebarLayout from '../components/Layout/SidebarLayout';
 import axiosInstance from '../axios/AxiosInstance';
 import { ScreenLoading, PaginationLoading } from '../components/Loaders';
+import useFetch from '../common/useFetch';
+import { API_STATUS } from '../utils/Constants';
 
 const TopSelling = () => {
-  const dispatch = useDispatch();
-  const { status, products } = useSelector(
-    (state) => state.anotherProduct.topSellingProducts
-  );
+  const {
+    data: topSellingProducts,
+    status,
+    updateData,
+  } = useFetch('topSellingProducts', '/product/top-selling');
 
   const [filterProducts, setFilterProducts] = useState({
     status: 'loading',
@@ -36,12 +34,13 @@ const TopSelling = () => {
   const fetchMoreProducts = async (url) => {
     try {
       const res = await axiosInstance.get(url);
-      dispatch(
-        anotherProductUpdate({
-          stateName: 'topSellingProducts',
-          data: res.data,
-        })
-      );
+      let products = {
+        ...topSellingProducts?.products,
+        next: res.data?.products?.next,
+      };
+
+      products?.item?.push(...res.data?.products?.item);
+      updateData('topSellingProducts', 'products', products); // updating state
     } catch (err) {
       toast.error(err?.response?.data?.error || err?.message);
     }
@@ -79,18 +78,13 @@ const TopSelling = () => {
     if (inView) {
       if (searchParam.toString()) {
         fetchFilteredProducts(filterProducts.next, true);
-      } else if (products.next) {
-        fetchMoreProducts(products.next);
+      } else if (topSellingProducts?.products.next) {
+        fetchMoreProducts(topSellingProducts?.products.next);
       }
     }
   }, [inView]);
 
-  // fetching top selling products
-  useEffect(() => {
-    if (status === 'idle') dispatch(fetchTopSellingProducts());
-  }, []);
-
-  if (status === 'pending') return <ScreenLoading />;
+  if (status === API_STATUS.LOADING) return <ScreenLoading />;
 
   return (
     <RootLayout>
@@ -116,9 +110,9 @@ const TopSelling = () => {
           ) : (
             <NotFound>No Filtered Products Available</NotFound>
           )
-        ) : products.item.length > 0 ? (
+        ) : topSellingProducts?.products?.item?.length > 0 ? (
           <div className="product-container">
-            {products.item.map((product) => (
+            {topSellingProducts?.products?.item?.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
           </div>
@@ -133,7 +127,7 @@ const TopSelling = () => {
                 <PaginationLoading />
               </div>
             )
-          : products.next && (
+          : topSellingProducts?.products?.next && (
               <div ref={ref}>
                 <PaginationLoading />
               </div>
