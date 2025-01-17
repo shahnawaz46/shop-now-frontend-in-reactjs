@@ -92,20 +92,6 @@ const Navbar = () => {
 
   return (
     <>
-      <div style={{ backgroundColor: 'black' }}>
-        <marquee
-          direction="left"
-          style={{
-            color: 'white',
-            margin: '-4px',
-            padding: '5px 0px',
-            width: '100%',
-          }}
-        >
-          Free Shipping All Over The India
-        </marquee>
-      </div>
-
       {/* desktop and tab navbar */}
       <div className="navbar-container">
         <div className="navbar">

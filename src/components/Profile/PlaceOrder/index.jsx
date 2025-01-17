@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaFileInvoiceDollar } from 'react-icons/fa';
 import { TbViewfinder } from 'react-icons/tb';
 import { toast } from 'react-toastify';
@@ -13,6 +13,7 @@ import Modal from '../../../common/Modal';
 import TrackOrder from '../TrackOrder';
 import { DELIVERY_CHARGE } from '../../PlaceOrderProcess/OrderSummary';
 import { ScreenLoading } from '../../Loaders';
+import { API_STATUS } from '../../../utils/Constants';
 
 const paymentMethod = {
   cod: 'Cash on Delivery',
@@ -26,6 +27,41 @@ const PlaceOrders = () => {
     show: false,
     data: {},
   });
+  const [downloadInvoiceStatus, setDownloadInvoiceStatus] = useState(
+    API_STATUS.IDLE
+  );
+  const navigate = useNavigate();
+
+  const downloadInvoice = async (orderId) => {
+    try {
+      setDownloadInvoiceStatus(API_STATUS.LOADING);
+      const res = await axiosInstance.get(`/generate-invoice/${orderId}`, {
+        responseType: 'blob',
+      });
+
+      // const blob = await res.blob();
+      const blob = new Blob([res.data, { type: 'application/pdf' }]);
+      const url = URL.createObjectURL(blob);
+      console.log(res.data, blob, url);
+
+      const a = document.createElement('a');
+      a.download = 'invoice.pdf';
+      a.href = url;
+      a.click();
+      setDownloadInvoiceStatus(API_STATUS.SUCCESS);
+    } catch (err) {
+      setDownloadInvoiceStatus(API_STATUS.FAILED);
+      // extract an error object from a Blob API Response
+      const error = await err?.response?.data?.text();
+      if (error) {
+        const parsedError = JSON.parse(error);
+        toast.error(parsedError?.error);
+        return;
+      }
+
+      toast.error(err?.response?.data?.error || err?.message);
+    }
+  };
 
   useEffect(() => {
     const fetchOrders = async () => {
@@ -43,37 +79,45 @@ const PlaceOrders = () => {
 
   return (
     <div
-      className='placeOrder_container'
+      className="placeOrder_container"
       style={{ height: loading ? '120px' : '100%' }}
     >
+      {/* show loading icon after user click on download invoice button */}
+      {downloadInvoiceStatus === API_STATUS.LOADING && (
+        <ScreenLoading backgroundColor="rgba(0,0,0,0.5)" />
+      )}
+
       {loading ? (
         <ScreenLoading />
       ) : !allOrders.length ? (
-        <div className='placeorder-no-order'>
-          <MdOutlineRemoveShoppingCart className='placeorder-icon' />
-          <div className='placeorder-no-order-content'>
+        <div className="placeorder-no-order">
+          <MdOutlineRemoveShoppingCart className="placeorder-icon" />
+          <div className="placeorder-no-order-content">
             <h3>You haven't placed any orders</h3>
             <h4>All your orders will appear here</h4>
           </div>
         </div>
       ) : (
-        <div className='placeOrder_card_container'>
+        <div className="placeOrder_card_container">
           {allOrders.map((value, index) => (
-            <div className='placeOrder_card' key={index}>
-              <div className='placeOrder_top'>
-                <span className='placeOrder_Id'>Order ID: {value.orderId}</span>
+            <div className="placeOrder_card" key={index}>
+              <div className="placeOrder_top">
+                <span className="placeOrder_Id">Order ID: {value.orderId}</span>
 
                 {/* only for large device */}
-                <div className='placeOrder_hide_in_smalldevice'>
+                <div className="placeOrder_hide_in_smalldevice">
                   {value?.paymentStatus !== 'failed' &&
                     (value?.status === 'delivered' ? (
-                      <div className='placeOrder_delivered'>
+                      <div
+                        className="placeOrder_delivered"
+                        onClick={() => downloadInvoice(value?.orderId)}
+                      >
                         <FaFileInvoiceDollar />
                         <span>Invoice</span>
                       </div>
                     ) : (
                       <div
-                        className='placeOrder_tack'
+                        className="placeOrder_tack"
                         onClick={() =>
                           setTrackOrderModal({
                             show: true,
@@ -91,20 +135,23 @@ const PlaceOrders = () => {
                 </div>
               </div>
 
-              <div className='placeOrder_date'>
+              <div className="placeOrder_date">
                 <p>Order Date: {getDate(value.orderDate)}</p>
               </div>
 
               {/* only for small device */}
-              <div className='placeOrder_hide_in_largedevice'>
+              <div className="placeOrder_hide_in_largedevice">
                 {value?.status === 'delivered' ? (
-                  <div className='placeOrder_delivered'>
+                  <div
+                    className="placeOrder_delivered"
+                    onClick={() => downloadInvoice(value?.orderId)}
+                  >
                     <FaFileInvoiceDollar />
                     <span>Invoice</span>
                   </div>
                 ) : (
                   <div
-                    className='placeOrder_tack'
+                    className="placeOrder_tack"
                     onClick={() =>
                       setTrackOrderModal({
                         show: true,
@@ -121,16 +168,21 @@ const PlaceOrders = () => {
                 )}
               </div>
 
-              <div className='placeOrder_item_container'>
+              <div className="placeOrder_item_container">
                 {value.items.map((item) => (
-                  <div key={item?._id} className='placeOrder_item'>
-                    <img src={item?.product?.productPictures[0]?.img} alt='' />
+                  <div key={item?._id} className="placeOrder_item">
+                    <img src={item?.product?.productPictures[0]?.img} alt="" />
                     <div>
-                      <h3 className='placeOrder_product_name'>
+                      <h3
+                        className="placeOrder_product_name"
+                        onClick={() =>
+                          navigate(`/preview/${item?.product?._id}`)
+                        }
+                      >
                         {item?.product?.productName}
                       </h3>
 
-                      <div className='placeOrder_size_qty'>
+                      <div className="placeOrder_size_qty">
                         <span>Size: {item.size}</span>
                         <span style={{ color: 'rgb(212 212 207)' }}>|</span>
                         <span>Quantity: {item.qty}</span>
@@ -142,8 +194,8 @@ const PlaceOrders = () => {
                 ))}
               </div>
 
-              <div className='placeOrder_delivery_details'>
-                <div className='placeOrder_payment'>
+              <div className="placeOrder_delivery_details">
+                <div className="placeOrder_payment">
                   <h4>
                     <span style={{ textDecoration: 'underline' }}>Payment</span>{' '}
                     {value?.paymentStatus === 'failed' && (
@@ -151,9 +203,9 @@ const PlaceOrders = () => {
                     )}
                   </h4>
                   {/* price details */}
-                  <div className='placeOrder_item_price_container'>
+                  <div className="placeOrder_item_price_container">
                     <p>{paymentMethod[value?.paymentMethod]} </p>
-                    <div className='placeOrder_item_price'>
+                    <div className="placeOrder_item_price">
                       <div>
                         <span>
                           Price (
@@ -181,23 +233,23 @@ const PlaceOrders = () => {
                       </div>
                     </div>
 
-                    <div className='placeOrder_total_price'>
+                    <div className="placeOrder_total_price">
                       <span>Total Amount</span>
                       <span>Rs. {value?.totalPrice}</span>
                     </div>
                   </div>
                 </div>
-                <div className='placeOrder_delivery'>
+                <div className="placeOrder_delivery">
                   <h4 style={{ textDecoration: 'underline' }}>Delivery</h4>
                   {value?.status === 'delivered' && (
-                    <div className='placeOrder_delivery_date'>
+                    <div className="placeOrder_delivery_date">
                       <p>
                         Your package has been delivered on{' '}
                         {getDate(value?.deliveredDate, false)}
                       </p>
                     </div>
                   )}
-                  <div className='placeOrder_delivery_address'>
+                  <div className="placeOrder_delivery_address">
                     {/* <span>ADDRESS</span> */}
                     <span>
                       ADDRESS: {value?.address?.address}

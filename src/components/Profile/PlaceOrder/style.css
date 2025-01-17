@@ -121,6 +121,7 @@
 .placeOrder_product_name {
   font-size: 17px;
   font-weight: 400;
+  cursor: pointer;
 }
 
 .placeOrder_size_qty {
