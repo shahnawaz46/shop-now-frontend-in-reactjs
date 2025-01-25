@@ -11,7 +11,7 @@ import axiosInstance from '../axios/AxiosInstance';
 import SidebarLayout from '../components/Layout/SidebarLayout';
 import NotFound from '../components/NotFound';
 import { ScreenLoading, PaginationLoading } from '../components/Loaders';
-import useFetch from '../common/useFetch';
+import useFetch from '../components/common/useFetch';
 import { API_STATUS } from '../utils/Constants';
 
 const WomenProducts = () => {

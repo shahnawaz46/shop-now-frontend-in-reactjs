@@ -1,0 +1,13 @@
+.custom-button {
+  padding: 10px;
+  font-size: 1.25rem;
+  border: none;
+  cursor: pointer;
+  border-radius: 8px;
+}
+
+@media only screen and (max-width: 500px) {
+  .custom-button {
+    font-size: 1rem;
+  }
+}

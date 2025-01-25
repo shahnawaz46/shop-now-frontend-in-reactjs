@@ -17,9 +17,7 @@ import {
 import ScrollTop from './components/ScrollTop';
 import Toastify from './utils/Toastify';
 import { getCartItem } from './redux/slices/CartSlice';
-import Login from './pages/account/Login';
-import Signup from './pages/account/Signup';
-import VerifyAccount from './pages/account/VerifyAccount';
+import { Login, Signup, VerifyAccount } from './pages/account';
 import { AuthPrivateRoute, PrivateRoute } from './routes';
 import PlaceOrder from './pages/PlaceOrder';
 

@@ -4,7 +4,7 @@ import { toast } from 'react-toastify';
 
 // components
 import './style.css';
-import Modal from '../../../common/Modal';
+import Modal from '../../common/Modal';
 import axiosInstance from '../../../axios/AxiosInstance';
 
 const WriteReview = ({
@@ -45,9 +45,9 @@ const WriteReview = ({
 
   return (
     <Modal open={writeReviewModal} onClose={() => setWriteReviewModal(false)}>
-      <div className='write_review_container'>
+      <div className="write_review_container">
         <h2>Write Review</h2>
-        <div className='write_review_rating_star'>
+        <div className="write_review_rating_star">
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             {[...Array(5)].map((_, index) => (
               <label
@@ -56,14 +56,14 @@ const WriteReview = ({
                 style={{ cursor: 'pointer' }}
               >
                 <input
-                  type='radio'
+                  type="radio"
                   value={index + 1}
                   id={`fill-star-${index + 1}`}
                   onClick={(e) => setStar(e.target.value)}
                   hidden
                 />
                 <BsFillStarFill
-                  size='22px'
+                  size="22px"
                   color={index < star ? '#f8a41b' : '#cccccc'}
                 />
               </label>
@@ -74,13 +74,13 @@ const WriteReview = ({
           </span>
         </div>
         <textarea
-          className='write_review_text_area'
-          id=''
-          cols='30'
-          rows='5'
+          className="write_review_text_area"
+          id=""
+          cols="30"
+          rows="5"
           onChange={(e) => setMessage(e.target.value)}
         />
-        <button className='write_review_btn' onClick={writeReviewFnc}>
+        <button className="write_review_btn" onClick={writeReviewFnc}>
           Submit
         </button>
       </div>

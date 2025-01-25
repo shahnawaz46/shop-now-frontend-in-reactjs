@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import axiosInstance from '../axios/AxiosInstance';
-import { API_STATUS } from '../utils/Constants';
+import axiosInstance from '../../axios/AxiosInstance';
+import { API_STATUS } from '../../utils/Constants';
 
 const dataMap = new Map();
 

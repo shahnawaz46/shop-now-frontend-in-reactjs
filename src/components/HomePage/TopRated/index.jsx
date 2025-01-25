@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 // components
 import './style.css';
 import HeadingAndParagraph from '../HeadingAndParagraph';
-import useFetch from '../../../common/useFetch';
+import useFetch from '../../common/useFetch';
 
 const TopRated = () => {
   const { data: topRatingProducts } = useFetch(

@@ -8,7 +8,7 @@ import 'react-alice-carousel/lib/alice-carousel.css';
 // components
 import './style.css';
 import HeadingAndParagraph from '../HeadingAndParagraph';
-import useFetch from '../../../common/useFetch';
+import useFetch from '../../common/useFetch';
 
 const responsive = {
   0: { items: 1 },

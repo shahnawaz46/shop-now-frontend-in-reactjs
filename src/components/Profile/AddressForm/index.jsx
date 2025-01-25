@@ -6,7 +6,7 @@ import { toast } from 'react-toastify';
 
 // components
 import './style.css';
-import Modal from '../../../common/Modal';
+import Modal from '../../common/Modal';
 import { addAddress, updateAddress } from '../../../redux/slices/UserSlice';
 import axiosInstance from '../../../axios/AxiosInstance';
 import { ScreenLoading } from '../../Loaders';

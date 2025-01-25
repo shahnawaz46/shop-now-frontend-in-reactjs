@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 import './style.css';
 import axiosInstance from '../../../axios/AxiosInstance';
 import { getDate } from '../../../utils/Date';
-import Modal from '../../../common/Modal';
+import Modal from '../../common/Modal';
 import TrackOrder from '../TrackOrder';
 import { DELIVERY_CHARGE } from '../../PlaceOrderProcess/OrderSummary';
 import { ScreenLoading } from '../../Loaders';

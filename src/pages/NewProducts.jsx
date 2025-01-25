@@ -11,7 +11,7 @@ import { ScreenLoading, PaginationLoading } from '../components/Loaders';
 import NotFound from '../components/NotFound';
 import SidebarLayout from '../components/Layout/SidebarLayout';
 import axiosInstance from '../axios/AxiosInstance';
-import useFetch from '../common/useFetch';
+import useFetch from '../components/common/useFetch';
 import { API_STATUS } from '../utils/Constants';
 
 const NewProducts = () => {

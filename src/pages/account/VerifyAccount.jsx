@@ -4,8 +4,10 @@ import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
 // components
 import './style.css';
-import axiosInstance from '../../../axios/AxiosInstance';
-import { ScreenLoading } from '../../../components/Loaders';
+import axiosInstance from '../../axios/AxiosInstance';
+import { ScreenLoading } from '../../components/Loaders';
+import FormTitle from '../../components/common/FormTitle';
+import CustomButton from '../../components/common/CustomButton';
 
 const VerifyAccount = () => {
   const location = useLocation();
@@ -58,45 +60,54 @@ const VerifyAccount = () => {
     <>
       {loading && <ScreenLoading backgroundColor="rgba(0,0,0,0.5)" />}
 
-      <div className="otpverification-container">
-        <div className="otpverification-header">
-          <h2>Email Verification</h2>
-          <p>Please Enter the 4 Digit Code Sent to Your Mail</p>
-          <p>{location?.search?.slice(1)}</p>
+      <div className="form-container">
+        <div className="form-sub-container otpverification-container">
+          <FormTitle text={'Email Verification'} justifyContent="center">
+            <p style={{ textAlign: 'center', marginTop: '12px' }}>
+              Please Enter the 4 Digit Code Sent to Your Mail
+            </p>
+            <p>{location?.search?.slice(1)}</p>
+          </FormTitle>
+
+          <form className="optverification-form" onSubmit={optHanlde}>
+            <input
+              type="text"
+              maxLength={1}
+              name="otp1"
+              required
+              onKeyUp={(e) => setOtpFnc(e, 0)}
+            />
+            <input
+              type="text"
+              maxLength={1}
+              name="otp2"
+              required
+              onKeyUp={(e) => setOtpFnc(e, 1)}
+            />
+            <input
+              type="text"
+              maxLength={1}
+              name="otp3"
+              required
+              onKeyUp={(e) => setOtpFnc(e, 2)}
+            />
+            <input
+              type="text"
+              maxLength={1}
+              name="otp4"
+              required
+              onKeyUp={(e) => setOtpFnc(e, 3)}
+            />
+            <div style={{ marginTop: '30px' }}>
+              <CustomButton
+                text={'Verify'}
+                type="submit"
+                backgroundColor="#18556b"
+                width="120px"
+              />
+            </div>
+          </form>
         </div>
-        <form className="optverification-form" onSubmit={optHanlde}>
-          <input
-            type="text"
-            maxLength={1}
-            name="otp1"
-            required
-            onKeyUp={(e) => setOtpFnc(e, 0)}
-          />
-          <input
-            type="text"
-            maxLength={1}
-            name="otp2"
-            required
-            onKeyUp={(e) => setOtpFnc(e, 1)}
-          />
-          <input
-            type="text"
-            maxLength={1}
-            name="otp3"
-            required
-            onKeyUp={(e) => setOtpFnc(e, 2)}
-          />
-          <input
-            type="text"
-            maxLength={1}
-            name="otp4"
-            required
-            onKeyUp={(e) => setOtpFnc(e, 3)}
-          />
-          <div>
-            <button className="otpverification-button">Verify</button>
-          </div>
-        </form>
       </div>
     </>
   );

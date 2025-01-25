@@ -10,7 +10,7 @@ import './style.css';
 import Sizes from '../Sizes';
 import { addToCart } from '../../../redux/slices/CartSlice';
 import AllReviews from '../../Review/allReviews';
-import { totalRating } from '../../../common/TotalRating';
+import { totalRating } from '../../../utils/TotalRating';
 
 const responsive = {
   0: { items: 1 },
@@ -59,22 +59,22 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
 
   return (
     <>
-      <div className='preview-main-box'>
+      <div className="preview-main-box">
         {/* only for large device */}
-        <div className='preview-pc-image-box'>
+        <div className="preview-pc-image-box">
           {previewProduct.productPictures.map((item, index) => (
             <img
               key={index}
               src={item.img}
-              loading='lazy'
-              alt='not found'
-              className='preview-image preview-image-space-box-one'
+              loading="lazy"
+              alt="not found"
+              className="preview-image preview-image-space-box-one"
             />
           ))}
         </div>
 
         {/* only for mobile device */}
-        <div className='preview-mobile-image-box'>
+        <div className="preview-mobile-image-box">
           <AliceCarousel
             responsive={responsive}
             autoPlay={true}
@@ -88,17 +88,17 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
                 key={item._id}
                 src={item.img}
                 // onDragStart={handleDragStart}
-                role='presentation'
-                className='preview-mobile-image preview-image-space-box-one'
-                alt='not-found'
+                role="presentation"
+                className="preview-mobile-image preview-image-space-box-one"
+                alt="not-found"
               />
             ))}
           />
         </div>
 
-        <div className='preview-box-two'>
+        <div className="preview-box-two">
           <h3>{previewProduct?.productName}</h3>
-          <div className='preview-product-rating'>
+          <div className="preview-product-rating">
             <AiFillStar
               style={{
                 fontSize: '22px',
@@ -107,11 +107,11 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
               }}
             />
             <span>{totalRating(previewProduct?.reviews)}</span>
-            <div className='product-review'>
+            <div className="product-review">
               <span>{previewProduct?.reviews.length} Reviews</span>
             </div>
           </div>
-          <div className='preview-price-box'>
+          <div className="preview-price-box">
             <h2>&#8377; {previewProduct?.sellingPrice}</h2>
             {previewProduct?.actualPrice > 0 && (
               <strike>&#8377; {previewProduct?.actualPrice}</strike>
@@ -131,23 +131,23 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
           {/* products sizes */}
           <Sizes productSize={productSize} setProductSize={setProductSize} />
 
-          <div className='preview-page-main-button-box'>
-            <button className='preview-page-main-button' onClick={addToCartFnc}>
+          <div className="preview-page-main-button-box">
+            <button className="preview-page-main-button" onClick={addToCartFnc}>
               ADD TO SHOP
             </button>
             <button
-              className='preview-page-main-button'
+              className="preview-page-main-button"
               onClick={PlaceOrderPageFunc}
             >
               BUY NOW
             </button>
           </div>
-          <div className='preview-shiping-page-box'>
+          <div className="preview-shiping-page-box">
             <p>
               Free Shipping on orders above ₹1500. Will ship within 3-6 days.
             </p>
           </div>
-          <div className='preview-product-description-box'>
+          <div className="preview-product-description-box">
             <h4>Description</h4>
             <pre>{previewProduct?.description}</pre>
           </div>
@@ -163,7 +163,7 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
 
       {reviewSize < previewProduct?.reviews?.length && (
         <button
-          className='review-all-review'
+          className="review-all-review"
           onClick={() => setReviewSize((prev) => prev + 5)}
         >
           See More
