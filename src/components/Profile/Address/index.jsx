@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FaRegAddressBook } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -6,16 +6,41 @@ import { toast } from 'react-toastify';
 // components
 import './style.css';
 import AddressForm from '../AddressForm';
-import ShowError from '../../ShowError';
 import axiosInstance from '../../../axios/AxiosInstance';
-import { deleteAddress, updateAddress } from '../../../redux/slices/UserSlice';
+import { deleteAddress } from '../../../redux/slices/UserSlice';
+
+const initialState = {
+  name: '',
+  mobileNumber: '',
+  pinCode: '',
+  state: '',
+  cityDistrictTown: '',
+  address: '',
+  locality: '',
+  landmark: '',
+  alternatePhone: '',
+  addressType: '',
+};
+
+export const AddressType = {
+  name: 'Full Name',
+  mobileNumber: 'Mobile Number',
+  pinCode: 'Pin Code',
+  state: 'State',
+  cityDistrictTown: 'City/District Town',
+  address: 'Address',
+  locality: 'Locality',
+  landmark: 'Landmark',
+  alternatePhone: 'Alternate Mobile Number',
+  addressType: 'Address Type',
+};
 
 const Address = () => {
   const dispatch = useDispatch();
   const { addressDetails } = useSelector((state) => state.user);
 
   const [showAddress, setShowAddress] = useState({ type: '', show: false });
-  const [userAddress, setUserAddress] = useState({});
+  const [userAddress, setUserAddress] = useState(initialState);
 
   const removeAddressFnc = async (_id) => {
     try {

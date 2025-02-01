@@ -32,14 +32,13 @@
   position: relative;
 }
 
-.input-container > input {
+.input-container input {
   padding: 7px;
   width: 100%;
   border: 1px solid rgb(217 216 216);
   border-radius: 4px;
   outline: none;
   font-size: 1rem;
-  padding-right: 40px;
 }
 
 .form-sub-container > h5 {
@@ -100,6 +99,20 @@
 }
 /* verify page CSS --> END */
 
+/* Address Form page CSS --> START */
+.input-container.input-container-address {
+  margin-bottom: 12px;
+}
+
+.input-container.width-50 {
+  width: 50%;
+}
+
+.input-container.input-container-address input {
+  margin-top: 5px;
+}
+/* Address Form page CSS --> END */
+
 @media screen and (max-width: 600px) {
   .form-sub-container.signup-container {
     width: 450px;
@@ -121,6 +134,12 @@
     flex-direction: column;
     gap: 0;
   }
+
+  /* Address Form page CSS --> START */
+  .input-container.width-50 {
+    width: 100%;
+  }
+  /* Address Form page CSS --> END */
 }
 
 @media only screen and (max-width: 400px) {

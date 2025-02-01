@@ -62,7 +62,7 @@ const VerifyAccount = () => {
 
       <div className="form-container">
         <div className="form-sub-container otpverification-container">
-          <FormTitle text={'Email Verification'} justifyContent="center">
+          <FormTitle text={'Email Verification'} alignItems="center">
             <p style={{ textAlign: 'center', marginTop: '12px' }}>
               Please Enter the 4 Digit Code Sent to Your Mail
             </p>

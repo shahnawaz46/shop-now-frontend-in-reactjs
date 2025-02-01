@@ -4,11 +4,23 @@ import './style.css';
 const FormTitle = ({
   text,
   children,
+  display = 'flex',
+  flexDirection = 'column',
   justifyContent = 'flex-start',
+  alignItems = 'flex-start',
+  marginBottom = '20px',
   fontWeight = 500,
 }) => {
   return (
-    <div className="title-container" style={{ justifyContent }}>
+    <div
+      style={{
+        display,
+        flexDirection,
+        alignItems,
+        justifyContent,
+        marginBottom,
+      }}
+    >
       <h1 className="title" style={{ fontWeight }}>
         {text}
       </h1>
