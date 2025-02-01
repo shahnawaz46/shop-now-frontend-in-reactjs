@@ -12,6 +12,8 @@ import { addAddress, updateAddress } from '../../../redux/slices/UserSlice';
 import axiosInstance from '../../../axios/AxiosInstance';
 import FormTitle from '../../common/FormTitle';
 import { AddressType } from '../Address';
+import { API_STATUS } from '../../../utils/Constants';
+import { ScreenLoading } from '../../Loaders';
 
 const AddressForm = (props) => {
   const { showAddress, setShowAddress, userAddress, setUserAddress } = props;
@@ -22,6 +24,7 @@ const AddressForm = (props) => {
   const [locality, setLocality] = useState([]);
   const [showLocalityList, setShowLocalityList] = useState(false);
   const [laodingForPinCode, setLoadingForPinCode] = useState(false);
+  const [status, setStatus] = useState(API_STATUS.IDLE);
 
   const handleInput = async (e) => {
     const name = e.target.name;
@@ -70,6 +73,7 @@ const AddressForm = (props) => {
     }
 
     try {
+      setStatus(API_STATUS.LOADING);
       let res;
       if (type === 'Update Address') {
         res = await axiosInstance.patch('/user/updateAddress', {
@@ -85,13 +89,19 @@ const AddressForm = (props) => {
       setUserAddress({});
 
       toast.success(res.data.msg);
+      setStatus(API_STATUS.SUCCESS);
     } catch (error) {
+      setStatus(API_STATUS.FAILED);
       toast.error(error?.response?.data?.error || error?.message);
     }
   };
 
   return (
     <>
+      {status === API_STATUS.LOADING && (
+        <ScreenLoading backgroundColor="rgba(0,0,0,0.5)" />
+      )}
+
       <Modal
         open={showAddress?.show}
         // onClose={() => setShowAddress({ type: '', show: false })}

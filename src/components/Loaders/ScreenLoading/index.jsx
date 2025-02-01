@@ -10,7 +10,7 @@ const ScreenLoading = ({ backgroundColor = '#fff', position = 'fixed' }) => {
         backgroundColor: backgroundColor,
         position: position,
         inset: 0,
-        zIndex: 999,
+        zIndex: 99999,
       }}
     >
       <div
