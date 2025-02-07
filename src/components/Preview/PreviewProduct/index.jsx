@@ -129,7 +129,11 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
           </div>
 
           {/* products sizes */}
-          <Sizes productSize={productSize} setProductSize={setProductSize} />
+          <Sizes
+            allSize={previewProduct?.size}
+            productSize={productSize}
+            setProductSize={setProductSize}
+          />
 
           <div className="preview-page-main-button-box">
             <button className="preview-page-main-button" onClick={addToCartFnc}>
