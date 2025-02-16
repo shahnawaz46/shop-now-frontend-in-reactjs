@@ -8,7 +8,11 @@
   border-radius: 5px;
 }
 
-.write_review_container > h2 {
+.write_review_header {
+  position: relative;
+}
+
+.write_review_header > h2 {
   font-weight: 400;
 }
 

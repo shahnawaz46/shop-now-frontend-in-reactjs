@@ -26,7 +26,7 @@ const Modal = ({ open, onClose, children }) => {
     <div
       id="review-modal"
       className="modal-container"
-      onClick={() => onClose && closeReviewModal()}
+      onClick={(e) => onClose && closeReviewModal(e)}
     >
       {children}
     </div>
