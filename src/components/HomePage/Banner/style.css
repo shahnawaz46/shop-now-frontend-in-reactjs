@@ -1,83 +1,17 @@
 .computer-banner-container {
-    position: relative;
-    height: 100%;
-}
-
-.banner-blank-image {
-    display: block;
-    max-width: 100%;
-    height: auto;
-}
-
-.banner-main-box {
-    position: absolute;
-    top: 0%;
-}
-
-.banner-image {
-    display: block;
-    max-width: 100%;
-    height: auto;
-}
-
-.banner-arrow-box {
-    width: 45px;
-    height: 45px;
-    padding: 15px 7px;
-    color: rgba(0, 0, 0, 0.5);
-    background-color: rgba(255, 255, 255, 0.7);
-    cursor: pointer;
-    user-select: none;
-    top: 45%;
-    z-index: 1;
-}
-
-.banner-right-arrow {
-    position: absolute;
-    right: 0%;
-}
-
-.banner-left-arrow {
-    position: absolute;
-    left: 0%;
-}
-
-.slide {
-    opacity: 0;
-}
-
-.slide.active {
-    opacity: 1;
-    transition: 1s all;
+  height: 100%;
 }
 
 .mobile-banner-main-position-box {
+  display: none;
+}
+
+@media only screen and (max-width: 768px) {
+  .computer-banner-container {
     display: none;
+  }
+
+  .mobile-banner-main-position-box {
+    display: block;
+  }
 }
-
-/* media query for mobile */
-
-@media only screen and (max-width:768px) {
-    .banner-arrow-box {
-        top: 40%;
-    }
-
-    .computer-banner-container {
-        display: none;
-    }
-
-    .mobile-banner-main-position-box {
-        display: block;
-        position: relative;
-    }
-}
-
-/* @media only screen and (max-width: 500px) {
-    .banner-main-position-box{
-        display: none;
-    }
-    .mobile-banner-main-position-box{
-        display: block;
-        position: relative;
-    }
-} */
