@@ -208,12 +208,7 @@ const AddressForm = (props) => {
                     name="locality"
                     type="text"
                     value={userAddress.locality || ''}
-                    onChange={(e) =>
-                      setUserAddress({
-                        ...userAddress,
-                        locality: e.target.value,
-                      })
-                    }
+                    onChange={handleInput}
                     required
                   />
                   {showLocalityList ? (

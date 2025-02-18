@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { useDispatch, useSelector } from 'react-redux';
@@ -7,7 +7,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import './style.css';
 import axiosInstance from '../../../axios/AxiosInstance';
 import { emptyCart } from '../../../redux/slices/CartSlice';
-import { apiUrl } from '../../../axios/UlrConfig';
 
 const Payment = () => {
   const dispatch = useDispatch();
@@ -68,7 +67,6 @@ const Payment = () => {
           image:
             'https://images.pexels.com/photos/1884581/pexels-photo-1884581.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
           order_id: createOrderRes.data.razorOrderId,
-          // callback_url: `${apiUrl}/user/paymentVerification/${res.data.orderId}`,
           handler: async (response) => {
             try {
               // Once the payment is processed, payment verification will be done in server.
@@ -79,7 +77,7 @@ const Payment = () => {
               navigate('/place-order?status=done', { replace: true });
             } catch (err) {
               toast.error('Payment Failed');
-              // console.log(err)
+              console.log(err);
             }
           },
           // customer details
@@ -131,7 +129,7 @@ const Payment = () => {
             type="radio"
             name="payment_method"
             id="cash_payment"
-            onChange={(e) => setPaymentMethod('cod')}
+            onChange={() => setPaymentMethod('cod')}
           />
           <label htmlFor="cash_payment">Cash on Delivery</label>
         </div>
@@ -140,7 +138,7 @@ const Payment = () => {
             type="radio"
             name="payment_method"
             id="card_payment"
-            onChange={(e) => setPaymentMethod('card')}
+            onChange={() => setPaymentMethod('card')}
           />
           <label htmlFor="card_payment">Card Payment</label>
         </div>

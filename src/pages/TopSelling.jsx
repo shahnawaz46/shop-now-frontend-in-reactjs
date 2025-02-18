@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { debounce } from 'lodash';
 import { toast } from 'react-toastify';
@@ -34,35 +34,36 @@ const TopSelling = () => {
   const fetchMoreProducts = async (url) => {
     try {
       const res = await axiosInstance.get(url);
-      let products = {
-        ...topSellingProducts?.products,
+      const products = {
         next: res.data?.products?.next,
+        item: [
+          ...(topSellingProducts?.products?.item || []),
+          ...(res.data?.products?.item || []),
+        ],
       };
 
-      products?.item?.push(...res.data?.products?.item);
       updateData('topSellingProducts', 'products', products); // updating state
     } catch (err) {
       toast.error(err?.response?.data?.error || err?.message);
     }
   };
 
-  const fetchFilteredProducts = useCallback(
-    debounce(async (url, fetchMore = false) => {
-      try {
-        const res = await axiosInstance.get(url);
-        setFilterProducts((prev) => ({
-          ...prev,
-          status: 'success',
-          next: res.data.next,
-          item: fetchMore ? [...prev.item, ...res.data.item] : res.data.item,
-        }));
-      } catch (err) {
-        setFilterProducts((prev) => ({ ...prev, status: 'failed' }));
-        toast.error(err?.response?.data?.error || err?.message);
-      }
-    }, 500),
-    []
-  );
+  const fetchFilteredProducts = debounce(async (url, fetchMore = false) => {
+    try {
+      const res = await axiosInstance.get(url);
+      setFilterProducts((prev) => ({
+        ...prev,
+        status: 'success',
+        next: res.data.products.next,
+        item: fetchMore
+          ? [...prev.item, ...res.data.products.item]
+          : res.data.products.item,
+      }));
+    } catch (err) {
+      setFilterProducts((prev) => ({ ...prev, status: 'failed' }));
+      toast.error(err?.response?.data?.error || err?.message);
+    }
+  });
 
   // useEffect for calling filteredProducts function based on query changed in url
   useEffect(() => {

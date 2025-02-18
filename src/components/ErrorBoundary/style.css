@@ -1,0 +1,33 @@
+.error-fallback {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  /* background-color: #f8d7da; */
+  color: #721c24;
+  /* text-align: center; */
+  padding: 20px;
+  border: 1px solid #f5c6cb;
+  border-radius: 5px;
+}
+
+.error-anchor {
+  color: #721c24;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.retry-button {
+  margin-top: 20px;
+  padding: 10px 20px;
+  background-color: #155724;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.retry-button:hover {
+  background-color: #1e7e34;
+}

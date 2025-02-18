@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState, memo } from 'react';
 import { FaRegAddressBook } from 'react-icons/fa';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -58,7 +58,7 @@ const Address = () => {
         <div className="address_not_available_container">
           <FaRegAddressBook className="address_icon" />
           <div className="address_not_available_content">
-            <h3>You haven't Added any Addresses</h3>
+            <h3>You haven&apos;t Added any Addresses</h3>
             <button
               onClick={() =>
                 setShowAddress({ type: 'Add Address', show: true })
@@ -133,4 +133,4 @@ const Address = () => {
   );
 };
 
-export default React.memo(Address);
+export default memo(Address);

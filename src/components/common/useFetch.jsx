@@ -10,7 +10,7 @@ const defaultTime = 24 * 60 * 60 * 1000;
 const useFetch = (key, URL, refetchIn = defaultTime) => {
   const [status, setStatus] = useState(API_STATUS.IDLE);
   const [error, setError] = useState('');
-  const [dateUpdated, setDateUpdated] = useState(0);
+  const setDateUpdated = useState(0)[1]; //  i am not using state that's why i am only taking stateFunction(for re-render)
 
   const fetchDate = async () => {
     // console.log(dataMap);

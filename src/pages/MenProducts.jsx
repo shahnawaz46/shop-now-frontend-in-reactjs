@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { debounce } from 'lodash';
 import { toast } from 'react-toastify';
@@ -34,11 +34,14 @@ const MenProducts = () => {
   const fetchMoreProducts = async (url) => {
     try {
       const res = await axiosInstance.get(url);
-      let products = {
-        ...menProducts?.products,
+      const products = {
         next: res.data?.products?.next,
+        item: [
+          ...(menProducts?.products?.item || []),
+          ...(res.data?.products?.item || []),
+        ],
       };
-      products?.data?.push(...res.data?.products?.data);
+
       updateData('menProducts', 'products', products); // updating state
     } catch (err) {
       toast.error(err?.response?.data?.error || err?.message);
@@ -46,25 +49,22 @@ const MenProducts = () => {
   };
 
   // fetching filteredProducts based on price and sub-category
-  const fetchFilteredProducts = useCallback(
-    debounce(async (url, fetchMore = false) => {
-      try {
-        const res = await axiosInstance.get(url);
-        setFilterProducts((prev) => ({
-          ...prev,
-          status: 'success',
-          next: res.data.next,
-          item: fetchMore
-            ? [...prev.item, ...res.data.subCategoryProducts]
-            : res.data.subCategoryProducts,
-        }));
-      } catch (err) {
-        setFilterProducts((prev) => ({ ...prev, status: 'failed' }));
-        toast.error(err?.response?.data?.error || err?.message);
-      }
-    }, 500),
-    []
-  );
+  const fetchFilteredProducts = debounce(async (url, fetchMore = false) => {
+    try {
+      const res = await axiosInstance.get(url);
+      setFilterProducts((prev) => ({
+        ...prev,
+        status: 'success',
+        next: res.data.products.next,
+        item: fetchMore
+          ? [...prev.item, ...res.data.products.subCategoryProducts]
+          : res.data.products.subCategoryProducts,
+      }));
+    } catch (err) {
+      setFilterProducts((prev) => ({ ...prev, status: 'failed' }));
+      toast.error(err?.response?.data?.error || err?.message);
+    }
+  });
 
   // useEffect for calling filteredProducts function based on query changed in url
   useEffect(() => {
@@ -107,9 +107,9 @@ const MenProducts = () => {
           ) : (
             <NotFound>No Filtered Products Available</NotFound>
           )
-        ) : menProducts?.products?.data?.length > 0 ? (
+        ) : menProducts?.products?.item?.length > 0 ? (
           <div className="product-container">
-            {menProducts?.products?.data?.map((product) => (
+            {menProducts?.products?.item?.map((product) => (
               <ProductCard key={product._id} product={product} />
             ))}
           </div>
