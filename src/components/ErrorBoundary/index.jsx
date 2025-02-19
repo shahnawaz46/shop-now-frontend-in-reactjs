@@ -8,7 +8,7 @@ const ClientErrorBoundary = ({ children }) => {
 };
 
 const ErrorFallback = ({ error, resetBoundary }) => {
-  console.log('ErrorFallback:', error);
+  // console.log('ErrorFallback:', error);
 
   return (
     <div className="error-fallback">

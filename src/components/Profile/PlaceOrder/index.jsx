@@ -42,7 +42,7 @@ const PlaceOrders = () => {
       // const blob = await res.blob();
       const blob = new Blob([res.data, { type: 'application/pdf' }]);
       const url = URL.createObjectURL(blob);
-      console.log(res.data, blob, url);
+      // console.log(res.data, blob, url);
 
       const a = document.createElement('a');
       a.download = 'invoice.pdf';
