@@ -21,6 +21,7 @@ const Payment = () => {
     if (!paymentMethod) return toast.error('Please Choose Payment');
 
     let orderDetails = {};
+    // if user buy product directly then i am sending data inside location state
     if (location.state?.productId) {
       const { addressId, price, productId, qty, size, totalPrice } =
         location.state;

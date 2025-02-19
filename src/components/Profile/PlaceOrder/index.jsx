@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { FaFileInvoiceDollar } from 'react-icons/fa';
 import { TbViewfinder } from 'react-icons/tb';
 import { toast } from 'react-toastify';
@@ -106,32 +106,41 @@ const PlaceOrders = () => {
 
                 {/* only for large device */}
                 <div className="placeOrder_hide_in_smalldevice">
-                  {value?.paymentStatus !== 'failed' &&
-                    (value?.status === 'delivered' ? (
-                      <div
-                        className="placeOrder_delivered"
-                        onClick={() => downloadInvoice(value?.orderId)}
-                      >
-                        <FaFileInvoiceDollar />
-                        <span>Invoice</span>
-                      </div>
-                    ) : (
-                      <div
-                        className="placeOrder_tack"
-                        onClick={() =>
-                          setTrackOrderModal({
-                            show: true,
-                            data: {
-                              status: value?.status,
-                              orderId: value?.orderId,
-                            },
-                          })
-                        }
-                      >
-                        <span>Track Order</span>
-                        <TbViewfinder />
-                      </div>
-                    ))}
+                  {value?.orderStatus === 'failed' ? (
+                    <span
+                      style={{
+                        fontSize: '1.125rem',
+                        fontWeight: 700,
+                        color: '#FF0000',
+                      }}
+                    >
+                      Order Failed
+                    </span>
+                  ) : value?.orderStatus === 'delivered' ? (
+                    <div
+                      className="placeOrder_delivered"
+                      onClick={() => downloadInvoice(value?.orderId)}
+                    >
+                      <FaFileInvoiceDollar />
+                      <span>Invoice</span>
+                    </div>
+                  ) : (
+                    <div
+                      className="placeOrder_tack"
+                      onClick={() =>
+                        setTrackOrderModal({
+                          show: true,
+                          data: {
+                            status: value?.orderStatus,
+                            orderId: value?.orderId,
+                          },
+                        })
+                      }
+                    >
+                      <span>Track Order</span>
+                      <TbViewfinder />
+                    </div>
+                  )}
                 </div>
               </div>
 
@@ -141,7 +150,17 @@ const PlaceOrders = () => {
 
               {/* only for small device */}
               <div className="placeOrder_hide_in_largedevice">
-                {value?.status === 'delivered' ? (
+                {value?.orderStatus === 'failed' ? (
+                  <span
+                    style={{
+                      fontSize: '1.125rem',
+                      fontWeight: 700,
+                      color: '#FF0000',
+                    }}
+                  >
+                    Order Failed
+                  </span>
+                ) : value?.orderStatus === 'delivered' ? (
                   <div
                     className="placeOrder_delivered"
                     onClick={() => downloadInvoice(value?.orderId)}
@@ -156,7 +175,7 @@ const PlaceOrders = () => {
                       setTrackOrderModal({
                         show: true,
                         data: {
-                          status: value?.status,
+                          status: value?.orderStatus,
                           orderId: value?.orderId,
                         },
                       })
@@ -241,7 +260,7 @@ const PlaceOrders = () => {
                 </div>
                 <div className="placeOrder_delivery">
                   <h4 style={{ textDecoration: 'underline' }}>Delivery</h4>
-                  {value?.status === 'delivered' && (
+                  {value?.orderStatus === 'delivered' && (
                     <div className="placeOrder_delivery_date">
                       <p>
                         Your package has been delivered on{' '}
