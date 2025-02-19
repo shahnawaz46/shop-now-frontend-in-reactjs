@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import { MdKeyboardArrowDown, MdKeyboardArrowUp } from 'react-icons/md';
 import { useDispatch } from 'react-redux';
@@ -23,7 +23,7 @@ const AddressForm = (props) => {
   const [invalidPinCodeMessage, setInvalidPinCodeMessage] = useState(null);
   const [locality, setLocality] = useState([]);
   const [showLocalityList, setShowLocalityList] = useState(false);
-  const [laodingForPinCode, setLoadingForPinCode] = useState(false);
+  const [, setLoadingForPinCode] = useState(false);
   const [status, setStatus] = useState(API_STATUS.IDLE);
 
   const handleInput = async (e) => {

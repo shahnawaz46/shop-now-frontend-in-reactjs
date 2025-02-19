@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BsFillStarFill } from 'react-icons/bs';
 
 // components
@@ -38,7 +38,7 @@ const AllReviews = ({
   };
 
   return (
-    <div className='review-main-box'>
+    <div className="review-main-box">
       {/*-- modal for write review start */}
       <WriteReview
         productId={productId}
@@ -48,7 +48,7 @@ const AllReviews = ({
       />
       {/* modal for write review end -- */}
 
-      <div className='review-box_2'>
+      <div className="review-box_2">
         <h2>Total Reviews {allReviews?.length}</h2>
         <button
           // onClick={() =>
@@ -64,11 +64,11 @@ const AllReviews = ({
         {allReviews.length > 0 &&
           allReviews?.slice(0, size).map((value, index) => {
             return (
-              <div className='review-show-box' key={index}>
-                <div className='review-user-name'>
+              <div className="review-show-box" key={index}>
+                <div className="review-user-name">
                   <img
                     src={value?.userId?.profilePicture || AvatarImage}
-                    loading='lazy'
+                    loading="lazy"
                     style={{
                       width: '40px',
                       height: '40px',
@@ -81,13 +81,13 @@ const AllReviews = ({
                     {value.userId.firstName} {value.userId.lastName}
                   </h4>
                 </div>
-                <div className='review-message'>
-                  <div className='review-star'>
+                <div className="review-message">
+                  <div className="review-star">
                     <h5>
                       {[...Array(5)].map((val, ind) => (
                         <BsFillStarFill
                           key={ind}
-                          size='18px'
+                          size="18px"
                           color={
                             ind + 1 <= value.rating ? '#f8a41b' : '#cccccc'
                           }

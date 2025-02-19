@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
 import { BiSearch } from 'react-icons/bi';
 import { FiShoppingBag } from 'react-icons/fi';

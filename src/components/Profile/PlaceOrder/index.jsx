@@ -93,7 +93,7 @@ const PlaceOrders = () => {
         <div className="placeorder-no-order">
           <MdOutlineRemoveShoppingCart className="placeorder-icon" />
           <div className="placeorder-no-order-content">
-            <h3>You haven't placed any orders</h3>
+            <h3>You haven&apos;t placed any orders</h3>
             <h4>All your orders will appear here</h4>
           </div>
         </div>

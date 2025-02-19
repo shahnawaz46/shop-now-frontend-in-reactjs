@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { deviceDetect, browserName } from 'react-device-detect';
@@ -76,7 +76,7 @@ const Login = () => {
             validationSchema={signInSchema}
             onSubmit={(value) => handleFormSubmit(value)}
           >
-            {({ errors, handleSubmit }) => (
+            {({ handleSubmit }) => (
               <Form>
                 <div className="input-container">
                   <Field name="email" placeholder="Email Address" />
@@ -106,7 +106,7 @@ const Login = () => {
           {/* <h5>Forgot your Password</h5>
           <span>or</span> */}
           <h5>
-            Don't have account{' '}
+            Don&apos;t have account{' '}
             <Link to="/account/signup" style={{ color: '#478ccd' }}>
               Click here
             </Link>

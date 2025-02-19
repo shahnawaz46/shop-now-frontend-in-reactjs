@@ -1,4 +1,3 @@
-import React from 'react';
 import RootLayout from '../components/Layout/RooLayout';
 import Banner from '../components/HomePage/Banner';
 import Card from '../components/HomePage/Card';

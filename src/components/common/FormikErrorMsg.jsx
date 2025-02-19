@@ -1,5 +1,4 @@
 import { ErrorMessage } from 'formik';
-import React from 'react';
 
 const FormikErrorMsg = ({ name }) => {
   return (

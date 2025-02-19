@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 
 // components
@@ -7,12 +6,12 @@ import './style.css';
 const SearchResults = ({ result, activeSuggestion }) => {
   return (
     <div>
-      <ul className='searchResult_ul_container'>
+      <ul className="searchResult_ul_container">
         {result.length > 0 ? (
           result.map((item, index) => (
             <li
               key={index}
-              className='searchResult_li'
+              className="searchResult_li"
               style={{
                 backgroundColor: activeSuggestion === index ? 'aliceblue' : '',
               }}
@@ -29,7 +28,7 @@ const SearchResults = ({ result, activeSuggestion }) => {
             </li>
           ))
         ) : (
-          <li className='searchResult_li'>No Result Found</li>
+          <li className="searchResult_li">No Result Found</li>
         )}
       </ul>
     </div>

@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import { BsFillCameraFill } from 'react-icons/bs';
@@ -156,4 +156,4 @@ const User = ({ userData }) => {
     </div>
   );
 };
-export default React.memo(User);
+export default memo(User);

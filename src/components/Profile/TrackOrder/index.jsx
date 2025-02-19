@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 
 // components
 import './style.css';
@@ -19,15 +19,15 @@ const TrackOrder = ({ onClose, value }) => {
   }, [value?.status]);
 
   return (
-    <div className='trackOrder_modal'>
-      <MdCancel onClick={onClose} className='close_modal' />
+    <div className="trackOrder_modal">
+      <MdCancel onClick={onClose} className="close_modal" />
 
       <h1>Track Order</h1>
       <div style={{ margin: '10px 0px' }}>
-        <span className='trackOrder_Id'>Order ID: {value.orderId}</span>
+        <span className="trackOrder_Id">Order ID: {value.orderId}</span>
       </div>
 
-      <div className='trackOrder_stepper'>
+      <div className="trackOrder_stepper">
         <Stepper
           data={[
             { title: 'Order Confirmed' },

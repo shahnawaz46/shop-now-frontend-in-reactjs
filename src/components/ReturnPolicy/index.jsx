@@ -1,4 +1,3 @@
-import React from 'react';
 import './style.css';
 
 const ReturnPolicy = () => {
@@ -19,8 +18,8 @@ const ReturnPolicy = () => {
           <h4>SUPPORT</h4>
           <p>
             Please email us at{' '}
-            <span style={{ fontWeight: '700' }}>contact@shopnow.co</span> or
-            call us during office hours Monday thru Saturday at{' '}
+            <span style={{ fontWeight: '700' }}>shahnawaz85748@gmail.com</span>{' '}
+            or call us during office hours Monday thru Saturday at{' '}
             <span style={{ fontWeight: '700' }}>1234567890</span> Whatsapp us on{' '}
             <span style={{ fontWeight: '700' }}>1234567890</span>
           </p>

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { memo, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -40,10 +40,10 @@ const EditProfile = () => {
     }
   };
 
-  const changeMobileNo = (e) => {
-    e.preventDefault();
-    console.log('done');
-  };
+  // const changeMobileNo = (e) => {
+  //   e.preventDefault();
+  //   console.log('done');
+  // };
 
   return (
     <>
@@ -146,4 +146,4 @@ const EditProfile = () => {
   );
 };
 
-export default React.memo(EditProfile);
+export default memo(EditProfile);

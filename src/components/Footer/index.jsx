@@ -1,4 +1,3 @@
-import React from 'react';
 import './style.css';
 import {
   FaBuilding,
@@ -61,7 +60,7 @@ const Footer = () => {
             </li>
             <li>
               <MdEmail style={Icon} />
-              contacts@shopnow.com
+              shahnawaz85748@gmail.com
             </li>
           </ul>
         </div>
@@ -88,15 +87,15 @@ const Footer = () => {
             Sign up now and be the first to know about exclusive offers, latest
             fashion news & style tips!
           </p>
-          {true ? (
-            <Link to="/home">
-              <button>lets Shopping</button>
-            </Link>
-          ) : (
+          {/* {true ? ( */}
+          <Link to="/home">
+            <button>lets Shopping</button>
+          </Link>
+          {/* ) : (
             <Link to="/signup">
               <button>Sign up</button>
             </Link>
-          )}
+          )} */}
         </div>
       </div>
 

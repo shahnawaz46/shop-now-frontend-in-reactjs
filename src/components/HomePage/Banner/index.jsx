@@ -1,5 +1,3 @@
-import React from 'react';
-
 // components
 import './style.css';
 import Banner1 from '../../../asset/Banner_1.png';

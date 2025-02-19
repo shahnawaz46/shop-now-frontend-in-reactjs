@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { BsFillStarFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
 import { MdCancel } from 'react-icons/md';
@@ -97,7 +97,7 @@ const WriteReview = ({
         <span
           style={{ fontSize: '0.75rem', fontWeight: '500', marginTop: '12px' }}
         >
-          Note: If you've already added a review, then it will be edited.
+          Note: If you&apos;ve already added a review, then it will be edited.
         </span>
       </div>
     </Modal>

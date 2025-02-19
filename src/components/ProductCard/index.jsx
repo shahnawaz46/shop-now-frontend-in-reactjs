@@ -1,4 +1,4 @@
-import React from 'react';
+import { memo } from 'react';
 import { Link } from 'react-router-dom';
 
 // components
@@ -7,16 +7,16 @@ import './style.css';
 const ProductCard = ({ product }) => {
   // console.log('ProductCard: ', product);
   return (
-    <div className='product-card-container'>
+    <div className="product-card-container">
       <Link to={`/preview/${product._id}`}>
         <img
           src={product.productPictures[0].img}
-          loading='lazy'
-          alt='not found'
-          className='product-card-image'
+          loading="lazy"
+          alt="not found"
+          className="product-card-image"
         />
-        <div className='product-card-details'>
-          <h4 className='product-card-name'>{product.productName}</h4>
+        <div className="product-card-details">
+          <h4 className="product-card-name">{product.productName}</h4>
           <div>
             <span style={{ fontSize: '15px', fontWeight: 600 }}>
               &#8377;{product?.sellingPrice}
@@ -46,4 +46,4 @@ const ProductCard = ({ product }) => {
   );
 };
 
-export default React.memo(ProductCard);
+export default memo(ProductCard);
