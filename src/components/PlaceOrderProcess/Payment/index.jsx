@@ -23,29 +23,25 @@ const Payment = () => {
     let orderDetails = {};
     // if user buy product directly then i am sending data inside location state
     if (location.state?.productId) {
-      const { addressId, price, productId, qty, size, totalPrice } =
-        location.state;
+      const { addressId, productId, qty, size } = location.state;
 
       orderDetails = {
         addressId,
-        totalPrice,
-        items: [{ product: productId, qty, size, price }],
         paymentMethod,
         process: 'direct', // for track order process(direct buy or checkout from cart)
+        items: [{ product: productId, qty, size }],
       };
     } else {
-      const { addressId, totalPrice } = location.state;
+      const { addressId } = location.state;
       orderDetails = {
         addressId,
+        paymentMethod,
+        process: 'checkout', // for track order process(direct buy or checkout from cart)
         items: cartItems.map((item) => ({
           product: item._id,
           qty: item.qty,
           size: item.size,
-          price: item.sellingPrice,
         })),
-        paymentMethod,
-        process: 'checkout', // for track order process(direct buy or checkout from cart)
-        totalPrice,
       };
     }
 
@@ -54,63 +50,15 @@ const Payment = () => {
         '/user/createOrder',
         orderDetails
       );
+
       // if paymentMethod is cod then redirect to the order successful page
       if (paymentMethod === 'cod') {
         navigate('/place-order?status=done', { replace: true });
       }
+
       // if paymentMethod is card then i am getting additional data from server(because i am using razorpay)
       else if (paymentMethod === 'card') {
-        const options = {
-          key: createOrderRes.data.key,
-          amount: createOrderRes.data.amount,
-          currency: 'INR',
-          name: 'ShopNow',
-          image:
-            'https://images.pexels.com/photos/1884581/pexels-photo-1884581.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
-          order_id: createOrderRes.data.razorOrderId,
-          handler: async (response) => {
-            try {
-              // Once the payment is processed, payment verification will be done in server.
-              await axiosInstance.post(
-                `/user/paymentVerification/${createOrderRes.data.orderId}`,
-                { ...response, process: createOrderRes?.data?.process }
-              );
-              navigate('/place-order?status=done', { replace: true });
-            } catch (err) {
-              toast.error('Payment Failed');
-              console.log(err);
-            }
-          },
-          // customer details
-          prefill: {
-            name: `${personalDetails?.firstName} ${personalDetails?.lastName}`,
-            email: personalDetails?.email,
-            contact: personalDetails?.phoneNo,
-          },
-          notes: {
-            address: 'Razorpay Corporate Office',
-          },
-          theme: {
-            color: '#3399cc',
-          },
-        };
-
-        // creating razorPay instance for open payment channel
-        const razorPay = new window.Razorpay(options);
-        razorPay.open();
-        razorPay.on('payment.failed', async (response) => {
-          try {
-            await axiosInstance.post('/user/paymentFailed', {
-              orderId: createOrderRes.data.orderId,
-              razorpay_order_id: response?.error?.metadata?.order_id,
-              razorpay_payment_id: response?.error?.metadata?.payment_id,
-            });
-            toast.error('Payment failed please try again');
-            // razorPay.close();
-          } catch (err) {
-            toast.error(err?.response?.data?.error || err?.message);
-          }
-        });
+        await handleVerifyPayment(createOrderRes.data);
       }
 
       // if customer place order through cart then the cart will be emptied after a successful order.
@@ -118,6 +66,62 @@ const Payment = () => {
     } catch (err) {
       toast.error(err?.resonse?.data?.error || err?.message);
     }
+  };
+
+  const handleVerifyPayment = async (orderRes) => {
+    const options = {
+      key: orderRes.key,
+      amount: orderRes.amount,
+      currency: 'INR',
+      name: 'ShopNow',
+      image:
+        'https://images.pexels.com/photos/1884581/pexels-photo-1884581.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1',
+      order_id: orderRes.razorOrderId,
+      handler: async (response) => {
+        try {
+          // Once the payment is processed, payment verification will be done in server.
+          await axiosInstance.post(
+            `/user/paymentVerification/${orderRes.orderId}`,
+            { ...response, process: orderRes?.process }
+          );
+          navigate('/place-order?status=done', { replace: true });
+        } catch (err) {
+          toast.error('Payment Failed');
+          console.log(err);
+        }
+      },
+      // customer details
+      prefill: {
+        name: `${personalDetails?.firstName} ${personalDetails?.lastName}`,
+        email: personalDetails?.email,
+        contact: personalDetails?.phoneNo,
+      },
+      notes: {
+        address: 'Razorpay Corporate Office',
+      },
+      theme: {
+        color: '#3399cc',
+      },
+    };
+
+    // creating razorPay instance for open payment channel
+    const razorPay = new window.Razorpay(options);
+    razorPay.open();
+
+    razorPay.on('payment.failed', async (response) => {
+      console.log('payment failed callback');
+      try {
+        await axiosInstance.post('/user/paymentFailed', {
+          orderId: orderRes.orderId,
+          razorpay_order_id: response?.error?.metadata?.order_id,
+          razorpay_payment_id: response?.error?.metadata?.payment_id,
+        });
+        toast.error('Payment failed please try again');
+        // razorPay.close();
+      } catch (err) {
+        toast.error(err?.response?.data?.error || err?.message);
+      }
+    });
   };
 
   return (

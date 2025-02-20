@@ -48,8 +48,6 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
     const productDetails = {
       productId: previewProduct._id,
       size: productSize,
-      qty: 1,
-      price: previewProduct.sellingPrice,
     };
 
     navigate(`/place-order?step=1`, {

@@ -190,7 +190,11 @@ const PlaceOrders = () => {
               <div className="placeOrder_item_container">
                 {value.items.map((item) => (
                   <div key={item?._id} className="placeOrder_item">
-                    <img src={item?.product?.productPictures[0]?.img} alt="" />
+                    <img
+                      src={item?.product?.productPictures[0]?.img}
+                      alt={'order'}
+                      onClick={() => navigate(`/preview/${item?.product?._id}`)}
+                    />
                     <div>
                       <h3
                         className="placeOrder_product_name"

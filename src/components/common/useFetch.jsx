@@ -7,7 +7,7 @@ import { API_STATUS } from '../../utils/Constants';
 
 const dataMap = new Map();
 
-const defaultTime = 24 * 60 * 60 * 1000;
+const defaultTime = 24 * 60 * 60 * 1000; // by default i am caching the data for one day
 
 const useFetch = (key, URL, refetchIn = defaultTime) => {
   const [status, setStatus] = useState(API_STATUS.IDLE);

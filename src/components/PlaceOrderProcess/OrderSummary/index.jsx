@@ -69,23 +69,26 @@ const OrderSummary = () => {
     // if productId is present thats mean user
     productIDRef.current
       ? navigate('/place-order?step=3', {
-          state: { ...location.state, qty: allOrders[0].qty, totalPrice },
+          state: { ...location.state, qty: allOrders[0].qty },
         })
       : navigate('/place-order?step=3', {
-          state: { ...location.state, totalPrice },
+          state: { ...location.state },
         });
   };
 
   const fetchProduct = async (productId) => {
-    const res = await axiosInstance.get(`/product/single/${productId}`);
+    const res = await axiosInstance.get(
+      `/product/single/checkout/${productId}`
+    );
+
     setAllOrder([
       {
-        productImage: res?.data?.product?.productPictures[1]?.img,
-        productName: res?.data?.product?.productName,
-        qty: 1,
-        sellingPrice: res?.data?.product?.sellingPrice,
-        size: location.state?.size,
         _id: res?.data?.product?._id,
+        productName: res?.data?.product?.productName,
+        sellingPrice: res?.data?.product?.sellingPrice,
+        productImage: res?.data?.product?.productPictures[1]?.img,
+        size: location.state?.size,
+        qty: 1,
       },
     ]);
     setLoading(false);
