@@ -76,12 +76,12 @@ const AddressForm = (props) => {
       setStatus(API_STATUS.LOADING);
       let res;
       if (type === 'Update Address') {
-        res = await axiosInstance.patch('/user/updateAddress', {
+        res = await axiosInstance.put('/address', {
           ...userAddress,
         });
         dispatch(updateAddress(res.data.address));
       } else {
-        res = await axiosInstance.post('/user/addAddress', { ...userAddress });
+        res = await axiosInstance.post('/address', { ...userAddress });
         dispatch(addAddress(res.data.address));
       }
 

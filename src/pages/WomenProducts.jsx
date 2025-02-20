@@ -20,7 +20,7 @@ const WomenProducts = () => {
     status,
     updateData,
   } = useFetch('womenProducts', [
-    "/category/Women's-Wardrobe",
+    "/category/all/Women's-Wardrobe",
     '/product/all/Women',
   ]);
 

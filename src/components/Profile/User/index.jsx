@@ -23,7 +23,7 @@ const User = ({ userData }) => {
   const logoutHandle = async () => {
     try {
       navigate('/home');
-      await axiosInstance.post('/user/signout');
+      await axiosInstance.post('/signout');
       clearStateAndStorage();
     } catch (err) {
       toast.error(err?.response?.data?.error || err?.message);
@@ -37,7 +37,7 @@ const User = ({ userData }) => {
     formData.append('profilePicture', file);
 
     try {
-      const res = await axiosInstance.patch('/user/updateProfilePic', formData);
+      const res = await axiosInstance.patch('/profile-pic', formData);
       toast.success('successfully');
       dispatch(updatePersonDetail(res.data.userDetails));
     } catch (error) {

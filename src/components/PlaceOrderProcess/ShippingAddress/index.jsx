@@ -28,7 +28,7 @@ const ShippingAddress = () => {
 
   const removeAddress = async (_id) => {
     try {
-      const res = await axiosInstance.delete(`/user/deleteAddress/${_id}`);
+      const res = await axiosInstance.delete(`/address/${_id}`);
       toast.success(res.data.msg);
       dispatch(updateAddress(res.data.address));
     } catch (error) {

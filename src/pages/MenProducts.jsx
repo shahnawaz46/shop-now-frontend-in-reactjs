@@ -19,7 +19,10 @@ const MenProducts = () => {
     data: menProducts,
     status,
     updateData,
-  } = useFetch('menProducts', ["/category/Men's-Wardrobe", '/product/all/Men']);
+  } = useFetch('menProducts', [
+    "/category/all/Men's-Wardrobe",
+    '/product/all/Men',
+  ]);
 
   const [filterProducts, setFilterProducts] = useState({
     status: 'loading',

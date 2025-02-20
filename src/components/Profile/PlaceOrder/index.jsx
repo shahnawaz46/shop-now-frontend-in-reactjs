@@ -35,9 +35,12 @@ const PlaceOrders = () => {
   const downloadInvoice = async (orderId) => {
     try {
       setDownloadInvoiceStatus(API_STATUS.LOADING);
-      const res = await axiosInstance.get(`/generate-invoice/${orderId}`, {
-        responseType: 'blob',
-      });
+      const res = await axiosInstance.get(
+        `/order/generate-invoice/${orderId}`,
+        {
+          responseType: 'blob',
+        }
+      );
 
       // const blob = await res.blob();
       const blob = new Blob([res.data, { type: 'application/pdf' }]);
@@ -66,7 +69,7 @@ const PlaceOrders = () => {
   useEffect(() => {
     const fetchOrders = async () => {
       try {
-        const res = await axiosInstance.get('/user/getOrder');
+        const res = await axiosInstance.get('/order');
         setAllOrders(res.data.orders);
         setLoading(false);
       } catch (err) {

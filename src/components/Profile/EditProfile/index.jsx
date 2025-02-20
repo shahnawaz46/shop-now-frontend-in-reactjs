@@ -27,7 +27,7 @@ const EditProfile = () => {
 
     try {
       setStatus(API_STATUS.LOADING);
-      const res = await axiosInstance.patch('/user/updateProfile', {
+      const res = await axiosInstance.patch('/profile', {
         userDetail: { firstName, lastName, email, location },
       });
       toast.success(res.data.msg);

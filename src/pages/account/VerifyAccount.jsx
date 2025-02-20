@@ -29,7 +29,7 @@ const VerifyAccount = () => {
       const userInfo = { otp: allOtp, email: location?.search?.slice(1) || '' };
 
       try {
-        const res = await axiosInstance.post('/user/verify', userInfo);
+        const res = await axiosInstance.post('/verify', userInfo);
         localStorage.setItem('__f_id', res.data.userId);
         navigate('/', { replace: true });
       } catch (err) {

@@ -46,7 +46,7 @@ const Navbar = () => {
     }
 
     try {
-      const res = await axiosInstance.get(`/search/category?search=${search}`);
+      const res = await axiosInstance.get(`/category/search?query=${search}`);
       setSearchItems({ status: true, result: res.data.result });
       setActiveSuggestion(0);
     } catch (err) {

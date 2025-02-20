@@ -15,7 +15,7 @@ export const addToCart = createAsyncThunk('cart/addToCart', async (product) => {
   // otherwise store the cartItem into LocalStorage
   if (_userId) {
     const { _id, size, qty } = product;
-    await axiosInstance.post('/user/cartItem/add', {
+    await axiosInstance.post('/cart', {
       productId: _id,
       size,
       qty,
@@ -48,7 +48,7 @@ export const getCartItem = createAsyncThunk('cart/getCartItem', async () => {
   // if user is logged in then call the api and get cartItem from db
   // otherwise get cartItem from LocalStorage
   if (_userId) {
-    const res = await axiosInstance.get('/user/cartItem/get');
+    const res = await axiosInstance.get('/cart');
     return res.data.allCartItem;
   } else {
     const isCartItemPresent = localStorage.getItem('__f_cartItem');
@@ -64,9 +64,7 @@ export const removeCartItem = createAsyncThunk(
     // if user is logged in then call the api and remove cartItem from db
     // otherwise remove cartItem from LocalStorage
     if (_userId) {
-      await axiosInstance.delete('/user/cartItem/remove', {
-        data: { product },
-      });
+      await axiosInstance.delete('/cart', { data: { product } });
     } else {
       const parseCartItem = JSON.parse(localStorage.getItem('__f_cartItem'));
       const removedProductIndex = parseCartItem.findIndex(

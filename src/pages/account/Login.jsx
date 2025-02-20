@@ -22,7 +22,7 @@ const Login = () => {
   const handleFormSubmit = async (value) => {
     setLoading(true); // for show loading screen after clicked on Login button
     try {
-      const res = await axiosInstance.post('/user/signin', {
+      const res = await axiosInstance.post('/signin', {
         ...value,
         ...deviceInfo,
       });

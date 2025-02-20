@@ -46,10 +46,7 @@ const Payment = () => {
     }
 
     try {
-      const createOrderRes = await axiosInstance.post(
-        '/user/createOrder',
-        orderDetails
-      );
+      const createOrderRes = await axiosInstance.post('/order', orderDetails);
 
       // if paymentMethod is cod then redirect to the order successful page
       if (paymentMethod === 'cod') {
@@ -81,7 +78,7 @@ const Payment = () => {
         try {
           // Once the payment is processed, payment verification will be done in server.
           await axiosInstance.post(
-            `/user/paymentVerification/${orderRes.orderId}`,
+            `/order/payment-verification/${orderRes.orderId}`,
             { ...response, process: orderRes?.process }
           );
           navigate('/place-order?status=done', { replace: true });
@@ -111,7 +108,7 @@ const Payment = () => {
     razorPay.on('payment.failed', async (response) => {
       console.log('payment failed callback');
       try {
-        await axiosInstance.post('/user/paymentFailed', {
+        await axiosInstance.post('/order/payment-failed', {
           orderId: orderRes.orderId,
           razorpay_order_id: response?.error?.metadata?.order_id,
           razorpay_payment_id: response?.error?.metadata?.payment_id,

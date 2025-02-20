@@ -11,7 +11,7 @@ const initialState = {
 export const fetchPersonalDetails = createAsyncThunk(
   'personalDetail/fetch',
   async () => {
-    const res = await axiosInstance.get('/user/profile');
+    const res = await axiosInstance.get('/profile');
     return res.data;
   }
 );

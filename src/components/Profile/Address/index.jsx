@@ -44,7 +44,7 @@ const Address = () => {
 
   const removeAddressFnc = async (_id) => {
     try {
-      const res = await axiosInstance.delete(`/user/deleteAddress/${_id}`);
+      const res = await axiosInstance.delete(`/address/${_id}`);
       toast.success(res.data.msg);
       dispatch(deleteAddress(_id));
     } catch (error) {

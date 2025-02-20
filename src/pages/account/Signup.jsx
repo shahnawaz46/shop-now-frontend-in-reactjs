@@ -26,7 +26,7 @@ const Signup = () => {
     setLoading(true); // for show loading screen after clicked on Sign Up button
 
     try {
-      const res = await axiosInstance.post('/user/signup', {
+      const res = await axiosInstance.post('/signup', {
         ...value,
         ...deviceInfo,
       });
