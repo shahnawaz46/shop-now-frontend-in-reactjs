@@ -12,23 +12,21 @@ import axiosInstance from '../axios/AxiosInstance';
 import SidebarLayout from '../components/Layout/SidebarLayout';
 import NotFound from '../components/NotFound';
 import useFetch from '../components/common/useFetch';
-import { API_STATUS } from '../utils/Constants';
+import { filterProductsInitialState } from '../utils/Constants';
 
 const MenProducts = () => {
   const {
     data: menProducts,
-    status,
+    isLoading,
     updateData,
   } = useFetch('menProducts', [
     "/category/all/Men's-Wardrobe",
     '/product/all/Men',
   ]);
 
-  const [filterProducts, setFilterProducts] = useState({
-    status: 'loading',
-    next: null,
-    item: [],
-  });
+  const [filterProducts, setFilterProducts] = useState(
+    filterProductsInitialState
+  );
 
   const searchParam = useSearchParams()[0]; // useSearchParams return two value first is searchState and second is searchState function
 
@@ -56,15 +54,14 @@ const MenProducts = () => {
     try {
       const res = await axiosInstance.get(url);
       setFilterProducts((prev) => ({
-        ...prev,
-        status: 'success',
+        isLoading: false,
         next: res.data.products.next,
         item: fetchMore
           ? [...prev.item, ...res.data.products.subCategoryProducts]
           : res.data.products.subCategoryProducts,
       }));
     } catch (err) {
-      setFilterProducts((prev) => ({ ...prev, status: 'failed' }));
+      setFilterProducts((prev) => ({ ...prev, isLoading: false }));
       toast.error(err?.response?.data?.error || err?.message);
     }
   });
@@ -73,7 +70,7 @@ const MenProducts = () => {
   useEffect(() => {
     const filteredQuery = searchParam.toString();
     if (filteredQuery) {
-      setFilterProducts({ status: 'loading', next: null, item: [] });
+      setFilterProducts(filterProductsInitialState);
       fetchFilteredProducts(
         `/product/filtered?${filteredQuery}&targetAudience=Men`
       );
@@ -91,7 +88,7 @@ const MenProducts = () => {
     }
   }, [inView]);
 
-  if (status === API_STATUS.LOADING) return <ScreenLoading />;
+  if (isLoading) return <ScreenLoading />;
 
   // first i am checking if query is present in url then showing products that i am getting based on query
   // if query is not present in url then i am showing products that is present in redux
@@ -99,7 +96,7 @@ const MenProducts = () => {
     <RootLayout>
       <SidebarLayout subCategory={menProducts?.categories || []}>
         {searchParam.toString() ? (
-          filterProducts.status === 'loading' ? (
+          filterProducts.isLoading ? (
             <ScreenLoading position="absolute" />
           ) : filterProducts.item.length > 0 ? (
             <div className="product-container">

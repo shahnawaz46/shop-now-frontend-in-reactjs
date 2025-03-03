@@ -4,3 +4,9 @@ export const API_STATUS = {
   SUCCESS: 'SUCCESS',
   FAILED: 'FAILED',
 };
+
+export const filterProductsInitialState = {
+  isLoading: true,
+  next: null,
+  item: [],
+};

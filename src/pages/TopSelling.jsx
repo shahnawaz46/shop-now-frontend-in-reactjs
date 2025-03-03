@@ -12,20 +12,18 @@ import SidebarLayout from '../components/Layout/SidebarLayout';
 import axiosInstance from '../axios/AxiosInstance';
 import { ScreenLoading, PaginationLoading } from '../components/Loaders';
 import useFetch from '../components/common/useFetch';
-import { API_STATUS } from '../utils/Constants';
+import { filterProductsInitialState } from '../utils/Constants';
 
 const TopSelling = () => {
   const {
     data: topSellingProducts,
-    status,
+    isLoading,
     updateData,
   } = useFetch('topSellingProducts', '/product/top-selling');
 
-  const [filterProducts, setFilterProducts] = useState({
-    status: 'loading',
-    next: null,
-    item: [],
-  });
+  const [filterProducts, setFilterProducts] = useState(
+    filterProductsInitialState
+  );
 
   const searchParam = useSearchParams()[0]; // useSearchParams return two value first is searchState and second is searchState function
 
@@ -52,15 +50,14 @@ const TopSelling = () => {
     try {
       const res = await axiosInstance.get(url);
       setFilterProducts((prev) => ({
-        ...prev,
-        status: 'success',
+        isLoading: false,
         next: res.data.products.next,
         item: fetchMore
           ? [...prev.item, ...res.data.products.item]
           : res.data.products.item,
       }));
     } catch (err) {
-      setFilterProducts((prev) => ({ ...prev, status: 'failed' }));
+      setFilterProducts((prev) => ({ ...prev, isLoading: false }));
       toast.error(err?.response?.data?.error || err?.message);
     }
   });
@@ -69,7 +66,7 @@ const TopSelling = () => {
   useEffect(() => {
     const filteredQuery = searchParam.toString();
     if (filteredQuery) {
-      setFilterProducts({ status: 'loading', next: null, item: [] });
+      setFilterProducts(filterProductsInitialState);
       fetchFilteredProducts(`/product/top-selling?${filteredQuery}`);
     }
   }, [searchParam.toString()]);
@@ -85,7 +82,7 @@ const TopSelling = () => {
     }
   }, [inView]);
 
-  if (status === API_STATUS.LOADING) return <ScreenLoading />;
+  if (isLoading) return <ScreenLoading />;
 
   return (
     <RootLayout>
@@ -100,7 +97,7 @@ const TopSelling = () => {
         ]}
       >
         {searchParam.toString() ? (
-          filterProducts.status === 'loading' ? (
+          filterProducts.isLoading ? (
             <ScreenLoading position="absolute" />
           ) : filterProducts.item.length > 0 ? (
             <div className="product-container">

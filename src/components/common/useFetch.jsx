@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import axiosInstance from '../../axios/AxiosInstance';
 import { API_STATUS } from '../../utils/Constants';
 
+// structure of dataMap-> [key, { refetchIn: time in mili-seconds, data: data }]
 const dataMap = new Map();
 
 const defaultTime = 24 * 60 * 60 * 1000; // by default i am caching the data for one day
@@ -67,6 +68,7 @@ const useFetch = (key, URL, refetchIn = defaultTime) => {
   const updateData = async (key, subKey, data) => {
     // console.log('updating Data: ', key, subKey, data, dataMap.get(key));
     let updating = dataMap.get(key);
+    // console.log('updating:', updating);
     updating = { ...updating, data: { ...updating?.data, [subKey]: data } };
     dataMap.set(key, updating);
     setDateUpdated(Math.random()); // here i am updating dateUpdated state only for re-render the component so i can return updated data
@@ -76,7 +78,13 @@ const useFetch = (key, URL, refetchIn = defaultTime) => {
     fetchDate();
   }, []);
 
-  return { status, error, data: dataMap.get(key)?.data || [], updateData };
+  return {
+    isLoading: dataMap.get(key) ? false : true,
+    status,
+    error,
+    data: dataMap.get(key)?.data || [],
+    updateData,
+  };
 };
 
 export default useFetch;
