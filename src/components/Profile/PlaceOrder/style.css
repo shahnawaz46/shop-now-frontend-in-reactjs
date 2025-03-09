@@ -85,7 +85,7 @@
 .placeOrder_date > p {
   font-size: 16px;
   margin: 10px 0px;
-  color: #888889;
+  color: var(--tertiary-color);
 }
 
 .placeOrder_hide_in_largedevice {
@@ -176,7 +176,7 @@
   justify-content: space-between;
   gap: 12px;
   align-items: center;
-  color: #5f5f52;
+  color: var(--tertiary-color);
 }
 
 .placeOrder_total_price {
@@ -196,12 +196,10 @@
 .placeOrder_delivery_date {
   font-size: 16px;
   margin-bottom: 10px;
-  /* color: #888889; */
 }
 
 .placeOrder_delivery_address > span {
   font-size: 16px;
-  /* color: #888889; */
 }
 
 .placeOrder_delivery_address > p {

@@ -12,7 +12,7 @@ const ProductCard = ({ product }) => {
         <img
           src={product.productPictures[0].img}
           loading="lazy"
-          alt="not found"
+          alt={product.productName}
           className="product-card-image"
         />
         <div className="product-card-details">
@@ -25,15 +25,19 @@ const ProductCard = ({ product }) => {
               <strike
                 style={{
                   fontSize: '14px',
-                  margin: '0px 5px',
-                  color: '#878787',
+                  margin: '0px 8px',
+                  color: 'var(--tertiary-color)',
                 }}
               >
                 &#8377; {product?.actualPrice}
               </strike>
             )}
             <span
-              style={{ fontSize: '14px', color: '#388e3c', fontWeight: '600' }}
+              style={{
+                fontSize: '14px',
+                color: 'rgb(4, 126, 11)',
+                fontWeight: '600',
+              }}
             >
               {100 -
                 parseInt((product?.sellingPrice / product?.actualPrice) * 100)}

@@ -1,133 +1,131 @@
 .profile-main-box {
-    background-color: white;
-    padding-bottom: 10px;
+  background-color: white;
+  padding-bottom: 10px;
 }
 
 .profile-detail-main-box {
-    margin: 20px 30px;
-    display: flex;
-    align-items: flex-end;
-    /* text-transform: capitalize; */
+  margin: 20px 30px;
+  display: flex;
+  align-items: flex-end;
+  /* text-transform: capitalize; */
 }
 
 .profile-picture-box {
-    width: 140px;
-    height: 140px;
-    position: relative;
+  width: 140px;
+  height: 140px;
+  position: relative;
 }
 
 .profile-edit-icon {
-    position: absolute;
-    right: 59px;
-    bottom: 5px;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
+  position: absolute;
+  right: 59px;
+  bottom: 5px;
+  color: white;
+  font-size: 20px;
+  cursor: pointer;
 }
 
 .profile-detail-box {
-    display: flex;
-    flex-direction: column;
-    gap: 1px;
-    margin-left: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-left: 15px;
 }
 
 .profile-name-box {
-    font-weight: 600;
-    font-size: 25px;
-    text-transform: capitalize;
+  font-weight: 600;
+  font-size: 25px;
+  text-transform: capitalize;
 }
 
 .profile-user-button {
-    width: 110px;
-    height: 27px;
-    margin-top: 5px;
-    cursor: pointer;
-    border: 1px solid #E4E4E4;
-    border-radius: 5px;
+  width: 110px;
+  height: 27px;
+  margin-top: 5px;
+  cursor: pointer;
+  border: 1px solid #e4e4e4;
+  border-radius: 5px;
 }
 
 .profile-user-button:hover {
-    background-color: rgb(213, 212, 212);
+  background-color: rgb(213, 212, 212);
 }
 
 .profile-main-features-box {
-    border: 1px solid #E4E4E4;
+  border: 1px solid #e4e4e4;
 }
 
 .profile-main-features-ul {
-    list-style: none;
-    display: flex;
-    justify-content: center;
-    gap: 10px;
-    padding: 0px 10px;
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  padding: 0px 10px;
 }
 
-
-.profile-main-features-ul>a>li {
-    padding: 8px 20px;
-    cursor: pointer;
+.profile-main-features-ul > li {
+  padding: 8px 20px;
+  cursor: pointer;
 }
 
-.profile-main-features-ul>a>li:hover {
-    background-color: #ff0000;
-    color: white;
+.profile-main-features-ul > li:hover,
+.profile-main-features-ul > li:hover a {
+  background-color: var(--secondary-color);
+  color: white;
 }
 
 .active-tab {
-    background-color: #ff0000;
-    color: white;
+  background-color: var(--secondary-color);
+  color: white;
 }
-
-
 
 /* media query */
 
 @media only screen and (max-width: 600px) {
-    .profile-main-features-ul>a>li {
-        font-size: 15px;
-    }
+  .profile-main-features-ul > li {
+    font-size: 15px;
+  }
 }
 
 @media only screen and (max-width: 700px) {
-    .profile-main-features-ul {
-        justify-content: left;
-        overflow-x: scroll;
-        white-space: nowrap;
-    }
+  .profile-main-features-ul {
+    justify-content: left;
+    overflow-x: scroll;
+    white-space: nowrap;
+  }
 
-    .profile-main-features-ul::-webkit-scrollbar {
-        display: none;
-    }
+  .profile-main-features-ul::-webkit-scrollbar {
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 500px) {
-    .profile-detail-main-box {
-        margin: 20px 10px;
-        flex-direction: column;
-        align-items: flex-start;
-    }
+  .profile-detail-main-box {
+    margin: 20px 10px;
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-    .profile-edit-icon {
-        right: 48px;
-    }
+  .profile-edit-icon {
+    right: 48px;
+  }
 
-    .profile-detail-box {
-        margin-left: 5px;
-        margin-top: 10px;
-        gap: 3px;
-    }
+  .profile-detail-box {
+    margin-left: 5px;
+    margin-top: 10px;
+    gap: 3px;
+  }
 
-    .profile-picture-box {
-        width: 120px;
-        height: 120px;
-    }
+  .profile-picture-box {
+    width: 120px;
+    height: 120px;
+  }
 
-    .profile-name-box {
-        font-size: 20px;
-    }
+  .profile-name-box {
+    font-size: 20px;
+  }
 
-    .profile-details {
-        font-size: 16px;
-    }
+  .profile-details {
+    font-size: 16px;
+  }
 }

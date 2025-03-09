@@ -88,13 +88,20 @@ const TopTrending = () => {
               disableButtonsControls={true}
               mouseTracking
               items={currentProducts.map((product) => (
-                <Link to={`/preview/${product?.productId}`} key={product?._id}>
+                <Link
+                  key={product?._id}
+                  to={`/preview/${product?.productId}`}
+                  aria-label="View product picture"
+                >
                   <img
                     src={product?.productPicture?.img}
                     onDragStart={handleDragStart}
                     role="presentation"
                     className="trending-product-images"
-                    alt="product-not-found"
+                    alt={
+                      product?.productPicture?.public_id?.split('/')[0] ||
+                      'product picture'
+                    }
                     loading="lazy"
                   />
                 </Link>

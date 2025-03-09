@@ -48,15 +48,15 @@
 }
 
 .navbar-link > a:hover {
-  color: orangered;
+  color: var(--secondary-color);
 }
 
 .nav-link-class {
-  border-bottom: 1px solid orangered;
+  border-bottom: 1px solid var(--secondary-color);
 }
 
 .navbar_search_bar {
-  border: 1px solid #c1b2b2;
+  border: 1px solid var(--tertiary-color);
   border-radius: 20px;
   overflow: hidden;
   display: flex;
@@ -121,7 +121,7 @@
   width: 20px;
   height: 20px;
   border-radius: 50%;
-  background: #fe4c50;
+  background: var(--secondary-color);
   font-size: 12px;
   font-weight: 700;
   color: white;

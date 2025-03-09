@@ -23,33 +23,33 @@ const Footer = () => {
     <div className="footer-main-box">
       <div className="footer-first-box">
         <div className="footer-links-box">
-          <h4 className="footer-h4">Quick Links</h4>
+          <h2 className="footer-h2">Quick Links</h2>
           <ul>
-            <Link to="/">
-              <li>Home</li>
-            </Link>
-            <Link to="/collections/Men's-Wardrobe">
-              <li>Men</li>
-            </Link>
-            <Link to="/collections/Women's-Wardrobe">
-              <li>Women</li>
-            </Link>
-            <Link to="/top-selling">
-              <li>Top Selling</li>
-            </Link>
-            <Link to="/new-products">
-              <li>Newest</li>
-            </Link>
-            <Link to="/about">
-              <li>About us</li>
-            </Link>
-            <Link to="/help">
-              <li>Help</li>
-            </Link>
+            <li>
+              <Link to="/">Home</Link>
+            </li>
+            <li>
+              <Link to="/collections/Men's-Wardrobe">Men</Link>
+            </li>
+            <li>
+              <Link to="/collections/Women's-Wardrobe">Women</Link>
+            </li>
+            <li>
+              <Link to="/top-selling">Top Selling</Link>
+            </li>
+            <li>
+              <Link to="/new-products">Newest</Link>
+            </li>
+            <li>
+              <Link to="/about">About us</Link>
+            </li>
+            <li>
+              <Link to="/help">Help</Link>
+            </li>
           </ul>
         </div>
         <div className="footer-contact-box">
-          <h4 className="footer-h4">Contact us</h4>
+          <h2 className="footer-h2">Contact us</h2>
           <ul>
             <li>
               <FaBuilding style={Icon} /> New Delhi 91
@@ -65,24 +65,24 @@ const Footer = () => {
           </ul>
         </div>
         <div className="footer-links-box">
-          <h4 className="footer-h4">ShopNow Policy</h4>
+          <h2 className="footer-h2">ShopNow Policy</h2>
           <ul>
-            <Link to="/privacy-policy">
-              <li>Privacy Policy</li>
-            </Link>
-            <Link to="/return-policy">
-              <li>Return Policy</li>
-            </Link>
-            <Link to="/shipping-policy">
-              <li>Shipping Policy</li>
-            </Link>
-            <Link to="/terms-and-services">
-              <li>Terms of services</li>
-            </Link>
+            <li>
+              <Link to="/privacy-policy">Privacy Policy</Link>
+            </li>
+            <li>
+              <Link to="/return-policy">Return Policy</Link>
+            </li>
+            <li>
+              <Link to="/shipping-policy">Shipping Policy</Link>
+            </li>
+            <li>
+              <Link to="/terms-and-services">Terms of services</Link>
+            </li>
           </ul>
         </div>
         <div className="footer-signup">
-          <h4 className="footer-h4">Hey Sign up ?</h4>
+          <h2 className="footer-h2">Hey Sign up ?</h2>
           <p>
             Sign up now and be the first to know about exclusive offers, latest
             fashion news & style tips!
@@ -101,15 +101,15 @@ const Footer = () => {
 
       <div className="footer-second-box">
         <div className="footer-second-box-icon">
-          <a href="https://www.facebook.com/">
+          <a href="https://www.facebook.com/" aria-label="facebook">
             <FaFacebookSquare style={{ fontSize: '20px', color: 'black' }} />
           </a>
-          <a href="https://www.instagram.com/">
+          <a href="https://www.instagram.com/" aria-label="instagram">
             <FaInstagramSquare
               style={{ fontSize: '20px', color: 'black', margin: '0px 30px' }}
             />
           </a>
-          <a href="https://twitter.com/login">
+          <a href="https://twitter.com/login" aria-label="twitter">
             <FaTwitterSquare style={{ fontSize: '20px', color: 'black' }} />
           </a>
         </div>

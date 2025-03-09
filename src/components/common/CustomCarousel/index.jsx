@@ -79,6 +79,7 @@ const CustomCarousel = ({ items }) => {
             key={index}
             style={{ backgroundColor: index === current ? '#000' : '#fff' }}
             onClick={() => setCurrent(index)}
+            aria-label="indicator"
           ></button>
         ))}
       </div>

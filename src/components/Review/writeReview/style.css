@@ -39,7 +39,7 @@
   margin-top: 10px;
   outline: none;
   cursor: pointer;
-  background-color: #ff0000;
+  background-color: var(--secondary-color);
   color: white;
   font-size: 18px;
   border-radius: 5px;

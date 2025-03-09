@@ -58,8 +58,8 @@
 
 .editprofile_button {
   height: 35px;
-  border: 1px solid red;
-  background: red;
+  border: 1px solid var(--secondary-color);
+  background: var(--secondary-color);
   color: white;
   font-size: 16px;
   cursor: pointer;

@@ -104,6 +104,7 @@ const Cart = ({ show, setShow }) => {
                               product.sellingPrice
                             )
                           }
+                          aria-label="remove"
                         >
                           <IoMdRemove
                             className="cart-icons click"
@@ -123,6 +124,7 @@ const Cart = ({ show, setShow }) => {
                               product.sellingPrice
                             )
                           }
+                          aria-label="add"
                         >
                           <IoMdAdd
                             className="cart-icons click"

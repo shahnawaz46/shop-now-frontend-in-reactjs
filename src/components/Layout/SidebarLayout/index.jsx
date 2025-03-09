@@ -1,4 +1,4 @@
-import  { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import './style.css';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import { useLocation, useNavigate } from 'react-router-dom';
@@ -36,28 +36,28 @@ const SidebarLayout = ({ children, subCategory }) => {
   }, [searchParam.toString()]);
 
   return (
-    <div className='sidebar-container'>
+    <div className="sidebar-container">
       {/* left side (filter) */}
       <div
-        className='filter-icon-container'
+        className="filter-icon-container"
         onClick={() => setShowFilter(true)}
       >
-        <img src={FilterIcon} alt='filter-icon' />
+        <img src={FilterIcon} alt="filter-icon" />
         <h2 style={{ fontSize: '20px', fontWeight: 400 }}>Filter</h2>
       </div>
 
       <div className={showFilter ? 'filter show-filter' : 'filter'}>
         {/* filter heading */}
-        <div className='filter-space filter-close-icon-container'>
+        <div className="filter-space filter-close-icon-container">
           <h2 style={{ fontSize: '22px', fontWeight: 500 }}>Filters</h2>
           <IoMdClose
-            className='filter-close-icon'
+            className="filter-close-icon"
             onClick={() => setShowFilter(false)}
           />
         </div>
 
         {/* price slider/range */}
-        <div className='filter-space'>
+        <div className="filter-space">
           <h3
             style={{
               fontSize: '16px',
@@ -68,7 +68,7 @@ const SidebarLayout = ({ children, subCategory }) => {
             Price
           </h3>
 
-          <div className='slider-container'>
+          <div className="slider-container">
             <Slider
               range
               value={[...range]}
@@ -85,17 +85,17 @@ const SidebarLayout = ({ children, subCategory }) => {
             />
           </div>
 
-          <div className='slider-field-container'>
-            <div className='slider-field'>
+          <div className="slider-field-container">
+            <div className="slider-field">
               <span>Min</span>
-              <div type='number' value='7500'>
+              <div type="number" value="7500">
                 {range[0]}
               </div>
             </div>
             <div>-</div>
-            <div className='slider-field'>
+            <div className="slider-field">
               <span>Max</span>
-              <div type='number' value='7500'>
+              <div type="number" value="7500">
                 {range[1] === 2500 ? '2500+' : range[1]}
               </div>
             </div>
@@ -103,7 +103,7 @@ const SidebarLayout = ({ children, subCategory }) => {
         </div>
 
         {/* catogories */}
-        <div className='filter-space'>
+        <div className="filter-space">
           <h3
             style={{
               fontSize: '16px',
@@ -113,16 +113,18 @@ const SidebarLayout = ({ children, subCategory }) => {
           >
             Categories
           </h3>
-          <div className='category'>
+          <div className="category">
             {subCategory.length > 0 &&
               subCategory[0].children.map((item) => (
                 <div
                   key={item.slug}
                   onClick={() => appendQuery('category', item.slug)}
-                  className='category-name'
+                  className="category-name"
                   style={{
                     color:
-                      getQuery('category') === item.slug ? '#000' : '#878787',
+                      getQuery('category') === item.slug
+                        ? '#000'
+                        : 'var(--tertiary-color)',
                     fontWeight: getQuery('category') === item.slug ? 500 : 400,
                   }}
                 >
@@ -135,7 +137,7 @@ const SidebarLayout = ({ children, subCategory }) => {
       </div>
 
       {/* right side (products) */}
-      <div className='right'>{children}</div>
+      <div className="right">{children}</div>
     </div>
   );
 };

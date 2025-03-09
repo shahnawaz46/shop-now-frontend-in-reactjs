@@ -114,7 +114,7 @@ const PlaceOrders = () => {
                       style={{
                         fontSize: '1.125rem',
                         fontWeight: 700,
-                        color: '#FF0000',
+                        color: 'var(--secondary-color)',
                       }}
                     >
                       Order Failed
@@ -158,7 +158,7 @@ const PlaceOrders = () => {
                     style={{
                       fontSize: '1.125rem',
                       fontWeight: 700,
-                      color: '#FF0000',
+                      color: 'var(--secondary-color)',
                     }}
                   >
                     Order Failed
@@ -225,7 +225,9 @@ const PlaceOrders = () => {
                   <h4>
                     <span style={{ textDecoration: 'underline' }}>Payment</span>{' '}
                     {value?.paymentStatus === 'failed' && (
-                      <span style={{ color: '#FF0000' }}>(Failed)</span>
+                      <span style={{ color: 'var(--secondary-color)' }}>
+                        (Failed)
+                      </span>
                     )}
                   </h4>
                   {/* price details */}

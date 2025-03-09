@@ -137,13 +137,17 @@ const User = ({ userData }) => {
       <div className="profile-main-features-box">
         <ul className="profile-main-features-ul">
           {userConfig.map((nav) => (
-            <NavLink
+            <li
               key={nav.id}
-              to={nav.link}
-              className={({ isActive }) => (isActive ? 'active-tab' : '')}
+              className={nav.link.split('/')[2] === page ? 'active-tab' : ''}
             >
-              <li>{nav.name}</li>
-            </NavLink>
+              <NavLink
+                to={nav.link}
+                className={({ isActive }) => (isActive ? 'active-tab' : '')}
+              >
+                {nav.name}
+              </NavLink>
+            </li>
           ))}
         </ul>
       </div>

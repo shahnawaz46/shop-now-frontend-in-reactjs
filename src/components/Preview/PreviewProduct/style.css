@@ -33,9 +33,10 @@
   width: 35%;
 }
 
-.preview-box-two > h3 {
+.preview-box-two > h2 {
   font-weight: 400;
   line-height: 20px;
+  font-size: 1.188rem;
 }
 
 .preview-product-rating {
@@ -57,14 +58,16 @@
   margin: 10px 0px;
 }
 
-.preview-price-box > h2 {
+.preview-price-box > h3 {
   font-weight: 400;
-  color: red;
+  color: var(--secondary-color);
+  font-size: 1.5rem;
 }
 
 .preview-price-box > strike {
   margin-left: 10px;
   font-size: 18px;
+  color: var(--tertiary-color);
 }
 
 .preview-price-box > h4 {

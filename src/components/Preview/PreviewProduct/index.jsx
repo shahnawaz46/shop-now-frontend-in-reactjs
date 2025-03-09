@@ -95,7 +95,7 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
         </div>
 
         <div className="preview-box-two">
-          <h3>{previewProduct?.productName}</h3>
+          <h2>{previewProduct?.productName}</h2>
           <div className="preview-product-rating">
             <AiFillStar
               style={{
@@ -110,7 +110,7 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
             </div>
           </div>
           <div className="preview-price-box">
-            <h2>&#8377; {previewProduct?.sellingPrice}</h2>
+            <h3>&#8377; {previewProduct?.sellingPrice}</h3>
             {previewProduct?.actualPrice > 0 && (
               <strike>&#8377; {previewProduct?.actualPrice}</strike>
             )}

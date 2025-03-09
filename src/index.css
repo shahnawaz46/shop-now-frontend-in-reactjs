@@ -1,3 +1,8 @@
+:root {
+  --secondary-color: #c01111;
+  --tertiary-color: rgb(100, 99, 99);
+}
+
 * {
   margin: 0;
   padding: 0;

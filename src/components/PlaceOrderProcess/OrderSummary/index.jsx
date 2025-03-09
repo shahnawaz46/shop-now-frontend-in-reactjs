@@ -142,6 +142,7 @@ const OrderSummary = () => {
                                 product.sellingPrice
                               )
                             }
+                            aria-label="remove"
                           >
                             <IoMdRemove style={{ fontSize: '16px' }} />
                           </button>
@@ -158,6 +159,7 @@ const OrderSummary = () => {
                                 product.sellingPrice
                               )
                             }
+                            aria-label="add"
                           >
                             <IoMdAdd style={{ fontSize: '16px' }} />
                           </button>

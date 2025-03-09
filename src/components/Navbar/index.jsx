@@ -98,7 +98,7 @@ const Navbar = () => {
           <div className="website-name">
             <Link to="/">
               <h3>
-                <span style={{ color: 'red' }}>Shop</span>Now
+                <span style={{ color: 'var(--secondary-color)' }}>Shop</span>Now
               </h3>
             </Link>
           </div>
@@ -170,6 +170,7 @@ const Navbar = () => {
             <Link
               to={'/my-account/address'}
               state={{ from: location.pathname }}
+              aria-label="profile"
             >
               <MdPerson className="icon profile-icon" />
             </Link>

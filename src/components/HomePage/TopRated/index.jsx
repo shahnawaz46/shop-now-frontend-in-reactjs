@@ -25,13 +25,20 @@ const TopRated = () => {
           />
           <div className="top-rated-image-container">
             {topRatingProducts?.products?.map((product, index) => (
-              <Link to={`/preview/${product?._id}`} key={product?._id}>
+              <Link
+                key={product?._id}
+                to={`/preview/${product?._id}`}
+                aria-label="View product picture"
+              >
                 <motion.img
                   whileHover={{ scale: 1.03, transition: { duration: 0.2 } }}
                   whileTap={{ scale: 1.03 }}
                   key={index}
                   src={product?.productPicture?.img}
-                  alt="not-found"
+                  alt={
+                    product?.productPicture?.public_id?.split('/')[0] ||
+                    'product picture'
+                  }
                   className="top-rated-images"
                   loading="lazy"
                 />

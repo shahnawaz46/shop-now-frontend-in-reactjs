@@ -20,7 +20,7 @@
 
 .payment_method_container > span {
   font-size: 18px;
-  color: #888889;
+  color: var(--tertiary-color);
 }
 
 .payment_method {
