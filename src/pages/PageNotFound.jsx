@@ -28,7 +28,7 @@ const PageNotFound = () => {
           Oops! The page you are looking for does not exist.
         </p>
         <a
-          href="/home"
+          href="/"
           style={{
             display: 'inline-block',
             padding: '10px 20px',

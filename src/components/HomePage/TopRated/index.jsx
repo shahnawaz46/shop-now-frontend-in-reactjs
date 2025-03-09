@@ -33,6 +33,7 @@ const TopRated = () => {
                   src={product?.productPicture?.img}
                   alt="not-found"
                   className="top-rated-images"
+                  loading="lazy"
                 />
               </Link>
             ))}

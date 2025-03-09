@@ -13,7 +13,7 @@
 }
 
 .cs-slider-img {
-  min-width: 100%; /* i was using width:100% and it was not working */
+  min-width: 100%; /* i am showing single image in full screen so i was using width:100% and it was not working */
   height: 100%;
   display: flex;
   justify-content: center;

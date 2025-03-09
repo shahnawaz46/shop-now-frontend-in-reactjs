@@ -14,6 +14,29 @@ import { updatePersonDetail } from '../../../redux/slices/UserSlice';
 import axiosInstance from '../../../axios/AxiosInstance';
 import { clearStateAndStorage } from '../../../utils/ClearStateAndStorage';
 
+const userConfig = [
+  {
+    id: 1,
+    name: 'Your Address',
+    link: '/my-account/address',
+    component: Address,
+  },
+  {
+    id: 2,
+    name: 'Edit Profile',
+    link: '/my-account/edit-profile',
+    component: EditProfile,
+  },
+  {
+    id: 3,
+    name: 'Your Order',
+    link: '/my-account/orders',
+    component: PlaceOrders,
+  },
+  // { id: 4, name: 'Your Wish List', link: '/my-account/wish-list',  component: WishList, },
+  // { id: 5, name: 'Return', link: '/my-account/return' },
+];
+
 const User = ({ userData }) => {
   const dispatch = useDispatch();
 
@@ -46,6 +69,11 @@ const User = ({ userData }) => {
 
     e.target.file = null;
   };
+
+  // find activeComponent based on URL
+  const ActiveComponent = userConfig.find((nav) =>
+    nav.link.includes(page)
+  ).component;
 
   return (
     <div className="profile-main-box">
@@ -108,50 +136,19 @@ const User = ({ userData }) => {
       {/* tabs */}
       <div className="profile-main-features-box">
         <ul className="profile-main-features-ul">
-          <NavLink
-            to="/my-account/address"
-            className={({ isActive }) => (isActive ? 'active-tab' : '')}
-          >
-            <li>Your Address</li>
-          </NavLink>
-          <NavLink
-            to="/my-account/edit-profile"
-            className={({ isActive }) => (isActive ? 'active-tab' : '')}
-          >
-            <li>Edit Profile</li>
-          </NavLink>
-          <NavLink
-            to="/my-account/orders"
-            className={({ isActive }) => (isActive ? 'active-tab' : '')}
-          >
-            <li>Your Order</li>
-          </NavLink>
-          {/* <NavLink
-            to='/my-account/wish-list'
-            className={({ isActive }) => (isActive ? 'active-tab' : '')}
-          >
-            <li>Your Wish List</li>
-          </NavLink> */}
-          {/* <NavLink
-            to="/my-account/return"
-            className={({ isActive }) =>
-              isActive ? "active-tab" : ""
-            }
-          >
-            <li>Return</li>
-          </NavLink> */}
+          {userConfig.map((nav) => (
+            <NavLink
+              key={nav.id}
+              to={nav.link}
+              className={({ isActive }) => (isActive ? 'active-tab' : '')}
+            >
+              <li>{nav.name}</li>
+            </NavLink>
+          ))}
         </ul>
       </div>
       <div className="profile-features-box">
-        {page === 'address' && <Address />}
-
-        {page === 'edit-profile' && <EditProfile />}
-
-        {page === 'orders' && <PlaceOrders />}
-
-        {page === 'wish-list' && <WishList />}
-
-        {/* {page === "return" && <Return />} */}
+        <ActiveComponent />
       </div>
     </div>
   );

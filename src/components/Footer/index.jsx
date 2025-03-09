@@ -25,7 +25,7 @@ const Footer = () => {
         <div className="footer-links-box">
           <h4 className="footer-h4">Quick Links</h4>
           <ul>
-            <Link to="/home">
+            <Link to="/">
               <li>Home</li>
             </Link>
             <Link to="/collections/Men's-Wardrobe">
@@ -88,7 +88,7 @@ const Footer = () => {
             fashion news & style tips!
           </p>
           {/* {true ? ( */}
-          <Link to="/home">
+          <Link to="/">
             <button>lets Shopping</button>
           </Link>
           {/* ) : (

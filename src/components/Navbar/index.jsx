@@ -15,7 +15,7 @@ import SearchResults from '../SearchResults';
 import axiosInstance from '../../axios/AxiosInstance';
 
 const navLinks = [
-  { name: 'Home', link: '/home' },
+  { name: 'Home', link: '/' },
   { name: "Men's", link: "/collections/Men's-Wardrobe" },
   { name: "Women's", link: "/collections/Women's-Wardrobe" },
   { name: 'Top Selling', link: '/top-selling' },
@@ -96,7 +96,7 @@ const Navbar = () => {
       <div className="navbar-container">
         <div className="navbar">
           <div className="website-name">
-            <Link to="/home">
+            <Link to="/">
               <h3>
                 <span style={{ color: 'red' }}>Shop</span>Now
               </h3>

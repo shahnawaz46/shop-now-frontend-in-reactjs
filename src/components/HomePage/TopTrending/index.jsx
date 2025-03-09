@@ -95,6 +95,7 @@ const TopTrending = () => {
                     role="presentation"
                     className="trending-product-images"
                     alt="product-not-found"
+                    loading="lazy"
                   />
                 </Link>
               ))}

@@ -8,10 +8,7 @@ const Card = () => {
 
       <div className="menwomencard-box">
         <div className="card">
-          <img
-            src="https://preview.colorlib.com/theme/capitalshop/assets/img/hero/h1_hero1.jpg.webp"
-            alt="not found"
-          />
+          <img src="./men-wardrobe.webp" alt="men-wardrobe" loading="lazy" />
           <div className="card-content left">
             {/* <p>
               Men's fashion refers to the styles and trends in clothing,
@@ -28,10 +25,7 @@ const Card = () => {
         </div>
 
         <div className="card">
-          <img
-            src="https://preview.colorlib.com/theme/capitalshop/assets/img/hero/h1_hero2.jpg.webp"
-            alt="not found"
-          />
+          <img src="./women-wardrobe.webp" alt="not found" loading="lazy" />
           <div className="card-content right-side">
             <Link to="/collections/Women's-Wardrobe">
               <h2>Women&apos;s Fashion</h2>
