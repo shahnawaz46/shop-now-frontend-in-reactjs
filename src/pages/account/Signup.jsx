@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useTransition } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { BiHide, BiShow } from 'react-icons/bi';
@@ -18,24 +18,22 @@ const Signup = () => {
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [maxDate, setMaxDate] = useState();
   const [deviceInfo, setDeviceInfo] = useState({});
+  const [isPending, startTransition] = useTransition();
 
   const handleFormSubmit = async (value) => {
-    setLoading(true); // for show loading screen after clicked on Sign Up button
-
-    try {
-      const res = await axiosInstance.post('/signup', {
-        ...value,
-        ...deviceInfo,
-      });
-
-      navigate(`/account/verify?${res.data.email}`, { replace: true });
-    } catch (err) {
-      setLoading(false);
-      toast.error(err?.response?.data?.error || err?.message);
-    }
+    startTransition(async () => {
+      try {
+        const res = await axiosInstance.post('/signup', {
+          ...value,
+          ...deviceInfo,
+        });
+        navigate(`/account/verify?${res.data.email}`, { replace: true });
+      } catch (err) {
+        toast.error(err?.response?.data?.error || err?.message);
+      }
+    });
   };
 
   useEffect(() => {
@@ -61,7 +59,7 @@ const Signup = () => {
 
   return (
     <>
-      {loading && <ScreenLoading backgroundColor="rgba(0,0,0,0.5)" />}
+      {isPending && <ScreenLoading backgroundColor="rgba(0,0,0,0.5)" />}
 
       <div className="form-container">
         <div className="form-sub-container signup-container">
@@ -160,6 +158,7 @@ const Signup = () => {
                       name="checked"
                       type="checkbox"
                       className="checkbox"
+                      style={{ width: 'auto' }}
                     />
                     <span>I agree to the Terms and conditions</span>
                   </div>

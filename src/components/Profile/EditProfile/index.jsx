@@ -1,4 +1,4 @@
-import { memo, useState } from 'react';
+import { memo, useActionState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 
@@ -6,143 +6,127 @@ import { toast } from 'react-toastify';
 import './style.css';
 import axiosInstance from '../../../axios/AxiosInstance';
 import { updatePersonDetail } from '../../../redux/slices/UserSlice';
-import { API_STATUS } from '../../../utils/Constants';
-import { ScreenLoading } from '../../Loaders';
+import { ErrorMsg } from '../../common/FormikErrorMsg';
 
 const EditProfile = () => {
   const dispatch = useDispatch();
   const { personalDetails } = useSelector((state) => state.user);
 
-  const [editUserDetail, setEditUserDetail] = useState(personalDetails);
-  const [status, setStatus] = useState(API_STATUS.IDLE);
+  const [data, formAction, isPending] = useActionState(
+    async (prevState, formData) => {
+      const formDataInfo = {};
+      Array.from(formData.entries()).forEach(
+        ([key, value]) => (formDataInfo[key] = value)
+      );
 
-  const EditFormhandle = async (e) => {
-    e.preventDefault();
-    const { firstName, lastName, email, location } = editUserDetail;
-    // console.log(firstName, lastName, email, location);
-    if (!firstName) return toast.error('Please Enter First Name');
-    else if (!lastName) return toast.error('Please Enter Last Name');
-    else if (!email) return toast.error('Please Enter Email');
-    else if (!location) return toast.error('Please Enter Location');
+      const error = {};
+      for (let key in formDataInfo) {
+        if (!formDataInfo[key]) {
+          formDataInfo[key] = '';
+          error[key + 'Error'] = `${key
+            .replace(/([a-z])([A-Z])/g, '$1 $2')
+            .toLowerCase()} required`;
+        }
+      }
 
-    try {
-      setStatus(API_STATUS.LOADING);
-      const res = await axiosInstance.patch('/profile', {
-        userDetail: { firstName, lastName, email, location },
-      });
-      toast.success(res.data.msg);
-      dispatch(updatePersonDetail(res.data.userDetail));
-      setStatus(API_STATUS.SUCCESS);
-      // return res.data.userDetail
-    } catch (error) {
-      setStatus(API_STATUS.FAILED);
-      toast.error(error?.response?.data?.error || error?.message);
-    }
-  };
+      if (Object.keys(error).length > 0) return { ...formDataInfo, ...error };
 
-  // const changeMobileNo = (e) => {
-  //   e.preventDefault();
-  //   console.log('done');
-  // };
+      try {
+        const res = await axiosInstance.patch('/profile', {
+          userDetail: formDataInfo,
+        });
+        toast.success(res.data.msg);
+        dispatch(updatePersonDetail(res.data.userDetail));
+      } catch (error) {
+        toast.error(error?.response?.data?.error || error?.message);
+      }
+
+      return formDataInfo;
+    },
+    personalDetails
+  );
 
   return (
-    <>
-      {status === API_STATUS.LOADING && (
-        <ScreenLoading backgroundColor="rgba(0,0,0,0.5)" />
-      )}
+    <div className="editprofile_container">
+      <div className="editprofile_form_container">
+        <h2>Edit Details</h2>
 
-      <div className="editprofile_container">
-        <div className="editprofile_form_container">
-          <h2>Edit Details</h2>
-          <form className="editprofile_form" onSubmit={EditFormhandle}>
-            <div className="editprofile_input">
-              <label htmlFor="first_name">First Name</label>
-              <input
-                type="text"
-                id="first_name"
-                value={editUserDetail?.firstName}
-                onChange={(e) =>
-                  setEditUserDetail({
-                    ...editUserDetail,
-                    firstName: e.target.value,
-                  })
-                }
-              />
-            </div>
+        <form className="editprofile_form" action={formAction}>
+          <div className="editprofile_input">
+            <label htmlFor="first_name">First Name</label>
+            <input
+              type="text"
+              id="first_name"
+              name="firstName"
+              defaultValue={data?.firstName}
+            />
 
-            <div className="editprofile_input">
-              <label htmlFor="last_name">Last Name</label>
-              <input
-                type="text"
-                id="last_name"
-                value={editUserDetail?.lastName}
-                onChange={(e) =>
-                  setEditUserDetail({
-                    ...editUserDetail,
-                    lastName: e.target.value,
-                  })
-                }
-              />
-            </div>
+            {data?.firstNameError && <ErrorMsg msg={data?.firstNameError} />}
+          </div>
 
-            <div className="editprofile_input">
-              <label htmlFor="phone_no">Phone No</label>
-              <input
-                type="number"
-                id="phone_no"
-                value={editUserDetail?.phoneNo}
-                readOnly
-                onChange={(e) =>
-                  setEditUserDetail({
-                    ...editUserDetail,
-                    phoneNo: e.target.value,
-                  })
-                }
-              />
+          <div className="editprofile_input">
+            <label htmlFor="last_name">Last Name</label>
+            <input
+              type="text"
+              id="last_name"
+              name="lastName"
+              defaultValue={data?.lastName}
+            />
 
-              {/* <button
+            {data?.lastNameError && <ErrorMsg msg={data?.lastNameError} />}
+          </div>
+
+          <div className="editprofile_input">
+            <label htmlFor="phone_no">Phone No</label>
+            <input
+              type="number"
+              id="phone_no"
+              value={personalDetails?.phoneNo}
+              readOnly
+            />
+
+            {/* <button
                 className="editprofile-edit-phone-no-button"
                 onClick={changeMobileNo}
               >
                 Change
               </button> */}
-            </div>
+          </div>
 
-            <div className="editprofile_input">
-              <label htmlFor="email">Email</label>
-              <input
-                type="email"
-                id="email"
-                value={editUserDetail?.email}
-                onChange={(e) =>
-                  setEditUserDetail({
-                    ...editUserDetail,
-                    email: e.target.value,
-                  })
-                }
-              />
-            </div>
+          <div className="editprofile_input">
+            <label htmlFor="email">Email</label>
+            <input
+              type="email"
+              id="email"
+              name="email"
+              defaultValue={data?.email}
+            />
 
-            <div className="editprofile_input">
-              <label htmlFor="location">Location</label>
-              <input
-                type="text"
-                id="location"
-                value={editUserDetail?.location || ''}
-                onChange={(e) =>
-                  setEditUserDetail({
-                    ...editUserDetail,
-                    location: e.target.value,
-                  })
-                }
-              />
-            </div>
+            {data?.emailError && <ErrorMsg msg={data?.emailError} />}
+          </div>
 
-            <button className="editprofile_button">Save Changes</button>
-          </form>
-        </div>
+          <div className="editprofile_input">
+            <label htmlFor="location">Location</label>
+            <input
+              type="text"
+              id="location"
+              name="location"
+              defaultValue={data?.location}
+            />
+
+            {data?.locationError && <ErrorMsg msg={data?.locationError} />}
+          </div>
+
+          <button
+            className="editprofile_button"
+            type="submit"
+            disabled={isPending}
+          >
+            Save Changes
+          </button>
+        </form>
       </div>
-    </>
+    </div>
   );
 };
 

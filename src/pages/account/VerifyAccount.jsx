@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useTransition } from 'react';
 import { toast } from 'react-toastify';
 import { Navigate, useLocation, useNavigate } from 'react-router-dom';
 
@@ -14,7 +14,7 @@ const VerifyAccount = () => {
   const navigate = useNavigate();
 
   const [otp, setOtp] = useState({});
-  const [loading, setLoading] = useState(false);
+  const [isPending, startTransition] = useTransition();
 
   const optHanlde = async (e) => {
     e.preventDefault();
@@ -23,9 +23,10 @@ const VerifyAccount = () => {
 
     if (allOtp.length !== 4) {
       toast.error('OTP must be 4 digits');
-    } else {
-      setLoading(true); // for show loading screen after clicked on verify button
+      return;
+    }
 
+    startTransition(async () => {
       const userInfo = { otp: allOtp, email: location?.search?.slice(1) || '' };
 
       try {
@@ -33,10 +34,9 @@ const VerifyAccount = () => {
         localStorage.setItem('__f_id', res.data.userId);
         navigate('/', { replace: true });
       } catch (err) {
-        setLoading(false);
         toast.error(err?.response?.data?.error || err?.message);
       }
-    }
+    });
   };
 
   const setOtpFnc = (e, index) => {
@@ -58,7 +58,7 @@ const VerifyAccount = () => {
 
   return (
     <>
-      {loading && <ScreenLoading backgroundColor="rgba(0,0,0,0.5)" />}
+      {isPending && <ScreenLoading backgroundColor="rgba(0,0,0,0.5)" />}
 
       <div className="form-container">
         <div className="form-sub-container otpverification-container">

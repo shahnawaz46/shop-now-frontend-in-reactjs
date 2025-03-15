@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useTransition } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { deviceDetect, browserName } from 'react-device-detect';
+import { Field, Form, Formik } from 'formik';
 
 // components
 import './style.css';
 import axiosInstance from '../../axios/AxiosInstance';
 import { ScreenLoading } from '../../components/Loaders';
-import { Field, Form, Formik } from 'formik';
 import { initialState, signInSchema } from '../../validation/SignIn.yup';
 import FormikErrorMsg from '../../components/common/FormikErrorMsg';
 import FormTitle from '../../components/common/FormTitle';
@@ -16,36 +16,35 @@ import CustomButton from '../../components/common/CustomButton';
 const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const [loading, setLoading] = useState(false);
   const [deviceInfo, setDeviceInfo] = useState({});
+  const [isPending, startTransition] = useTransition();
 
   const handleFormSubmit = async (value) => {
-    setLoading(true); // for show loading screen after clicked on Login button
-    try {
-      const res = await axiosInstance.post('/signin', {
-        ...value,
-        ...deviceInfo,
-      });
-      localStorage.setItem('__f_id', res.data.userId);
-
-      setLoading(false);
-
-      if (location.state) {
-        navigate(`/place-order?step=1`, {
-          state: location.state,
-          replace: true,
+    // until transtion complete isPending will be true
+    startTransition(async () => {
+      try {
+        const res = await axiosInstance.post('/signin', {
+          ...value,
+          ...deviceInfo,
         });
-      } else {
-        navigate('/my-account/address', { replace: true });
-      }
-    } catch (err) {
-      setLoading(false);
-      toast.error(err?.response?.data?.error || err?.message);
+        localStorage.setItem('__f_id', res.data.userId);
 
-      if (err?.response?.data?.error === 'User not verified, Please verify') {
-        navigate(`/account/verify?${value.email}`, { replace: true });
+        if (location.state) {
+          navigate(`/place-order?step=1`, {
+            state: location.state,
+            replace: true,
+          });
+        } else {
+          navigate('/my-account/address', { replace: true });
+        }
+      } catch (err) {
+        toast.error(err?.response?.data?.error || err?.message);
+
+        if (err?.response?.data?.error === 'User not verified, Please verify') {
+          navigate(`/account/verify?${value.email}`, { replace: true });
+        }
       }
-    }
+    });
   };
 
   useEffect(() => {
@@ -65,7 +64,7 @@ const Login = () => {
 
   return (
     <>
-      {loading && <ScreenLoading backgroundColor="rgba(0,0,0,0.5)" />}
+      {isPending && <ScreenLoading backgroundColor="rgba(0,0,0,0.5)" />}
 
       <div className="form-container">
         <div className="form-sub-container">
