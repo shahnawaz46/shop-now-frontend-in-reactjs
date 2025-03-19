@@ -3,7 +3,7 @@ import { AiFillStar } from 'react-icons/ai';
 import AliceCarousel from 'react-alice-carousel';
 import { toast } from 'react-toastify';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 // components
 import './style.css';

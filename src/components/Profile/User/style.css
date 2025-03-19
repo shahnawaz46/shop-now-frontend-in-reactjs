@@ -64,12 +64,15 @@
 }
 
 .profile-main-features-ul > li {
+  display: contents;
+}
+
+.profile-main-features-ul > li > a {
   padding: 8px 20px;
   cursor: pointer;
 }
 
-.profile-main-features-ul > li:hover,
-.profile-main-features-ul > li:hover a {
+.profile-main-features-ul > li > a:hover {
   background-color: var(--secondary-color);
   color: white;
 }

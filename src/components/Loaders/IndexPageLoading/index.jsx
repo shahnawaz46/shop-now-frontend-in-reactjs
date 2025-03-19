@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import './style.css';
 // import Logo from '../../../asset/shopnow_logo.png';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const IndexPageLoading = () => {
   const navigate = useNavigate();

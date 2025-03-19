@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { MdOutlineRemoveShoppingCart } from 'react-icons/md';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { FaFileInvoiceDollar } from 'react-icons/fa';
 import { TbViewfinder } from 'react-icons/tb';
 import { toast } from 'react-toastify';

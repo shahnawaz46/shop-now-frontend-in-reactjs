@@ -1,5 +1,5 @@
 import { useState, useEffect, useTransition } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { BiHide, BiShow } from 'react-icons/bi';
 import { deviceDetect, browserName } from 'react-device-detect';

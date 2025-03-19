@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { MdDelete } from 'react-icons/md';
 import { IoMdAdd, IoMdRemove } from 'react-icons/io';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
 // components

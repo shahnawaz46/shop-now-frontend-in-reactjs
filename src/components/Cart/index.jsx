@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { IoMdClose, IoMdAdd, IoMdRemove } from 'react-icons/io';
 import { MdDelete } from 'react-icons/md';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 
 // components

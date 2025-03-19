@@ -6,7 +6,8 @@ export const API_STATUS = {
 };
 
 export const filterProductsInitialState = {
-  isLoading: true,
+  // isLoading: true,
   next: null,
+  count: 0,
   item: [],
 };

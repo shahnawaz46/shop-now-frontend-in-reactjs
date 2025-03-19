@@ -1,6 +1,6 @@
 import { useState, useTransition } from 'react';
 import { toast } from 'react-toastify';
-import { Navigate, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, useLocation, useNavigate } from 'react-router';
 
 // components
 import './style.css';

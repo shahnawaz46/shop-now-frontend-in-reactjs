@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import './style.css';
 import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 import { IoMdClose } from 'react-icons/io';
 
 // slider

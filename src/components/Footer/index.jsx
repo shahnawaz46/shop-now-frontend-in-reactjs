@@ -7,7 +7,7 @@ import {
 } from 'react-icons/fa';
 import { IoMdCall } from 'react-icons/io';
 import { MdEmail } from 'react-icons/md';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 
 // import { useSelector } from 'react-redux';
 

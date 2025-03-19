@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { Link, NavLink, useLocation, useNavigate } from 'react-router';
 import { BiSearch } from 'react-icons/bi';
 import { FiShoppingBag } from 'react-icons/fi';
 import { RiMenu2Line } from 'react-icons/ri';
 import { MdClose, MdPerson } from 'react-icons/md';
 import { useSelector } from 'react-redux';
-import { debounce } from 'lodash';
+import debounce from 'lodash/debounce';
 import { toast } from 'react-toastify';
 
 // components

@@ -1,18 +1,17 @@
-import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { debounce } from 'lodash';
+import { useEffect, useState, useTransition } from 'react';
+import { useSearchParams } from 'react-router';
+// import debounce from 'lodash/debounce';
 import { toast } from 'react-toastify';
 import { useInView } from 'react-intersection-observer';
 
 // components
 import RootLayout from '../components/Layout/RooLayout';
-import ProductCard from '../components/ProductCard';
-import NotFound from '../components/NotFound';
 import SidebarLayout from '../components/Layout/SidebarLayout';
 import axiosInstance from '../axios/AxiosInstance';
-import { ScreenLoading, PaginationLoading } from '../components/Loaders';
+import { ScreenLoading } from '../components/Loaders';
 import useFetch from '../components/common/useFetch';
 import { filterProductsInitialState } from '../utils/Constants';
+import ProductCardWrapper from '../components/Product/ProductCardWrapper';
 
 const TopSelling = () => {
   const {
@@ -24,9 +23,8 @@ const TopSelling = () => {
   const [filterProducts, setFilterProducts] = useState(
     filterProductsInitialState
   );
-
+  const [isPending, startTransition] = useTransition(); // using for handle filterProducts
   const searchParam = useSearchParams()[0]; // useSearchParams return two value first is searchState and second is searchState function
-
   const { ref, inView } = useInView({ threshold: 1 });
 
   const fetchMoreProducts = async (url) => {
@@ -46,28 +44,28 @@ const TopSelling = () => {
     }
   };
 
-  const fetchFilteredProducts = debounce(async (url, fetchMore = false) => {
+  const fetchFilteredProducts = async (url, fetchMore = false) => {
     try {
       const res = await axiosInstance.get(url);
       setFilterProducts((prev) => ({
-        isLoading: false,
         next: res.data.products.next,
+        count: res.data.product?.count,
         item: fetchMore
           ? [...prev.item, ...res.data.products.item]
           : res.data.products.item,
       }));
     } catch (err) {
-      setFilterProducts((prev) => ({ ...prev, isLoading: false }));
       toast.error(err?.response?.data?.error || err?.message);
     }
-  });
+  };
 
   // useEffect for calling filteredProducts function based on query changed in url
   useEffect(() => {
     const filteredQuery = searchParam.toString();
     if (filteredQuery) {
-      setFilterProducts(filterProductsInitialState);
-      fetchFilteredProducts(`/product/top-selling?${filteredQuery}`);
+      startTransition(() =>
+        fetchFilteredProducts(`/product/top-selling?${filteredQuery}`)
+      );
     }
   }, [searchParam.toString()]);
 
@@ -84,6 +82,8 @@ const TopSelling = () => {
 
   if (isLoading) return <ScreenLoading />;
 
+  // first i am checking if query is present in url then showing filter products that i am getting based on query
+  // if query is not present in url then i am showing top selling products
   return (
     <RootLayout>
       <SidebarLayout
@@ -96,40 +96,25 @@ const TopSelling = () => {
           },
         ]}
       >
-        {searchParam.toString() ? (
-          filterProducts.isLoading ? (
-            <ScreenLoading position="absolute" />
-          ) : filterProducts.item.length > 0 ? (
-            <div className="product-container">
-              {filterProducts.item.map((product) => (
-                <ProductCard key={product._id} product={product} />
-              ))}
-            </div>
-          ) : (
-            <NotFound>No Filtered Products Available</NotFound>
-          )
-        ) : topSellingProducts?.products?.item?.length > 0 ? (
-          <div className="product-container">
-            {topSellingProducts?.products?.item?.map((product) => (
-              <ProductCard key={product._id} product={product} />
-            ))}
-          </div>
-        ) : (
-          <NotFound>Currently No Products Available</NotFound>
-        )}
-
-        {/* loading gif for pagination(show before fetching more product) */}
-        {searchParam.toString()
-          ? filterProducts.next && (
-              <div ref={ref}>
-                <PaginationLoading />
-              </div>
-            )
-          : topSellingProducts?.products?.next && (
-              <div ref={ref}>
-                <PaginationLoading />
-              </div>
-            )}
+        <ProductCardWrapper
+          isLoading={searchParam.toString() ? isPending : false}
+          products={
+            searchParam.toString()
+              ? filterProducts.item
+              : topSellingProducts?.products?.item
+          }
+          errorMsg={
+            searchParam.toString()
+              ? 'No Filtered Products Available'
+              : 'Currently No Products Available'
+          }
+          hasFetchNext={
+            searchParam.toString()
+              ? filterProducts.next
+              : topSellingProducts?.products?.next
+          }
+          fetchNextRef={ref} // in react 19, now we can pass `ref` as a prop for function components, without using forwarRef in child component
+        />
       </SidebarLayout>
     </RootLayout>
   );

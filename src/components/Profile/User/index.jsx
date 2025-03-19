@@ -1,5 +1,5 @@
 import { memo, useOptimistic, useTransition } from 'react';
-import { NavLink, useNavigate, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router';
 import { useDispatch } from 'react-redux';
 import { BsFillCameraFill } from 'react-icons/bs';
 import { toast } from 'react-toastify';
@@ -60,6 +60,8 @@ const User = ({ userData }) => {
   const updateProfileFnc = async (e) => {
     const file = e.target.files[0];
 
+    if (!file) return;
+
     const formData = new FormData();
     formData.append('profilePicture', file);
 
@@ -68,14 +70,14 @@ const User = ({ userData }) => {
 
       try {
         const res = await axiosInstance.patch('/profile-pic', formData);
-        toast.success('successfully');
+        toast.success('Profile picture updated successfully');
         dispatch(updatePersonDetail(res.data.userDetails));
       } catch (error) {
         toast.error(error?.response?.data?.error || error?.message);
       }
     });
 
-    e.target.file = null;
+    e.target.value = null;
   };
 
   // find activeComponent based on URL
@@ -122,8 +124,6 @@ const User = ({ userData }) => {
                 accept=".png, .jpg, .jpeg, .avif, .webp"
                 id="for-upload-profile"
                 style={{ display: 'none' }}
-                // formAction={updateProfileFnc}
-
                 onChange={updateProfileFnc}
               />
             </label>
@@ -151,10 +151,7 @@ const User = ({ userData }) => {
         <div className="profile-main-features-box">
           <ul className="profile-main-features-ul">
             {userConfig.map((nav) => (
-              <li
-                key={nav.id}
-                className={nav.link.split('/')[2] === page ? 'active-tab' : ''}
-              >
+              <li key={nav.id}>
                 <NavLink
                   to={nav.link}
                   className={({ isActive }) => (isActive ? 'active-tab' : '')}

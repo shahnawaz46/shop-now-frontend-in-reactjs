@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { FaPlus } from 'react-icons/fa';
 import { toast } from 'react-toastify';
 import { MdDelete } from 'react-icons/md';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router';
 
 // components
 import './style.css';

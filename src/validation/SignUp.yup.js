@@ -1,4 +1,4 @@
-import moment from 'moment';
+import dayjs from 'dayjs';
 import * as Yup from 'yup';
 
 export const initialState = {
@@ -29,9 +29,9 @@ export const signUpSchema = Yup.object({
       'age',
       'You must be at least 10 years old to create an account',
       function (value) {
-        const dob = moment(value);
-        const age = moment().diff(dob, 'years');
-        // console.log(value, age, age > 10);
+        const dob = dayjs(value);
+        const age = dayjs().diff(dob, 'years');
+        // console.log(value, dob, age, age > 10);
         return age > 10;
       }
     ),
