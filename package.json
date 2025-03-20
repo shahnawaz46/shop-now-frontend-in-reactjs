@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "audit-fix": "yarn audit && npm i --package-lock-only && npm audit fix && rm package-lock.json && rm yarn.lock && rm -rf node_modules && yarn"
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.5.1",
@@ -42,6 +43,7 @@
     "eslint-plugin-react-refresh": "^0.4.18",
     "globals": "^15.14.0",
     "rollup-plugin-visualizer": "^5.14.0",
-    "vite": "^6.1.0"
+    "vite": "^6.1.0",
+    "yarn-audit-fix": "^10.1.1"
   }
 }
