@@ -1,24 +1,30 @@
 .shippingAddress_container {
   width: 100%;
-  background-color: #fff;
+  background-color: var(--background-primary);
   box-shadow: 0px 5px 15px -8px rgba(0, 0, 0, 0.1);
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
   margin-top: 80px;
   border-radius: 20px;
-  border: 1px solid #e8e8e1;
+  border: 1px solid var(--border-primary);
   padding: 20px;
 }
 
+[data-theme='dark'] .shippingAddress_container {
+  box-shadow: var(--shadow-primary);
+  border: none;
+}
+
 .shippingAddress_container > h2 {
-  font-size: 22px;
+  font-size: 1.375rem;
   font-weight: 400;
+  color: var(--text-primary);
 }
 
 .shippingAddress_newaddress {
   display: flex;
   align-items: center;
   gap: 10px;
-  color: #60a5fa;
+  color: var(--tertiary-color);
   cursor: pointer;
   margin: 15px 0px;
   width: 160px;
@@ -44,22 +50,39 @@
   border-radius: 12px;
   width: 280px;
   cursor: pointer;
+  background-color: var(--background-primary);
+  border: 1px solid var(--border-primary);
 }
 
-.shippingAddress_btn {
+[data-theme='dark'] .shippingAddress_card {
+  border: none;
+  box-shadow: var(--shadow-primary);
+}
+
+.shippingAddress_active {
+  background-color: rgb(208 227 251);
+  border: 2px solid var(--tertiary-color);
+}
+
+[data-theme='dark'] .shippingAddress_active {
+  background-color: var(--background-primary);
+  border: 1px solid var(--tertiary-color);
+}
+
+.shippingAddress_info {
+  color: var(--text-primary);
+}
+
+.shippingAddress_btn_container {
   text-align: right;
   margin-top: 20px;
 }
 
-.shippingAddress_btn > button {
+.shippingAddress_btn {
   width: 150px;
-  padding: 5px;
-  border-radius: 10px;
-  font-size: 18px;
-  background-color: #60a5fa;
+  font-size: 1.125rem;
+  background-color: var(--tertiary-color);
   color: #fff;
-  border: none;
-  cursor: pointer;
 }
 
 @media only screen and (max-width: 1400px) {

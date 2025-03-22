@@ -20,7 +20,10 @@ const FormTitle = ({
         marginBottom,
       }}
     >
-      <h1 className="title" style={{ fontWeight }}>
+      <h1
+        className="title"
+        style={{ fontWeight, color: 'var(--text-primary)' }}
+      >
         {text}
       </h1>
       {children}

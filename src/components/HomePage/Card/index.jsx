@@ -1,10 +1,11 @@
 import { Link } from 'react-router';
 import './style.css';
+import HeadingAndParagraph from '../HeadingAndParagraph';
 
 const Card = () => {
   return (
     <div className="menwomencard-container">
-      <h2>WARDROBE</h2>
+      <HeadingAndParagraph heading={'WARDROBE'} />
 
       <div className="menwomencard-box">
         <div className="card">

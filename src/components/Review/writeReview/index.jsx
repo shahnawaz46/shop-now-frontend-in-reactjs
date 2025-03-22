@@ -49,15 +49,15 @@ const WriteReview = ({
 
   return (
     <Modal open={writeReviewModal}>
-      <div className="write_review_container">
-        <div className="write_review_header">
-          <h2>Write Review</h2>
+      <div className="write-review-container">
+        <div className="write-review-header">
+          <h2 className="write-review-h2">Write Review</h2>
           <MdCancel
             onClick={() => setWriteReviewModal(false)}
             className="close_modal"
           />
         </div>
-        <div className="write_review_rating_star">
+        <div className="write-review-rating-star">
           <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
             {[...Array(5)].map((_, index) => (
               <label
@@ -79,24 +79,22 @@ const WriteReview = ({
               </label>
             ))}
           </div>
-          <span onClick={() => setStar(0)} style={{ cursor: 'pointer' }}>
+          <span onClick={() => setStar(0)} className="write-review-clear">
             Clear
           </span>
         </div>
         <textarea
-          className="write_review_text_area"
+          className="write-review-text-area"
           id=""
           cols="30"
           rows="5"
           onChange={(e) => setMessage(e.target.value)}
         />
-        <button className="write_review_btn" onClick={writeReviewFnc}>
+        <button className="write-review-btn" onClick={writeReviewFnc}>
           Submit
         </button>
 
-        <span
-          style={{ fontSize: '0.75rem', fontWeight: '500', marginTop: '12px' }}
-        >
+        <span className="write-review-note">
           Note: If you&apos;ve already added a review, then it will be edited.
         </span>
       </div>

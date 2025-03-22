@@ -10,6 +10,7 @@ import './style.css';
 import AddressForm from '../../Profile/AddressForm';
 import axiosInstance from '../../../axios/AxiosInstance';
 import { updateAddress } from '../../../redux/slices/UserSlice';
+import CustomButton from '../../common/CustomButton';
 
 const ShippingAddress = () => {
   const dispatch = useDispatch();
@@ -61,17 +62,11 @@ const ShippingAddress = () => {
             addressDetails?.map((item, index) => (
               <div
                 key={index}
-                className="shippingAddress_card"
-                style={{
-                  backgroundColor:
-                    selectedAddressId === item?._id
-                      ? 'rgb(208 227 251)'
-                      : '#fff',
-                  border:
-                    selectedAddressId === item?._id
-                      ? '2px solid #60A5FA'
-                      : '1px solid #e8e8e1',
-                }}
+                className={`shippingAddress_card ${
+                  selectedAddressId === item?._id
+                    ? 'shippingAddress_active'
+                    : ''
+                }`}
                 onClick={() => setSelectedAddressId(item._id)}
               >
                 <div
@@ -82,37 +77,59 @@ const ShippingAddress = () => {
                   }}
                 >
                   <span
-                    style={{ textTransform: 'uppercase', fontWeight: '500' }}
+                    style={{
+                      textTransform: 'uppercase',
+                      fontWeight: '500',
+                    }}
+                    className="shippingAddress_info"
                   >
                     {item?.addressType}
                   </span>
-                  <MdDelete onClick={() => removeAddress(item._id)} />
+                  <MdDelete
+                    onClick={() => removeAddress(item._id)}
+                    className="shippingAddress_info"
+                  />
                 </div>
                 <div style={{ marginTop: '5px' }}>
-                  <p>
+                  <p className="shippingAddress_info">
                     {item?.address}, {item?.locality}, {item?.cityDistrictTown},
                   </p>
-                  <p>
+                  <p className="shippingAddress_info">
                     {' '}
                     {item?.state}, {item?.pinCode}
                   </p>
-                  {item?.landmark && <span>landmark: {item?.landmark}</span>}
-                  <h4 style={{ margin: '5px 0px' }}>{item?.name}</h4>
-                  <span>{item?.mobileNumber}</span>
+                  {item?.landmark && (
+                    <span className="shippingAddress_info">
+                      landmark: {item?.landmark}
+                    </span>
+                  )}
+                  <h4
+                    className="shippingAddress_info"
+                    style={{ margin: '5px 0px' }}
+                  >
+                    {item?.name}
+                  </h4>
+                  <span className="shippingAddress_info">
+                    {item?.mobileNumber}
+                  </span>
                 </div>
               </div>
             ))
           ) : (
             <div style={{ width: '100%', textAlign: 'center' }}>
-              <p>
+              <p className="shippingAddress_info">
                 No address available please add new address for move further
               </p>
             </div>
           )}
         </div>
 
-        <div className="shippingAddress_btn">
-          <button onClick={submitAddress}>Continue</button>
+        <div className="shippingAddress_btn_container">
+          <CustomButton
+            text={'Continue'}
+            className={'shippingAddress_btn'}
+            onClick={submitAddress}
+          />
         </div>
       </div>
 

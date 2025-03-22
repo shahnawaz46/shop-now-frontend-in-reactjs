@@ -57,21 +57,17 @@ const TopTrending = () => {
 
           <div className="trending-button-container">
             <button
-              className="trending-toggle-button"
-              style={{
-                backgroundColor: targetAudience === 'Men' && '#030342',
-                color: targetAudience === 'Men' && 'white',
-              }}
+              className={`trending-toggle-button ${
+                targetAudience === 'Men' ? 'active' : ''
+              }`}
               onClick={() => settargetAudience('Men')}
             >
               Men
             </button>
             <button
-              className="trending-toggle-button"
-              style={{
-                backgroundColor: targetAudience === 'Women' && '#030342',
-                color: targetAudience === 'Women' && 'white',
-              }}
+              className={`trending-toggle-button ${
+                targetAudience === 'Women' ? 'active' : ''
+              }`}
               onClick={() => settargetAudience('Women')}
             >
               Women

@@ -10,6 +10,7 @@ import './style.css';
 import axiosInstance from '../../../axios/AxiosInstance';
 import { addToCart, removeCartItem } from '../../../redux/slices/CartSlice';
 import { ScreenLoading } from '../../Loaders';
+import CustomButton from '../../common/CustomButton';
 
 export const DELIVERY_CHARGE = 200;
 
@@ -126,7 +127,7 @@ const OrderSummary = () => {
                     <div className="orderSummary_product_details">
                       <h3>{product.productName}</h3>
 
-                      <h4>Size: {product.size}</h4>
+                      <p>Size: {product.size}</p>
                       <div className="orderSummary_product_count">
                         <div className="orderSummary_product_add_remove">
                           <button
@@ -146,7 +147,7 @@ const OrderSummary = () => {
                           >
                             <IoMdRemove style={{ fontSize: '16px' }} />
                           </button>
-                          <h4>{product.qty}</h4>
+                          <span>{product.qty}</span>
                           <button
                             style={{
                               borderLeft: '1px solid #e8e8e1',
@@ -166,13 +167,17 @@ const OrderSummary = () => {
                         </div>
 
                         <MdDelete
-                          style={{ fontSize: '20px', cursor: 'pointer' }}
+                          style={{
+                            fontSize: '20px',
+                            cursor: 'pointer',
+                            color: 'var(--text-primary)',
+                          }}
                           onClick={() =>
                             deleteCartItemFnc(product._id, product.size)
                           }
                         />
                       </div>
-                      <h4>Rs. {product.sellingPrice}</h4>
+                      <p>Rs. {product.sellingPrice}</p>
                     </div>
                   </div>
                 );
@@ -186,7 +191,11 @@ const OrderSummary = () => {
                   transform: 'translate(-50%, -50%)',
                 }}
               >
-                <span style={{ fontSize: '18px' }}>No Product Available</span>
+                <span
+                  style={{ fontSize: '1.125rem', color: 'var(--text-primary)' }}
+                >
+                  No Product Available
+                </span>
               </div>
             )}
           </div>
@@ -230,8 +239,12 @@ const OrderSummary = () => {
             order summary
           </p>
 
-          <div className="orderSummary_btn">
-            <button onClick={handleOrderSummary}>Continue</button>
+          <div className="orderSummary_btn_container">
+            <CustomButton
+              text={'Continue'}
+              className={'orderSummary_btn'}
+              onClick={handleOrderSummary}
+            />
           </div>
         </div>
       </div>

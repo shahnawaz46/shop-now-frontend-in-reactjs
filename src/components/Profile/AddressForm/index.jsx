@@ -14,6 +14,7 @@ import FormTitle from '../../common/FormTitle';
 import { AddressType } from '../Address';
 import { API_STATUS } from '../../../utils/Constants';
 import { ScreenLoading } from '../../Loaders';
+import CustomButton from '../../common/CustomButton';
 
 const AddressForm = (props) => {
   const { showAddress, setShowAddress, userAddress, setUserAddress } = props;
@@ -117,7 +118,11 @@ const AddressForm = (props) => {
             justifyContent="space-between"
           >
             <IoClose
-              style={{ fontSize: '1.25rem', cursor: 'pointer' }}
+              style={{
+                fontSize: '1.25rem',
+                cursor: 'pointer',
+                color: 'var(--text-primary)',
+              }}
               onClick={() => setShowAddress({ type: '', show: false })}
             />
           </FormTitle>
@@ -198,9 +203,7 @@ const AddressForm = (props) => {
 
             <div className="input-flex">
               <div className="input-container input-container-address width-50">
-                <label htmlFor="" className="locality">
-                  Locality
-                </label>
+                <label htmlFor="">Locality</label>
 
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <input
@@ -214,12 +217,14 @@ const AddressForm = (props) => {
                   {showLocalityList ? (
                     <MdKeyboardArrowUp
                       onClick={() => setShowLocalityList(false)}
-                      style={{ marginLeft: '-18px' }}
+                      // style={{ marginLeft: '-18px' }}
+                      className="input-locality-icon"
                     />
                   ) : (
                     <MdKeyboardArrowDown
                       onClick={() => setShowLocalityList(true)}
-                      style={{ marginLeft: '-18px' }}
+                      // style={{ marginLeft: '-18px' }}
+                      className="input-locality-icon"
                     />
                   )}
                 </div>
@@ -308,7 +313,7 @@ const AddressForm = (props) => {
                     }
                     required
                   />
-                  <span>Home</span>
+                  <span style={{ color: 'var(--text-primary)' }}>Home</span>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center' }}>
                   <input
@@ -324,29 +329,28 @@ const AddressForm = (props) => {
                     }
                     required
                   />
-                  <span>Work</span>
+                  <span style={{ color: 'var(--text-primary)' }}>Work</span>
                 </div>
               </div>
             </div>
 
             <div className="address-form-buttons">
-              <button
-                className="address-form-buttton"
-                id={invalidPinCodeMessage && 'disable-add-address-button'}
+              <CustomButton
+                text={showAddress.type}
                 disabled={invalidPinCodeMessage}
+                className={`address-form-buttton ${
+                  invalidPinCodeMessage ? 'disable-add-address-button' : ''
+                }`}
                 onClick={(e) => handleForm(e, showAddress.type)}
-              >
-                {showAddress.type}
-              </button>
-              <button
-                className="address-form-buttton"
+              />
+              <CustomButton
+                text={'Cancel'}
+                className={`address-form-buttton`}
                 onClick={() => {
                   setUserAddress({});
                   setShowAddress(false);
                 }}
-              >
-                Cancel
-              </button>
+              />
             </div>
           </form>
         </div>

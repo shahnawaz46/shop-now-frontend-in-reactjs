@@ -10,8 +10,8 @@
 .product-card-container {
   border-radius: 5px;
   overflow: hidden;
-  box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
-  background-color: white;
+  box-shadow: var(--shadow-primary);
+  background-color: var(--background-primary);
   transition: all ease-in 0.2s;
 }
 
@@ -33,4 +33,17 @@
   margin-bottom: 5px;
   font-size: 14px;
   font-weight: 500;
+  color: var(--text-primary);
+}
+
+.product-selling-price {
+  font-size: 0.938rem;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.product-actual-price {
+  font-size: 0.875rem;
+  margin: 0px 8px;
+  color: var(--text-secondary);
 }

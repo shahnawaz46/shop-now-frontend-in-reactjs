@@ -18,17 +18,11 @@ const ProductCard = ({ product }) => {
         <div className="product-card-details">
           <h4 className="product-card-name">{product.productName}</h4>
           <div>
-            <span style={{ fontSize: '15px', fontWeight: 600 }}>
+            <span className="product-selling-price">
               &#8377;{product?.sellingPrice}
             </span>
             {product?.actualPrice > 0 && (
-              <strike
-                style={{
-                  fontSize: '14px',
-                  margin: '0px 8px',
-                  color: 'var(--tertiary-color)',
-                }}
-              >
+              <strike className="product-actual-price">
                 &#8377; {product?.actualPrice}
               </strike>
             )}

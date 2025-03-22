@@ -1,0 +1,36 @@
+.toggle-container {
+  width: 50px;
+  height: 26px;
+  border-radius: 50px;
+  position: relative;
+}
+
+.toggle {
+  max-width: 22px;
+  min-width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: #ffffff;
+  cursor: pointer;
+  transition: transform ease-in-out 0.3s;
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  z-index: 1;
+}
+
+.toggle-light-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 28px;
+  color: #ffff00;
+}
+
+.toggle-dark-icon {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 5px;
+  color: #ffffff;
+}

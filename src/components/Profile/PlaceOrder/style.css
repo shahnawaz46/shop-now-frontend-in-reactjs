@@ -1,4 +1,4 @@
-.placeOrder_container {
+.placeOrder-container {
   width: 100%;
   min-height: calc(100vh - 730px);
   /* height: 200px; */
@@ -15,7 +15,8 @@
 }
 
 .placeorder-icon {
-  font-size: 40px;
+  font-size: 2.5rem;
+  color: var(--text-primary);
 }
 
 .placeorder-no-order-content {
@@ -25,11 +26,14 @@
 
 .placeorder-no-order-content > h3 {
   font-weight: 400;
+  font-size: 1.125rem;
+  color: var(--text-primary);
 }
 
-.placeorder-no-order-content > h4 {
+.placeorder-no-order-content > span {
   font-weight: 400;
-  font-size: 15px;
+  font-size: 0.938rem;
+  color: var(--text-primary);
 }
 
 .placeOrder_card_container {
@@ -44,9 +48,14 @@
   width: 900px;
   box-shadow: 0px 5px 15px -8px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
-  border: 1px solid #e8e8e1;
-  background-color: #fff;
+  border: 1px solid var(--border-primary);
+  background-color: var(--background-primary);
   padding: 20px;
+}
+
+[data-theme='dark'] .placeOrder_card {
+  border: none;
+  box-shadow: var(--shadow-primary);
 }
 
 .placeOrder_top {
@@ -57,15 +66,22 @@
 }
 
 .placeOrder_Id {
-  font-size: 20px;
+  font-size: 1.25rem;
   font-weight: 500;
+  color: var(--text-primary);
+}
+
+.placeOrder-failed {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--primary-color);
 }
 
 .placeOrder_delivered {
   display: flex;
   align-items: center;
   gap: 5px;
-  background-color: #eeeeeb;
+  background-color: var(--secondary-color);
   padding: 5px 10px;
   border-radius: 5px;
   cursor: pointer;
@@ -75,7 +91,7 @@
   display: flex;
   align-items: center;
   gap: 5px;
-  background-color: #449ef2;
+  background-color: var(--tertiary-color);
   color: #fff;
   padding: 6px 10px;
   border-radius: 5px;
@@ -83,9 +99,9 @@
 }
 
 .placeOrder_date > p {
-  font-size: 16px;
+  font-size: 1rem;
   margin: 10px 0px;
-  color: var(--tertiary-color);
+  color: var(--text-secondary);
 }
 
 .placeOrder_hide_in_largedevice {
@@ -96,8 +112,8 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 12px;
-  border-top: 2px solid #eeeeeb;
-  border-bottom: 2px solid #eeeeeb;
+  border-top: 2px solid var(--border-primary);
+  border-bottom: 2px solid var(--border-primary);
   margin: 20px 0px;
   padding: 20px 0px;
 }
@@ -120,9 +136,10 @@
 }
 
 .placeOrder_product_name {
-  font-size: 17px;
+  font-size: 1.063rem;
   font-weight: 400;
   cursor: pointer;
+  color: var(--text-primary);
 }
 
 .placeOrder_size_qty {
@@ -133,8 +150,15 @@
 }
 
 .placeOrder_size_qty > span {
-  font-size: 15px;
+  font-size: 0.938rem;
   font-weight: 400;
+  color: var(--text-primary);
+}
+
+.placeOrder-product-price {
+  font-weight: 500;
+  font-size: 1rem;
+  color: var(--text-primary);
 }
 
 .placeOrder_delivery_details {
@@ -150,21 +174,24 @@
 
 .placeOrder_payment > h4,
 .placeOrder_delivery > h4 {
-  font-size: 18px;
+  font-size: 1.125rem;
   font-weight: 500;
   margin-bottom: 12px;
+  color: var(--text-primary);
   /* text-decoration: underline; */
 }
 
 .placeOrder_item_price_container > p {
   margin-bottom: 12px;
   text-transform: uppercase;
+  font-size: 1rem;
+  color: var(--text-primary);
 }
 
 .placeOrder_item_price {
   margin: 10px 0px;
   padding: 10px 0px;
-  border-top: 1px solid #e8e8e1;
+  border-top: 1px solid var(--border-primary);
   /* border-bottom: 1px solid #e8e8e1; */
   display: flex;
   flex-direction: column;
@@ -176,7 +203,7 @@
   justify-content: space-between;
   gap: 12px;
   align-items: center;
-  color: var(--tertiary-color);
+  color: var(--text-secondary);
 }
 
 .placeOrder_total_price {
@@ -184,7 +211,7 @@
   justify-content: space-between;
   gap: 12px;
   align-items: center;
-  background-color: #f4f5f6;
+  background-color: var(--secondary-color);
   border-radius: 6px;
   padding: 6px 8px;
 }
@@ -193,13 +220,15 @@
   font-size: 17px;
 }
 
-.placeOrder_delivery_date {
-  font-size: 16px;
+.placeOrder_delivery_date > p {
+  font-size: 1rem;
   margin-bottom: 10px;
+  color: var(--text-primary);
 }
 
 .placeOrder_delivery_address > span {
-  font-size: 16px;
+  font-size: 1rem;
+  color: var(--text-primary);
 }
 
 .placeOrder_delivery_address > p {

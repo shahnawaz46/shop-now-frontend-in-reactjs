@@ -4,6 +4,7 @@ import { Link } from 'react-router';
 // components
 import './style.css';
 import orderConfirmedGif from '../../../asset/order_confirmed.gif';
+import CustomButton from '../../common/CustomButton';
 
 const OrderDone = () => {
   const { personalDetails } = useSelector((state) => state.user);
@@ -19,7 +20,7 @@ const OrderDone = () => {
         />
         <p>You will get notify to you {personalDetails?.email}</p>
         <Link to={'/my-account/orders'}>
-          <button className="orderDone_btn">Your Orders</button>
+          <CustomButton text={'Your Orders'} className={'orderDone_btn'} />
         </Link>
       </div>
     </div>

@@ -11,6 +11,7 @@ const Stepper = ({ data, currentStep }) => {
           className="stepper_process"
           style={{ width: index + 1 === data.length ? '32px' : '100%' }}
         >
+          {/* circle */}
           <div style={{ position: 'relative' }}>
             <div
               className="stepper_number"
@@ -19,7 +20,7 @@ const Stepper = ({ data, currentStep }) => {
                   currentStep > index + 1
                     ? '#3ec43e'
                     : currentStep == index + 1
-                    ? '#60A5FA'
+                    ? 'var(--tertiary-color)'
                     : '#a9cdf9',
               }}
             >
@@ -27,11 +28,18 @@ const Stepper = ({ data, currentStep }) => {
             </div>
             <span className="stepper_title">{item.title}</span>
           </div>
-          {index + 1 !== data?.length && (
+
+          {/* progress line */}
+          {index < data?.length - 1 && (
             <div className="stepper_progress_bar">
               <div
                 className="stepper_progress"
-                style={{ width: currentStep > index + 1 ? '100%' : 0 }}
+                style={{
+                  transform:
+                    currentStep > index + 1
+                      ? 'translate(0)'
+                      : 'translate(-100%)',
+                }}
               />
             </div>
           )}

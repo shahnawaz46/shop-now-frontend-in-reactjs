@@ -1,6 +1,22 @@
 :root {
-  --secondary-color: #c01111;
-  --tertiary-color: rgb(100, 99, 99);
+  --background-primary: #ffffff;
+  --background-secondary: #f0f2f4;
+  --text-primary: #000000;
+  --text-secondary: #646363;
+  --border-primary: #e4e4e4;
+  --shadow-primary: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px;
+
+  /* accent(buttons and highlights) */
+  --primary-color: #c01111;
+  --secondary-color: #e5e5e5;
+  --tertiary-color: #319bfe;
+}
+
+[data-theme='dark'] {
+  --background-primary: #000000;
+  --background-secondary: #000000;
+  --text-primary: #ffffff;
+  --shadow-primary: 0px 0px 8px 2px rgba(255, 255, 255, 0.2);
 }
 
 * {
@@ -16,7 +32,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: #faf9f8;
+  background-color: var(--background-secondary);
 }
 
 code {
@@ -24,20 +40,24 @@ code {
     monospace;
 }
 
+a {
+  text-decoration: none;
+}
+
 .close_modal {
   position: absolute;
-  top: 1px;
-  right: 1px;
+  top: 5px;
+  right: 5px;
   font-size: 24px;
   cursor: pointer;
 }
 
-/* product card container */
-.product-container {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 10px;
-  padding: 10px;
+.page-not-found-btn {
+  width: 180px;
+  height: 40px;
+  font-size: 1rem;
+  background-color: var(--tertiary-color);
+  color: #ffffff;
 }
 
 .placeOrderProcess_container {
@@ -50,12 +70,6 @@ code {
 
 .placeOrderProcess_sub_container {
   width: 900px;
-}
-
-@media screen and (max-width: 1100px) {
-  .product-container {
-    grid-template-columns: repeat(3, 1fr);
-  }
 }
 
 @media screen and (max-width: 1000px) {
@@ -71,10 +85,6 @@ code {
 }
 
 @media screen and (max-width: 600px) {
-  .product-container {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
   .placeOrderProcess_container {
     padding: 30px 12px;
   }

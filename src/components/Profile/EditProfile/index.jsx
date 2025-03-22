@@ -7,6 +7,7 @@ import './style.css';
 import axiosInstance from '../../../axios/AxiosInstance';
 import { updatePersonDetail } from '../../../redux/slices/UserSlice';
 import { ErrorMsg } from '../../common/FormikErrorMsg';
+import CustomButton from '../../common/CustomButton';
 
 const EditProfile = () => {
   const dispatch = useDispatch();
@@ -47,12 +48,12 @@ const EditProfile = () => {
   );
 
   return (
-    <div className="editprofile_container">
-      <div className="editprofile_form_container">
-        <h2>Edit Details</h2>
+    <div className="editprofile-container">
+      <div className="editprofile-form-container">
+        <h2 className="editprofile-h2">Edit Details</h2>
 
-        <form className="editprofile_form" action={formAction}>
-          <div className="editprofile_input">
+        <form className="editprofile-form" action={formAction}>
+          <div className="editprofile-input">
             <label htmlFor="first_name">First Name</label>
             <input
               type="text"
@@ -64,7 +65,7 @@ const EditProfile = () => {
             {data?.firstNameError && <ErrorMsg msg={data?.firstNameError} />}
           </div>
 
-          <div className="editprofile_input">
+          <div className="editprofile-input">
             <label htmlFor="last_name">Last Name</label>
             <input
               type="text"
@@ -76,7 +77,7 @@ const EditProfile = () => {
             {data?.lastNameError && <ErrorMsg msg={data?.lastNameError} />}
           </div>
 
-          <div className="editprofile_input">
+          <div className="editprofile-input">
             <label htmlFor="phone_no">Phone No</label>
             <input
               type="number"
@@ -93,7 +94,7 @@ const EditProfile = () => {
               </button> */}
           </div>
 
-          <div className="editprofile_input">
+          <div className="editprofile-input">
             <label htmlFor="email">Email</label>
             <input
               type="email"
@@ -105,7 +106,7 @@ const EditProfile = () => {
             {data?.emailError && <ErrorMsg msg={data?.emailError} />}
           </div>
 
-          <div className="editprofile_input">
+          <div className="editprofile-input">
             <label htmlFor="location">Location</label>
             <input
               type="text"
@@ -117,13 +118,12 @@ const EditProfile = () => {
             {data?.locationError && <ErrorMsg msg={data?.locationError} />}
           </div>
 
-          <button
-            className="editprofile_button"
+          <CustomButton
+            text={'Save Changes'}
             type="submit"
             disabled={isPending}
-          >
-            Save Changes
-          </button>
+            className="editprofile-button"
+          />
         </form>
       </div>
     </div>

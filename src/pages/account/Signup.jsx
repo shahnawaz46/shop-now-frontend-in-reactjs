@@ -160,7 +160,9 @@ const Signup = () => {
                       className="checkbox"
                       style={{ width: 'auto' }}
                     />
-                    <span>I agree to the Terms and conditions</span>
+                    <span style={{ color: 'var(--text-primary)' }}>
+                      I agree to the Terms and conditions
+                    </span>
                   </div>
 
                   <FormikErrorMsg name={'checked'} />
@@ -169,18 +171,19 @@ const Signup = () => {
                 <CustomButton
                   text={'Register'}
                   type="submit"
+                  className={'form-btn'}
                   onClick={handleSubmit}
                 />
               </Form>
             )}
           </Formik>
 
-          <h5>
+          <p>
             Already have account{' '}
             <Link to="/account/login">
-              <span style={{ color: '#478ccd' }}>Click here</span>
+              <span style={{ color: 'var(--tertiary-color)' }}>Click here</span>
             </Link>
-          </h5>
+          </p>
         </div>
       </div>
     </>

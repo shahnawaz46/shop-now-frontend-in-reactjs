@@ -57,22 +57,22 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
 
   return (
     <>
-      <div className="preview-main-box">
+      <div className="preview-container">
         {/* only for large device */}
-        <div className="preview-pc-image-box">
-          {previewProduct.productPictures.map((item, index) => (
+        <div className="preview-image-container-large">
+          {previewProduct.productPictures.map((product) => (
             <img
-              key={index}
-              src={item.img}
+              key={product._id}
+              src={product.img}
+              className="preview-image-large"
+              alt={product?.public_id?.split('/')[0] || 'product picture'}
               loading="lazy"
-              alt="not found"
-              className="preview-image preview-image-space-box-one"
             />
           ))}
         </div>
 
         {/* only for mobile device */}
-        <div className="preview-mobile-image-box">
+        <div className="preview-image-container-small">
           <AliceCarousel
             responsive={responsive}
             autoPlay={true}
@@ -81,22 +81,23 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
             // disableDotsControls={true}
             disableButtonsControls={true}
             mouseTracking
-            items={previewProduct.productPictures.map((item) => (
+            items={previewProduct.productPictures.map((product) => (
               <img
-                key={item._id}
-                src={item.img}
-                // onDragStart={handleDragStart}
+                key={product._id}
+                src={product.img}
                 role="presentation"
-                className="preview-mobile-image preview-image-space-box-one"
-                alt="not-found"
+                className="preview-image-small"
+                alt={product?.public_id?.split('/')[0] || 'product picture'}
               />
             ))}
           />
         </div>
 
-        <div className="preview-box-two">
-          <h2>{previewProduct?.productName}</h2>
-          <div className="preview-product-rating">
+        <div className="preview-right-container">
+          <h2 className="preview-product-name">
+            {previewProduct?.productName}
+          </h2>
+          <div className="preview-product-rating-container">
             <AiFillStar
               style={{
                 fontSize: '22px',
@@ -104,17 +105,26 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
                 marginRight: '1px',
               }}
             />
-            <span>{totalRating(previewProduct?.reviews)}</span>
-            <div className="product-review">
+            <span className="preview-product-rating">
+              {totalRating(previewProduct?.reviews)}
+            </span>
+
+            <div className="preview-product-review">
               <span>{previewProduct?.reviews.length} Reviews</span>
             </div>
           </div>
-          <div className="preview-price-box">
-            <h3>&#8377; {previewProduct?.sellingPrice}</h3>
+
+          <div className="preview-product-price-container">
+            <span className="preview-product-selling-price">
+              &#8377; {previewProduct?.sellingPrice}
+            </span>
             {previewProduct?.actualPrice > 0 && (
-              <strike>&#8377; {previewProduct?.actualPrice}</strike>
+              <strike className="preview-product-actual-price">
+                &#8377; {previewProduct?.actualPrice}
+              </strike>
             )}
-            <h4>
+
+            <span className="preview-product-saving">
               Save &#8377;
               {previewProduct?.actualPrice - previewProduct?.sellingPrice} (
               {100 -
@@ -123,7 +133,7 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
                     100
                 )}
               %)
-            </h4>
+            </span>
           </div>
 
           {/* products sizes */}
@@ -133,25 +143,27 @@ const PreviewProduct = ({ previewProduct, setPreviewProduct }) => {
             setProductSize={setProductSize}
           />
 
-          <div className="preview-page-main-button-box">
-            <button className="preview-page-main-button" onClick={addToCartFnc}>
+          <div className="preview-product-button-container">
+            <button className="preview-product-btn" onClick={addToCartFnc}>
               ADD TO SHOP
             </button>
             <button
-              className="preview-page-main-button"
+              className="preview-product-btn"
               onClick={PlaceOrderPageFunc}
             >
               BUY NOW
             </button>
           </div>
-          <div className="preview-shiping-page-box">
-            <p>
-              Free Shipping on orders above ₹1500. Will ship within 3-6 days.
+
+          <p className="preview-product-shipping-note">
+            Free Shipping on orders above ₹1500. Will ship within 3-6 days.
+          </p>
+
+          <div className="preview-product-description-container">
+            <h3 className="preview-product-description-heading">Description</h3>
+            <p className="preview-product-description">
+              {previewProduct?.description}
             </p>
-          </div>
-          <div className="preview-product-description-box">
-            <h4>Description</h4>
-            <pre>{previewProduct?.description}</pre>
           </div>
         </div>
       </div>

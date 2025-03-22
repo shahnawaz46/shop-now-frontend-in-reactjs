@@ -1,6 +1,7 @@
 import { PaginationLoading, ScreenLoading } from '../../Loaders';
 import NotFound from '../../NotFound';
-import ProductCard from '../../ProductCard';
+import ProductCard from '../ProductCard';
+import './style.css';
 
 const ProductCardWrapper = (props) => {
   const { isLoading, products, errorMsg, hasFetchNext, fetchNextRef } = props;

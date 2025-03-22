@@ -8,6 +8,7 @@ import './style.css';
 import AddressForm from '../AddressForm';
 import axiosInstance from '../../../axios/AxiosInstance';
 import { deleteAddress } from '../../../redux/slices/UserSlice';
+import CustomButton from '../../common/CustomButton';
 
 const initialState = {
   name: '',
@@ -53,68 +54,67 @@ const Address = () => {
   };
 
   return (
-    <div className="address_container">
+    <div className="address-container">
       {addressDetails?.length === 0 ? (
-        <div className="address_not_available_container">
-          <FaRegAddressBook className="address_icon" />
-          <div className="address_not_available_content">
-            <h3>You haven&apos;t Added any Addresses</h3>
-            <button
+        <div className="address-not-available-container">
+          <FaRegAddressBook className="address-icon" />
+          <div className="address-not-available-content">
+            <h3 className="address-not-available-h3">
+              You haven&apos;t Added any Addresses
+            </h3>
+
+            <CustomButton
+              text={'Add Address'}
+              className={'address-not-available-btn'}
               onClick={() =>
                 setShowAddress({ type: 'Add Address', show: true })
               }
-              className="address_not_available_btn"
-            >
-              Add Address
-            </button>
+            />
           </div>
         </div>
       ) : (
-        <div className="address_available_container">
-          <div className="address_add_container">
-            <h3>Saved Addresses</h3>
-            <button
+        <div className="address-available-container">
+          <div className="address-add-container">
+            <h3 className="address-add-h3">Saved Addresses</h3>
+            <CustomButton
+              text={'Add Address'}
+              className={'address-add-button'}
               onClick={() =>
                 setShowAddress({ type: 'Add Address', show: true })
               }
-              className="address_add_button"
-            >
-              Add Address
-            </button>
+            />
           </div>
-          <div className="address_details_container">
+          <div className="address-details-container">
             {addressDetails?.map((value, index) => (
-              <div key={index} className="address_details">
-                <span className="address_user_name">{value.name}</span>
-                <span className="address_detail">{value.address}</span>
-                <span className="address_detail">
+              <div key={index} className="address-details">
+                <span className="address-user-name">{value.name}</span>
+                <span className="address-detail">{value.address}</span>
+                <span className="address-detail">
                   {value.state} - {value.pinCode}
                 </span>
-                <span className="address_detail">
+                <span className="address-detail">
                   {value.city_DistrictTown}
                 </span>
-                <span className="address_detail">
+                <span className="address-detail">
                   Landmark : {value.landmark}
                 </span>
                 <span className="address-person-mobile-no">
                   Phone no : {value.mobileNumber}
                 </span>
-                <div className="address-edit-remove-button">
-                  <button
-                    style={{ marginRight: '5px' }}
+                <div className="address-btn-container">
+                  <CustomButton
+                    text={'Edit'}
+                    className={'address-edit-remove-button'}
                     onClick={() => {
                       setUserAddress(value);
                       setShowAddress({ type: 'Update Address', show: true });
                     }}
-                  >
-                    Edit
-                  </button>
-                  <button
-                    style={{ marginLeft: '5px' }}
+                  />
+                  <CustomButton
+                    text={'Remove'}
+                    className={'address-edit-remove-button'}
                     onClick={() => removeAddressFnc(value._id)}
-                  >
-                    Remove
-                  </button>
+                  />
                 </div>
               </div>
             ))}

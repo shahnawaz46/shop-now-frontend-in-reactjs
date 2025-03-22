@@ -63,10 +63,22 @@ const VerifyAccount = () => {
       <div className="form-container">
         <div className="form-sub-container otpverification-container">
           <FormTitle text={'Email Verification'} alignItems="center">
-            <p style={{ textAlign: 'center', marginTop: '12px' }}>
+            <p
+              style={{
+                textAlign: 'center',
+                marginTop: '12px',
+                color: 'var(--text-primary)',
+              }}
+            >
               Please Enter the 4 Digit Code Sent to Your Mail
             </p>
-            <p>{location?.search?.slice(1)}</p>
+            <p
+              style={{
+                color: 'var(--text-primary)',
+              }}
+            >
+              {location?.search?.slice(1)}
+            </p>
           </FormTitle>
 
           <form className="optverification-form" onSubmit={optHanlde}>
@@ -102,8 +114,7 @@ const VerifyAccount = () => {
               <CustomButton
                 text={'Verify'}
                 type="submit"
-                backgroundColor="#18556b"
-                width="120px"
+                className={'form-btn verify-form-btn'}
               />
             </div>
           </form>

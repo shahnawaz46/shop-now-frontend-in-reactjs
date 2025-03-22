@@ -14,11 +14,6 @@ import { Link } from 'react-router';
 const Footer = () => {
   // const { authenticate } = useSelector((state) => state.user)
 
-  const Icon = {
-    fontSize: '20px',
-    color: 'black',
-    marginRight: '5px',
-  };
   return (
     <div className="footer-main-box">
       <div className="footer-first-box">
@@ -52,14 +47,14 @@ const Footer = () => {
           <h2 className="footer-h2">Contact us</h2>
           <ul>
             <li>
-              <FaBuilding style={Icon} /> New Delhi 91
+              <FaBuilding /> New Delhi 91
             </li>
             <li>
-              <IoMdCall style={Icon} />
+              <IoMdCall />
               +91 9999968025
             </li>
             <li>
-              <MdEmail style={Icon} />
+              <MdEmail />
               shahnawaz85748@gmail.com
             </li>
           </ul>
@@ -102,15 +97,23 @@ const Footer = () => {
       <div className="footer-second-box">
         <div className="footer-second-box-icon">
           <a href="https://www.facebook.com/" aria-label="facebook">
-            <FaFacebookSquare style={{ fontSize: '20px', color: 'black' }} />
+            <FaFacebookSquare
+              style={{ fontSize: '20px', color: 'var(--text-primary)' }}
+            />
           </a>
           <a href="https://www.instagram.com/" aria-label="instagram">
             <FaInstagramSquare
-              style={{ fontSize: '20px', color: 'black', margin: '0px 30px' }}
+              style={{
+                fontSize: '20px',
+                color: 'var(--text-primary)',
+                margin: '0px 30px',
+              }}
             />
           </a>
           <a href="https://twitter.com/login" aria-label="twitter">
-            <FaTwitterSquare style={{ fontSize: '20px', color: 'black' }} />
+            <FaTwitterSquare
+              style={{ fontSize: '20px', color: 'var(--text-primary)' }}
+            />
           </a>
         </div>
         <div className="footer-second-box-content">

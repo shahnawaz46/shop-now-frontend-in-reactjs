@@ -96,6 +96,7 @@ const Login = () => {
                 <CustomButton
                   text={'Login'}
                   type="submit"
+                  className={'form-btn'}
                   onClick={handleSubmit}
                 />
               </Form>
@@ -104,12 +105,15 @@ const Login = () => {
 
           {/* <h5>Forgot your Password</h5>
           <span>or</span> */}
-          <h5>
+          <p>
             Don&apos;t have account{' '}
-            <Link to="/account/signup" style={{ color: '#478ccd' }}>
+            <Link
+              to="/account/signup"
+              style={{ color: 'var(--tertiary-color)' }}
+            >
               Click here
             </Link>
-          </h5>
+          </p>
         </div>
       </div>
     </>

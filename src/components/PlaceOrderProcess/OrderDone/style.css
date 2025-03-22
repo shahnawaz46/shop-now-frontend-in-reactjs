@@ -1,25 +1,32 @@
 .orderDone_container {
   width: 100%;
-  background-color: #fff;
+  background-color: var(--background-primary);
   box-shadow: 0px 5px 15px -8px rgba(0, 0, 0, 0.1);
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
   margin-top: 80px;
   border-radius: 20px;
-  border: 1px solid #e8e8e1;
+  border: 1px solid var(--border-primary);
   padding: 20px;
+}
+
+[data-theme='dark'] .orderDone_container {
+  box-shadow: var(--shadow-primary);
+  border: none;
 }
 
 .orderDone_msg {
   text-align: center;
 }
 
+.orderDone_msg > h2 {
+  font-size: 1.5rem;
+  color: var(--text-primary);
+}
+
 .orderDone_btn {
-  background-color: #449ef2;
-  padding: 5px 15px;
-  border: none;
-  border-radius: 5px;
+  width: 150px;
+  background-color: var(--tertiary-color);
   color: #fff;
-  font-size: 17px;
+  font-size: 1.063rem;
   margin-top: 12px;
-  cursor: pointer;
 }

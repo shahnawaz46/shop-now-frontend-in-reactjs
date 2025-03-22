@@ -82,7 +82,7 @@ const PlaceOrders = () => {
 
   return (
     <div
-      className="placeOrder_container"
+      className="placeOrder-container"
       style={{ height: loading ? '120px' : '100%' }}
     >
       {/* show loading icon after user click on download invoice button */}
@@ -97,7 +97,7 @@ const PlaceOrders = () => {
           <MdOutlineRemoveShoppingCart className="placeorder-icon" />
           <div className="placeorder-no-order-content">
             <h3>You haven&apos;t placed any orders</h3>
-            <h4>All your orders will appear here</h4>
+            <span>All your orders will appear here</span>
           </div>
         </div>
       ) : (
@@ -105,20 +105,12 @@ const PlaceOrders = () => {
           {allOrders.map((value, index) => (
             <div className="placeOrder_card" key={index}>
               <div className="placeOrder_top">
-                <span className="placeOrder_Id">Order ID: {value.orderId}</span>
+                <h3 className="placeOrder_Id">Order ID: {value.orderId}</h3>
 
                 {/* only for large device */}
                 <div className="placeOrder_hide_in_smalldevice">
                   {value?.orderStatus === 'failed' ? (
-                    <span
-                      style={{
-                        fontSize: '1.125rem',
-                        fontWeight: 700,
-                        color: 'var(--secondary-color)',
-                      }}
-                    >
-                      Order Failed
-                    </span>
+                    <span className="placeOrder-failed">Order Failed</span>
                   ) : value?.orderStatus === 'delivered' ? (
                     <div
                       className="placeOrder_delivered"
@@ -154,15 +146,7 @@ const PlaceOrders = () => {
               {/* only for small device */}
               <div className="placeOrder_hide_in_largedevice">
                 {value?.orderStatus === 'failed' ? (
-                  <span
-                    style={{
-                      fontSize: '1.125rem',
-                      fontWeight: 700,
-                      color: 'var(--secondary-color)',
-                    }}
-                  >
-                    Order Failed
-                  </span>
+                  <span className="placeOrder-failed">Order Failed</span>
                 ) : value?.orderStatus === 'delivered' ? (
                   <div
                     className="placeOrder_delivered"
@@ -210,11 +194,15 @@ const PlaceOrders = () => {
 
                       <div className="placeOrder_size_qty">
                         <span>Size: {item.size}</span>
-                        <span style={{ color: 'rgb(212 212 207)' }}>|</span>
+                        <span style={{ color: 'var(--secondary-color)' }}>
+                          |
+                        </span>
                         <span>Quantity: {item.qty}</span>
                       </div>
 
-                      <h4 style={{ fontWeight: '500' }}>Rs. {item.price}</h4>
+                      <h4 className="placeOrder-product-price">
+                        Rs. {item.price}
+                      </h4>
                     </div>
                   </div>
                 ))}
@@ -225,9 +213,7 @@ const PlaceOrders = () => {
                   <h4>
                     <span style={{ textDecoration: 'underline' }}>Payment</span>{' '}
                     {value?.paymentStatus === 'failed' && (
-                      <span style={{ color: 'var(--secondary-color)' }}>
-                        (Failed)
-                      </span>
+                      <span className="placeOrder-failed">(Failed)</span>
                     )}
                   </h4>
                   {/* price details */}

@@ -43,13 +43,13 @@ const SidebarLayout = ({ children, subCategory }) => {
         onClick={() => setShowFilter(true)}
       >
         <img src={FilterIcon} alt="filter-icon" />
-        <h2 style={{ fontSize: '20px', fontWeight: 400 }}>Filter</h2>
+        <h2 className="filter-h2">Filter</h2>
       </div>
 
       <div className={showFilter ? 'filter show-filter' : 'filter'}>
         {/* filter heading */}
         <div className="filter-space filter-close-icon-container">
-          <h2 style={{ fontSize: '22px', fontWeight: 500 }}>Filters</h2>
+          <h2 className="filter-h2">Filters</h2>
           <IoMdClose
             className="filter-close-icon"
             onClick={() => setShowFilter(false)}
@@ -58,15 +58,7 @@ const SidebarLayout = ({ children, subCategory }) => {
 
         {/* price slider/range */}
         <div className="filter-space">
-          <h3
-            style={{
-              fontSize: '16px',
-              fontWeight: 500,
-              textTransform: 'uppercase',
-            }}
-          >
-            Price
-          </h3>
+          <h3 className="filter-h3">Price</h3>
 
           <div className="slider-container">
             <Slider
@@ -92,7 +84,7 @@ const SidebarLayout = ({ children, subCategory }) => {
                 {range[0]}
               </div>
             </div>
-            <div>-</div>
+            <div style={{ color: 'var(--text-primary)' }}>-</div>
             <div className="slider-field">
               <span>Max</span>
               <div type="number" value="7500">
@@ -104,15 +96,7 @@ const SidebarLayout = ({ children, subCategory }) => {
 
         {/* catogories */}
         <div className="filter-space">
-          <h3
-            style={{
-              fontSize: '16px',
-              fontWeight: 500,
-              textTransform: 'uppercase',
-            }}
-          >
-            Categories
-          </h3>
+          <h3 className="filter-h3">Categories</h3>
           <div className="category">
             {subCategory.length > 0 &&
               subCategory[0].children.map((item) => (
@@ -123,13 +107,13 @@ const SidebarLayout = ({ children, subCategory }) => {
                   style={{
                     color:
                       getQuery('category') === item.slug
-                        ? '#000'
-                        : 'var(--tertiary-color)',
+                        ? 'var(--text-primary)'
+                        : 'var(--text-secondary)',
                     fontWeight: getQuery('category') === item.slug ? 500 : 400,
                   }}
                 >
                   <MdOutlineKeyboardArrowLeft style={{ fontSize: '18px' }} />
-                  <span style={{ fontSize: '16px' }}>{item.categoryName}</span>
+                  <span style={{ fontSize: '1rem' }}>{item.categoryName}</span>
                 </div>
               ))}
           </div>

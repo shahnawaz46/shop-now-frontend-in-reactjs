@@ -29,6 +29,7 @@
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
+  color: var(--text-primary);
 }
 
 .stepper_progress_bar {
@@ -42,6 +43,7 @@
 }
 
 .stepper_progress {
+  width: 100%;
   height: 100%;
   background-color: #3ec43e;
   transition: all 0.3s;

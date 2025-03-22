@@ -1,21 +1,30 @@
 .trackOrder_modal {
   width: 500px;
   min-height: 220px;
-  background-color: #fff;
-  border-radius: 5px;
+  background-color: var(--background-primary);
+  border-radius: 12px;
   padding: 12px;
   position: relative;
 }
 
-.trackOrder_modal > h1 {
-  font-size: 22px;
+[data-theme='dark'] .trackOrder_modal {
+  box-shadow: var(--shadow-primary);
+}
+
+.close_modal {
+  color: var(--text-primary);
+}
+
+.trackOrder_h1 {
+  font-size: 1.375rem;
   font-weight: 500;
+  color: var(--text-primary);
 }
 
 .trackOrder_Id {
-  font-size: 17px;
+  font-size: 1.063rem;
   font-weight: 500;
-  color: var(--tertiary-color);
+  color: var(--text-secondary);
 }
 
 .trackOrder_stepper {

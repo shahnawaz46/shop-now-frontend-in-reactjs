@@ -1,45 +1,50 @@
-.address_container {
+.address-container {
   width: 100%;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.address_not_available_container {
+.address-not-available-container {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding-top: 20px;
 }
 
-.address_icon {
-  font-size: 40px;
+.address-icon {
+  font-size: 2.5rem;
+  color: var(--text-primary);
 }
 
-.address_not_available_content {
+.address-not-available-content {
   text-align: center;
   margin-top: 10px;
 }
 
-.address_not_available_content > h3 {
+.address-not-available-h3 {
   font-weight: 400;
+  font-size: 1.125rem;
+  color: var(--text-primary);
 }
 
-.address_not_available_btn {
+.address-not-available-btn {
   width: 160px;
-  height: 30px;
-  font-size: 16px;
-  border: 1px solid #e4e4e4;
-  border-radius: 5px;
-  cursor: pointer;
+  font-size: 1rem;
   margin: 10px 0px;
+  background-color: var(--secondary-color);
 }
 
-.address_available_container {
+.address-not-available-btn:hover {
+  background-color: var(--primary-color);
+  color: #ffffff;
+}
+
+.address-available-container {
   padding: 20px;
 }
 
-.address_add_container {
+.address-add-container {
   width: 100%;
   display: flex;
   justify-content: space-between;
@@ -47,117 +52,131 @@
   margin-bottom: 12px;
 }
 
-.address_add_container > h3 {
-  font-size: 20px;
+.address-add-h3 {
+  font-size: 1.25rem;
   font-weight: 500;
+  color: var(--text-primary);
 }
 
-.address_add_button {
+.address-add-button {
   width: 160px;
-  height: 30px;
-  font-size: 16px;
-  border: 1px solid #e4e4e4;
-  border-radius: 5px;
-  cursor: pointer;
+  padding: 10px;
+  font-size: 1rem;
+  background-color: var(--secondary-color);
 }
 
-.address_add_button:hover {
-  background-color: #ff0000;
-  color: white;
+.address-add-button:hover {
+  background-color: var(--primary-color);
+  color: #ffffff;
 }
 
-.address_details_container {
+.address-details-container {
   display: grid;
   grid-template-columns: 600px 600px;
   gap: 12px;
 }
 
-.address_details {
-  border: 1px solid #d4d4d9;
+.address-details {
+  border: 1px solid var(--border-primary);
   padding: 10px;
   display: flex;
   flex-direction: column;
-  border-radius: 5px;
+  border-radius: 12px;
 }
 
-.address_user_name {
-  font-size: 20px;
+/* [data-theme='dark'] .address-details {
+  border: none;
+  box-shadow: var(--shadow-primary);
+} */
+
+.address-user-name {
+  font-size: 1.25rem;
   font-weight: 500;
   text-transform: capitalize;
   margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.address-detail {
+  font-size: 1rem;
+  color: var(--text-primary);
 }
 
 .address-person-mobile-no {
   margin: 10px 0px;
+  font-size: 1rem;
+  color: var(--text-primary);
 }
 
-.address-edit-remove-button {
+.address-btn-container {
   width: 100%;
   display: grid;
+  gap: 12px;
   grid-template-columns: 1fr 1fr;
 }
 
-.address-edit-remove-button > button {
-  height: 35px;
-  border: 1px solid #e4e4e4;
-  border-radius: 5px;
-  cursor: pointer;
+.address-edit-remove-button {
+  background-color: var(--secondary-color);
+  padding: 10px;
+  font-size: 1rem;
 }
 
-.address-edit-remove-button > button:hover {
-  background-color: rgb(213, 212, 212);
+.address-edit-remove-button:hover {
+  background-color: var(--primary-color);
+  color: #ffffff;
 }
 
 /* media query */
 @media only screen and (max-width: 1400px) {
-  .address_available_container {
+  .address-available-container {
     width: 100%;
   }
 
-  .address_details_container {
+  .address-details-container {
     grid-template-columns: 1fr 1fr;
   }
 }
 
 @media only screen and (max-width: 768px) {
-  .address_details_container {
+  .address-details-container {
     grid-template-columns: 1fr;
   }
 }
 
 @media only screen and (max-width: 500px) {
-  .address_available_container {
+  .address-available-container {
     padding: 12px;
   }
 
-  .address_user_name {
-    font-size: 17px;
+  .address-user-name {
+    font-size: 1.063rem;
   }
 
-  .address_detail {
-    font-size: 15px;
+  .address-detail {
+    font-size: 0.938rem;
   }
 
   .address-person-mobile-no {
-    font-size: 15px;
+    font-size: 0.938rem;
   }
 
-  .address-edit-remove-button > button {
-    height: 30px;
+  .address-edit-remove-button {
+    padding: 8px;
   }
 
-  .address_add_container > h3 {
-    font-size: 18px;
+  .address-add-h3 {
+    font-size: 1.125rem;
   }
 }
 
-@media only screen and (max-width: 360px) {
-  .address_add_container > h3 {
-    font-size: 17px;
+@media only screen and (max-width: 500px) {
+  .address-add-h3 {
+    font-size: 1.063rem;
   }
 
-  .address_add_button {
+  .address-add-button {
     width: 115px;
-    font-size: 15px;
+    font-size: 0.938rem;
+    padding: 8px;
   }
 }

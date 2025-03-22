@@ -96,9 +96,9 @@ const Navbar = () => {
       <div className="navbar-container">
         <div className="navbar">
           <div className="website-name">
-            <Link to="/">
+            <Link to="/" style={{ color: 'var(--text-primary)' }}>
               <h3>
-                <span style={{ color: 'var(--secondary-color)' }}>Shop</span>Now
+                <span style={{ color: 'var(--primary-color)' }}>Shop</span>Now
               </h3>
             </Link>
           </div>
@@ -130,13 +130,7 @@ const Navbar = () => {
             {/* search bar for large device */}
             <div style={{ position: 'relative' }}>
               <div className="navbar_search_bar">
-                <BiSearch
-                  style={{
-                    fontSize: '25px',
-                    color: 'black',
-                    cursor: 'pointer',
-                  }}
-                />
+                <BiSearch className="navbar_search_icon" />
                 <input
                   type="text"
                   placeholder="Search item"
@@ -156,7 +150,7 @@ const Navbar = () => {
               </div>
 
               <BiSearch
-                className="icon navbar_search_bar_icon"
+                className="navbar_search_bar_icon"
                 onClick={() => setSearch(true)}
               />
             </div>
@@ -171,9 +165,11 @@ const Navbar = () => {
               to={'/my-account/address'}
               state={{ from: location.pathname }}
               aria-label="profile"
+              style={{ color: 'var(--text-primary)' }}
             >
               <MdPerson className="icon profile-icon" />
             </Link>
+
             <RiMenu2Line
               className="menu-icon"
               onClick={() => setCondition(true)}
@@ -185,13 +181,7 @@ const Navbar = () => {
         <div>
           {search ? (
             <div className="search-field">
-              <BiSearch
-                style={{
-                  fontSize: '25px',
-                  color: 'black',
-                  cursor: 'pointer',
-                }}
-              />
+              <BiSearch className="navbar_search_icon" />
               <input
                 type="text"
                 placeholder="Search item"
@@ -199,7 +189,11 @@ const Navbar = () => {
                 onKeyDown={handleMoveAndSelect}
               />
               <MdClose
-                style={{ fontSize: '25px', cursor: 'pointer' }}
+                style={{
+                  fontSize: '1.5rem',
+                  cursor: 'pointer',
+                  color: 'var(--text-primary)',
+                }}
                 onClick={() => setSearch(false)}
               />
             </div>

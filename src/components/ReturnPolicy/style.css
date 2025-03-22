@@ -1,62 +1,61 @@
-.return-main-box{
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    margin-bottom: 30px;
-    padding: 0px 20px;
+.return-policy-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 20px 30px 20px;
+  background-color: var(--background-primary);
 }
 
-.return-main-box > h3{
-    font-size: 25px;
-    font-weight: 400;
-    margin-top: 8px;
-    margin-bottom: 15px;
+.return-policy-heading {
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-top: 8px;
+  margin-bottom: 15px;
+  color: var(--text-primary);
 }
 
-.return-second-box{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    column-gap: 40px;
+.return-policy-sub-container {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  column-gap: 40px;
 }
 
-.return-content-box > h4{
-    font-size: 17px;
-    font-weight: 500;
+.return-policy-sub-heading {
+  font-size: 1.063rem;
+  font-weight: 500;
+  color: var(--text-primary);
 }
 
-.return-content-box > p{
-    font-size: 15px;
-    margin: 8px 0px;
+.return-policy-description {
+  font-size: 0.938rem;
+  margin: 8px 0px;
+  color: var(--text-primary);
 }
 
+@media only screen and (max-width: 769px) {
+  .return-policy-sub-container {
+    grid-template-columns: repeat(2, 1fr);
+    row-gap: 15px;
+  }
 
-
-@media only screen and (max-width:769px){
-    .return-second-box{
-        grid-template-columns: repeat(2, 1fr);
-        row-gap: 15px;
-    }
-
-    .return-content-box > p{
-        margin: 3px 0px;
-    }
+  .return-policy-description {
+    margin: 3px 0px;
+  }
 }
 
-
-@media only screen and (max-width:500px){
-    .return-second-box{
-        grid-template-columns: repeat(1, 1fr);
-    }
+@media only screen and (max-width: 500px) {
+  .return-policy-sub-container {
+    grid-template-columns: repeat(1, 1fr);
+  }
 }
 
-@media only screen and (max-width:355px) {
-    .return-main-box > h3 {
-        font-size: 21px;
-    }
+@media only screen and (max-width: 355px) {
+  .return-policy-heading {
+    font-size: 1.313rem;
+  }
 
-    .return-content-box > h4 {
-        font-size: 16px;
-    }
+  .return-policy-sub-heading {
+    font-size: 1rem;
+  }
 }

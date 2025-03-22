@@ -22,7 +22,7 @@ const TrackOrder = ({ onClose, value }) => {
     <div className="trackOrder_modal">
       <MdCancel onClick={onClose} className="close_modal" />
 
-      <h1>Track Order</h1>
+      <h1 className="trackOrder_h1">Track Order</h1>
       <div style={{ margin: '10px 0px' }}>
         <span className="trackOrder_Id">Order ID: {value.orderId}</span>
       </div>

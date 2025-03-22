@@ -1,7 +1,12 @@
 .footer-main-box {
-  background-color: #e4e4e4;
-  color: black;
-  font-size: 14px;
+  background-color: var(--secondary-color);
+  color: var(--text-primary);
+  font-size: 0.875rem;
+}
+
+[data-theme='dark'] .footer-main-box {
+  border-top: 1px solid var(--text-secondary);
+  background-color: var(--background-primary);
 }
 
 .footer-first-box {
@@ -18,15 +23,20 @@
 }
 
 .footer-h2 {
-  font-size: 17px;
+  font-size: 1.063rem;
   font-weight: 500;
   margin-bottom: 20px;
+  color: var(--text-primary);
 }
 
 .footer-links-box > ul > li {
   margin-bottom: 8px;
   list-style: none;
-  color: black;
+  color: var(--text-primary);
+}
+
+.footer-links-box > ul > li > a {
+  color: var(--text-primary);
 }
 
 .footer-links-box > ul > li > a:hover {
@@ -47,6 +57,14 @@
   display: flex;
   align-items: center;
   margin-bottom: 8px;
+  line-break: anywhere;
+  color: var(--text-primary);
+}
+
+.footer-contact-box > ul > li > svg {
+  color: var(--text-primary);
+  font-size: 1.25rem;
+  margin-right: 5px;
 }
 
 .footer-signup {
@@ -59,7 +77,8 @@
   padding: 5px 0px;
   border: none;
   outline: none;
-  border: 1px solid grey;
+  border: 1px solid var(--border-primary);
+  border-radius: 5px;
   margin-top: 20px;
   cursor: pointer;
 }
@@ -82,7 +101,7 @@
 }
 
 .footer-copyright-box > span {
-  font-size: 15px;
+  font-size: 0.938rem;
 }
 
 /* -------------------media quieries---------------- */

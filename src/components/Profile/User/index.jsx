@@ -13,6 +13,8 @@ import PlaceOrders from '../PlaceOrder';
 import { updatePersonDetail } from '../../../redux/slices/UserSlice';
 import axiosInstance from '../../../axios/AxiosInstance';
 import { clearStateAndStorage } from '../../../utils/ClearStateAndStorage';
+import CustomButton from '../../common/CustomButton';
+import Toggle from '../../Toggle';
 
 const userConfig = [
   {
@@ -87,20 +89,17 @@ const User = ({ userData }) => {
 
   return (
     <>
-      <div className="profile-main-box">
-        <h2
-          style={{
-            textAlign: 'center',
-            fontWeight: '400',
-            paddingTop: '15px',
-          }}
-        >
-          Customer Dashboard
-        </h2>
+      <div className="profile-container">
+        <div className="profile-top">
+          <h2 className="profile-heading">Customer Dashboard</h2>
+          <div style={{ paddingRight: '12px' }}>
+            <Toggle />
+          </div>
+        </div>
 
         {/* user personal details */}
-        <div className="profile-detail-main-box">
-          <div className="profile-picture-box">
+        <div className="profile-user-container">
+          <div className="profile-user-image-container">
             <img
               alt="Remy Sharp"
               src={
@@ -118,7 +117,7 @@ const User = ({ userData }) => {
               htmlFor="for-upload-profile"
               style={{ visibility: isPending ? 'hidden' : 'visible' }}
             >
-              <BsFillCameraFill className="profile-edit-icon" />
+              <BsFillCameraFill className="profile-user-edit-icon" />
               <input
                 type="file"
                 accept=".png, .jpg, .jpeg, .avif, .webp"
@@ -128,33 +127,40 @@ const User = ({ userData }) => {
               />
             </label>
           </div>
-          <div className="profile-detail-box">
-            <h2 className="profile-name-box">{`${userData?.firstName} ${userData?.lastName}`}</h2>
-            <div className="profile-details">
+
+          <div className="profile-user-detail-container">
+            <h2 className="profile-user-name">{`${userData?.firstName} ${userData?.lastName}`}</h2>
+            <div className="profile-user-details">
               First Name - {userData?.firstName}
             </div>
-            <div className="profile-details">
+            <div className="profile-user-details">
               Last Name - {userData?.lastName}
             </div>
-            <div className="profile-details">Email - {userData?.email}</div>
-            <div className="profile-details">
+            <div className="profile-user-details">
+              Email - {userData?.email}
+            </div>
+            <div className="profile-user-details">
               Mobile No. - {userData?.phoneNo}
             </div>
 
-            <button className="profile-user-button" onClick={logoutHandle}>
-              Logout
-            </button>
+            <CustomButton
+              text={'Logout'}
+              className={'profile-user-button'}
+              onClick={logoutHandle}
+            />
           </div>
         </div>
 
         {/* tabs */}
-        <div className="profile-main-features-box">
-          <ul className="profile-main-features-ul">
+        <div>
+          <ul className="profile-tab-container">
             {userConfig.map((nav) => (
               <li key={nav.id}>
                 <NavLink
                   to={nav.link}
-                  className={({ isActive }) => (isActive ? 'active-tab' : '')}
+                  className={({ isActive }) =>
+                    isActive ? 'active-tab profile-tab' : 'profile-tab'
+                  }
                 >
                   {nav.name}
                 </NavLink>
@@ -162,7 +168,8 @@ const User = ({ userData }) => {
             ))}
           </ul>
         </div>
-        <div className="profile-features-box">
+
+        <div>
           <ActiveComponent />
         </div>
       </div>

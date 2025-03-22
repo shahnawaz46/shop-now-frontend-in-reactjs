@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import './style.css';
 import axiosInstance from '../../../axios/AxiosInstance';
 import { emptyCart } from '../../../redux/slices/CartSlice';
+import CustomButton from '../../common/CustomButton';
 
 const Payment = () => {
   const dispatch = useDispatch();
@@ -145,8 +146,12 @@ const Payment = () => {
           <label htmlFor="card_payment">Card Payment</label>
         </div>
       </div>
-      <div className="payment_placeOrder_btn">
-        <button onClick={handleConfirmOrder}>Order Now</button>
+      <div className="payment_placeOrder_btn_container">
+        <CustomButton
+          text={'Order Now'}
+          className={'payment_placeOrder_btn'}
+          onClick={handleConfirmOrder}
+        />
       </div>
     </div>
   );

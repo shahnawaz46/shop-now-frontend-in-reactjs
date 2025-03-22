@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 // components
 import './style.css';
 import { addToCart, removeCartItem } from '../../redux/slices/CartSlice';
+import CustomButton from '../common/CustomButton';
 
 const Cart = ({ show, setShow }) => {
   const dispatch = useDispatch();
@@ -64,33 +65,49 @@ const Cart = ({ show, setShow }) => {
   };
 
   return (
-    <div className={show ? 'cart-box' : null}>
-      <div className="cart-empyt-box" onClick={() => setShow(false)}></div>
+    <div className={show ? 'cart-container' : null}>
+      <div className="cart-left-container" onClick={() => setShow(false)}></div>
 
-      <div className={show ? 'cart-main-box show-cart-box' : 'cart-main-box'}>
-        <div className="cart-first-box">
+      <div
+        className={
+          show ? 'cart-right-container show-cart' : 'cart-right-container'
+        }
+      >
+        <div className="cart-header">
           <h2>Shop</h2>
           <IoMdClose
             onClick={() => setShow(false)}
-            style={{ fontSize: '24px', cursor: 'pointer' }}
+            style={{
+              fontSize: '24px',
+              cursor: 'pointer',
+              color: 'var(--text-primary)',
+            }}
           />
         </div>
 
-        <div className="cart-second-box">
+        <div className="cart-product-container">
           {cartItems?.length > 0 ? (
             cartItems.map((product, index) => {
               return (
-                <div key={index} className="cart-image-product-details">
-                  <img src={product.productImage} alt="" />
-                  <div className="cart-product-details">
+                <div key={index} className="cart-product-details">
+                  <div className="cart-product-left">
+                    <img src={product.productImage} alt="" />
+                  </div>
+
+                  <div className="cart-product-right">
                     <Link to={`/preview/${product._id}`}>
                       <h3 onClick={() => setShow(false)}>
                         {product.productName}
                       </h3>
                     </Link>
-                    <h4>Size: {product.size}</h4>
-                    <div className="cart-icons-div">
-                      <div className="add-remove-icon">
+
+                    <div className="cart-product-size">
+                      <span>Size: {product.size}</span>
+                    </div>
+
+                    {/* add and remove icon */}
+                    <div className="cart-icons-container">
+                      <div className="cart-icons">
                         <button
                           style={{
                             borderRight: '1px solid #e8e8e1',
@@ -107,11 +124,11 @@ const Cart = ({ show, setShow }) => {
                           aria-label="remove"
                         >
                           <IoMdRemove
-                            className="cart-icons click"
+                            className="click"
                             style={{ fontSize: '16px' }}
                           />
                         </button>
-                        <h4 className="cart-icons">{product.qty}</h4>
+                        <span>{product.qty}</span>
                         <button
                           style={{
                             borderLeft: '1px solid #e8e8e1',
@@ -127,34 +144,42 @@ const Cart = ({ show, setShow }) => {
                           aria-label="add"
                         >
                           <IoMdAdd
-                            className="cart-icons click"
+                            className="click"
                             style={{ fontSize: '16px' }}
                           />
                         </button>
                       </div>
 
                       <MdDelete
-                        className="cart-icons click"
-                        style={{ fontSize: '20px', cursor: 'pointer' }}
+                        style={{
+                          fontSize: '20px',
+                          cursor: 'pointer',
+                          color: 'var(--text-primary)',
+                        }}
                         onClick={() =>
                           deleteCartItemFnc(product._id, product.size)
                         }
                       />
                     </div>
-                    <h4>Rs. {product.sellingPrice}</h4>
+
+                    <div className="cart-product-selling-price">
+                      <span>Rs. {product.sellingPrice}</span>
+                    </div>
                   </div>
                 </div>
               );
             })
           ) : (
-            <span>No Item in Cart</span>
+            <span style={{ fontSize: '1rem', color: 'var(--text-primary)' }}>
+              No Item in Cart
+            </span>
           )}
         </div>
 
-        <div className="cart-third-box">
+        <div className="cart-footer-container">
           <div className="cart-price">
-            <h3>SUBTOTAL</h3>
-            <h3>
+            <span>SUBTOTAL</span>
+            <span>
               Rs.{' '}
               {cartItems?.length > 0
                 ? cartItems.reduce(
@@ -162,10 +187,12 @@ const Cart = ({ show, setShow }) => {
                     0
                   )
                 : 0}
-            </h3>
+            </span>
           </div>
+
           <p>Shipping, taxes, and discounts calculated at checkout.</p>
-          <button
+
+          {/* <button
             style={{
               cursor: cartItems.length ? 'pointer' : 'default',
               color: cartItems.length ? '#fff' : '#878787',
@@ -174,7 +201,16 @@ const Cart = ({ show, setShow }) => {
             onClick={PlaceOrderPageFunc}
           >
             Check out
-          </button>
+          </button> */}
+
+          <CustomButton
+            text={'Check out'}
+            disabled={!cartItems.length}
+            className={`cart-product-checkout ${
+              cartItems.length ? 'active' : ''
+            }`}
+            onClick={PlaceOrderPageFunc}
+          />
         </div>
       </div>
     </div>
