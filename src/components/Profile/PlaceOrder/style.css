@@ -1,6 +1,6 @@
 .placeOrder-container {
   width: 100%;
-  min-height: calc(100vh - 730px);
+  /* min-height: calc(100vh - 730px); */
   /* height: 200px; */
   position: relative;
 }
@@ -12,6 +12,7 @@
   align-items: center;
   padding-top: 20px;
   padding-bottom: 10px;
+  height: 100%;
 }
 
 .placeorder-icon {

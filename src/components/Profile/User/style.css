@@ -1,6 +1,6 @@
 .profile-container {
   background-color: var(--background-primary);
-  padding-bottom: 10px;
+  /* padding-bottom: 10px; */
 }
 
 .profile-top {
@@ -16,7 +16,7 @@
 }
 
 .profile-user-container {
-  margin: 20px 30px;
+  padding: 20px 30px;
   display: flex;
   align-items: flex-end;
   /* text-transform: capitalize; */
@@ -120,7 +120,7 @@
 
 @media only screen and (max-width: 500px) {
   .profile-user-container {
-    margin: 20px 10px;
+    padding: 20px 10px;
     flex-direction: column;
     align-items: flex-start;
   }
