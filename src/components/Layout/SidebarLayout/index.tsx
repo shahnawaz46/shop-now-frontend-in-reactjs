@@ -11,10 +11,10 @@ import "rc-slider/assets/index.css";
 // components
 import FilterIcon from "../../../asset/filter.png";
 import { IChildren } from "../../../types/interfaces";
-import { IAllCategories } from "../../../types/interfaces/category.interface";
+import { ICategory } from "../../../types/interfaces/category.interface";
 
 interface ISidebarLayoutProps extends IChildren {
-  subCategory: IAllCategories[];
+  subCategory: ICategory[];
 }
 
 const SidebarLayout = ({ children, subCategory }: ISidebarLayoutProps) => {
@@ -99,7 +99,7 @@ const SidebarLayout = ({ children, subCategory }: ISidebarLayoutProps) => {
           <h3 className="filter-h3">Categories</h3>
           <div className="category">
             {subCategory.length > 0 &&
-              subCategory[0].children.map((item) => (
+              subCategory.map((item) => (
                 <div
                   key={item.slug}
                   onClick={() => appendQuery("category", item.slug)}

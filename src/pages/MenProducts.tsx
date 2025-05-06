@@ -11,7 +11,7 @@ import useFetch from "../hooks/useFetch";
 import { filterProductsInitialState } from "../utils/Constants";
 import ProductCardWrapper from "../components/Product/ProductCardWrapper";
 import { IAllProducts } from "../types/interfaces/product.interface";
-import { IAllCategories } from "../types/interfaces/category.interface";
+import { ICategory } from "../types/interfaces/category.interface";
 import { handleAxiosError } from "../utils/HandleAxiosError";
 
 const MenProducts = () => {
@@ -19,7 +19,7 @@ const MenProducts = () => {
     data: menProducts,
     isLoading,
     updateData,
-  } = useFetch<{ categories: IAllCategories[]; products: IAllProducts }>(
+  } = useFetch<{ categories: ICategory[]; products: IAllProducts }>(
     "menProducts",
     ["/category/all/Men's-Wardrobe", "/product/all/Men"]
   );

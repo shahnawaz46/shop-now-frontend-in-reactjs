@@ -11,39 +11,18 @@ import useFetch from "../hooks/useFetch";
 import { filterProductsInitialState } from "../utils/Constants";
 import ProductCardWrapper from "../components/Product/ProductCardWrapper";
 import { IAllProducts } from "../types/interfaces/product.interface";
-import { IAllCategories } from "../types/interfaces/category.interface";
+import { ICategory } from "../types/interfaces/category.interface";
 import { handleAxiosError } from "../utils/HandleAxiosError";
-
-const subCategory: IAllCategories[] = [
-  {
-    _id: "",
-    categoryName: "",
-    slug: "",
-    children: [
-      {
-        _id: "",
-        parentCategoryId: "",
-        categoryName: "Men Products",
-        slug: "Men",
-        children: [],
-      },
-      {
-        _id: "",
-        parentCategoryId: "",
-        categoryName: "Women Products",
-        slug: "Women",
-        children: [],
-      },
-    ],
-  },
-];
 
 const NewProducts = () => {
   const {
     data: newestProducts,
     isLoading,
     updateData,
-  } = useFetch<{ products: IAllProducts }>("newestProducts", "/product/newest");
+  } = useFetch<{ categories: ICategory[]; products: IAllProducts }>(
+    "newestProducts",
+    ["/category/all/parent", "/product/newest"]
+  );
 
   const [filterProducts, setFilterProducts] = useState<IAllProducts>(
     filterProductsInitialState
@@ -115,7 +94,7 @@ const NewProducts = () => {
   // if query is not present in url then i am showing newest products
   return (
     <RootLayout>
-      <SidebarLayout subCategory={subCategory}>
+      <SidebarLayout subCategory={newestProducts.categories || []}>
         <ProductCardWrapper
           isLoading={searchParam.toString() ? isPending : false}
           products={

@@ -12,40 +12,16 @@ import ProductCardWrapper from "../components/Product/ProductCardWrapper";
 import RootLayout from "../components/Layout/RootLayout";
 import { IAllProducts } from "../types/interfaces/product.interface";
 import { handleAxiosError } from "../utils/HandleAxiosError";
-import { IAllCategories } from "../types/interfaces/category.interface";
-
-const subCategory: IAllCategories[] = [
-  {
-    _id: "",
-    categoryName: "",
-    slug: "",
-    children: [
-      {
-        _id: "",
-        parentCategoryId: "",
-        categoryName: "Men Products",
-        slug: "Men",
-        children: [],
-      },
-      {
-        _id: "",
-        parentCategoryId: "",
-        categoryName: "Women Products",
-        slug: "Women",
-        children: [],
-      },
-    ],
-  },
-];
+import { ICategory } from "../types/interfaces/category.interface";
 
 const TopSelling = () => {
   const {
     data: topSellingProducts,
     isLoading,
     updateData,
-  } = useFetch<{ products: IAllProducts }>(
+  } = useFetch<{ categories: ICategory[]; products: IAllProducts }>(
     "topSellingProducts",
-    "/product/top-selling"
+    ["/category/all/parent", "/product/top-selling"]
   );
 
   const [filterProducts, setFilterProducts] = useState<IAllProducts>(
@@ -118,7 +94,7 @@ const TopSelling = () => {
   // if query is not present in url then i am showing top selling products
   return (
     <RootLayout>
-      <SidebarLayout subCategory={subCategory}>
+      <SidebarLayout subCategory={topSellingProducts.categories || []}>
         <ProductCardWrapper
           isLoading={searchParam.toString() ? isPending : false}
           products={
