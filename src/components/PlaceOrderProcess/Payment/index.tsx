@@ -13,6 +13,7 @@ import {
   IPlaceOrder,
 } from "../../../types/interfaces/placeOrder.interface";
 import { handleAxiosError } from "../../../utils/HandleAxiosError";
+import { ScreenLoading } from "../../Loaders";
 
 const Payment = () => {
   const dispatch = useAppDispatch();
@@ -23,9 +24,12 @@ const Payment = () => {
 
   const location = useLocation();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
 
   const handleConfirmOrder = async () => {
     if (!paymentMethod) return toast.error("Please Choose Payment");
+
+    setLoading(true);
 
     let orderDetails: ICurrentOrder;
     // if user buy product directly then i am sending data inside location state
@@ -55,6 +59,8 @@ const Payment = () => {
     try {
       const createOrderRes = await axiosInstance.post("/order", orderDetails);
 
+      setLoading(false);
+
       // if paymentMethod is cod then redirect to the order successful page
       if (paymentMethod === "cod") {
         navigate("/place-order?status=done", { replace: true });
@@ -69,6 +75,7 @@ const Payment = () => {
       orderDetails?.process === "checkout" && dispatch(emptyCart());
     } catch (error) {
       handleAxiosError({ error });
+      setLoading(false);
     }
   };
 
@@ -140,6 +147,13 @@ const Payment = () => {
       ></script>
 
       <div className="payment_container">
+        {loading && (
+          <ScreenLoading
+            position="absolute"
+            backgroundColor="rgba(0,0,0,0.5)"
+          />
+        )}
+
         <h2>Payment Methods</h2>
         <div className="payment_method_container">
           <span>Choose One</span>
