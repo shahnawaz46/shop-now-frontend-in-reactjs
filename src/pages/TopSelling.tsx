@@ -1,6 +1,7 @@
-import { useEffect, useState, useTransition } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useSearchParams } from "react-router";
 import { useInView } from "react-intersection-observer";
+import debounce from "lodash/debounce";
 
 // components
 import SidebarLayout from "../components/Layout/SidebarLayout";
@@ -27,7 +28,7 @@ const TopSelling = () => {
   const [filterProducts, setFilterProducts] = useState<IAllProducts>(
     filterProductsInitialState
   );
-  const [isPending, startTransition] = useTransition(); // using for handle filterProducts
+  const [isPending, setIsPending] = useState<boolean>(false); // using for handle filterProducts
   const searchParam = useSearchParams()[0]; // useSearchParams return two value first is searchState and second is searchState function
   const { ref, inView } = useInView({ threshold: 1 });
 
@@ -68,12 +69,19 @@ const TopSelling = () => {
   };
 
   // useEffect for calling filteredProducts function based on query changed in url
+  const debouncedFetch = useCallback(
+    debounce(async (query) => {
+      await fetchFilteredProducts(`/product/top-selling?${query}`);
+      setIsPending(false);
+    }, 600),
+    []
+  );
+
   useEffect(() => {
     const filteredQuery = searchParam.toString();
     if (filteredQuery) {
-      startTransition(() =>
-        fetchFilteredProducts(`/product/top-selling?${filteredQuery}`)
-      );
+      setIsPending(true);
+      debouncedFetch(filteredQuery);
     }
   }, [searchParam.toString()]);
 

@@ -49,13 +49,16 @@ const Navbar = () => {
   };
 
   const handleSearchBar = async (search: string) => {
-    if (search === "") {
+    const sanitizedInput = search.trim();
+    if (sanitizedInput === "") {
       setSearchItems({ status: false, result: [] });
       return;
     }
 
     try {
-      const res = await axiosInstance.get(`/category/search?query=${search}`);
+      const res = await axiosInstance.get(
+        `/category/search?query=${sanitizedInput}`
+      );
       setSearchItems({ status: true, result: res.data.result });
       setActiveSuggestion(0);
     } catch (error) {

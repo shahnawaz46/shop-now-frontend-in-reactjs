@@ -18,6 +18,34 @@ import {
   IPlaceOrder,
 } from "../../../types/interfaces/placeOrder.interface";
 
+const paymentStatusStyle = (paymentStatus: string): React.CSSProperties => {
+  return {
+    padding: "0.35rem 0.8rem",
+    marginLeft: "0.4rem",
+    fontSize: "0.875rem",
+    lineHeight: "1.25rem",
+    fontWeight: 600,
+    borderRadius: "9999px",
+    textTransform: "uppercase" as const,
+    backgroundColor:
+      paymentStatus === "success"
+        ? "#C6F6D5"
+        : paymentStatus === "pending"
+        ? "#E2E8F0"
+        : paymentStatus === "failed"
+        ? "#FEB2B2"
+        : "#F7FAFC",
+    color:
+      paymentStatus === "success"
+        ? "#2F855A"
+        : paymentStatus === "pending"
+        ? "#1A202C"
+        : paymentStatus === "failed"
+        ? "#C53030"
+        : "#A0AEC0",
+  };
+};
+
 const paymentMethod = {
   cod: "Cash on Delivery",
   card: "Card",
@@ -230,9 +258,9 @@ const PlaceOrders = ({ totalHeight }: { totalHeight?: number }) => {
               <div className="placeOrder_payment">
                 <h4>
                   <span style={{ textDecoration: "underline" }}>Payment</span>{" "}
-                  {value?.paymentStatus === "failed" && (
-                    <span className="placeOrder-failed">(Failed)</span>
-                  )}
+                  <span style={paymentStatusStyle(value.paymentStatus)}>
+                    {value.paymentStatus}
+                  </span>
                 </h4>
                 {/* price details */}
                 <div className="placeOrder_item_price_container">
@@ -277,7 +305,7 @@ const PlaceOrders = ({ totalHeight }: { totalHeight?: number }) => {
                   <div className="placeOrder_delivery_date">
                     <p>
                       Your package has been delivered on{" "}
-                      {getDate(value.deliveredDate, false)}
+                      {getDate(value.deliveredDate)}
                     </p>
                   </div>
                 )}
