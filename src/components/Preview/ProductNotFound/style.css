@@ -1,0 +1,39 @@
+.product-not-found-container {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #f8fafc;
+  text-align: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 40px;
+}
+
+.product-not-found-container h1 {
+  font-size: 3rem;
+  color: #ef4444;
+  margin-bottom: 20px;
+}
+
+.product-not-found-container p {
+  font-size: 1.1rem;
+  color: #333;
+  margin-bottom: 30px;
+}
+
+.back-home-btn {
+  padding: 12px 24px;
+  background-color: #3b82f6;
+  color: white;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: background-color 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.back-home-btn:hover {
+  background-color: #2563eb;
+}

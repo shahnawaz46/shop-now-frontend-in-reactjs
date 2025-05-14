@@ -1,19 +1,21 @@
-import { useEffect, useState, useTransition } from 'react';
-import { useParams } from 'react-router';
+import { useEffect, useState, useTransition } from "react";
+import { useParams } from "react-router";
 
 // components
-import RootLayout from '../components/Layout/RootLayout';
-import PreviewProduct from '../components/Preview/PreviewProduct';
-import ReturnPolicy from '../components/ReturnPolicy';
-import axiosInstance from '../axios/AxiosInstance';
-import { ScreenLoading } from '../components/Loaders';
-import { IPreviewProduct } from '../types/interfaces/product.interface';
-import { handleAxiosError } from '../utils/HandleAxiosError';
+import RootLayout from "../components/Layout/RootLayout";
+import PreviewProduct from "../components/Preview/PreviewProduct";
+import ReturnPolicy from "../components/ReturnPolicy";
+import axiosInstance from "../axios/AxiosInstance";
+import { ScreenLoading } from "../components/Loaders";
+import { IPreviewProduct } from "../types/interfaces/product.interface";
+// import { handleAxiosError } from "../utils/HandleAxiosError";
+import ProductNotFound from "../components/Preview/ProductNotFound";
 
 const Preview = () => {
   const { productId } = useParams();
 
   const [previewProduct, setPreviewProduct] = useState<IPreviewProduct>();
+  const [isError, setIsError] = useState<boolean>(false);
   const [isPending, startTransition] = useTransition();
 
   const getProductForPreview = async () => {
@@ -23,15 +25,16 @@ const Preview = () => {
       // 2nd API for updating top-trending product count based on event
       const [previewRes] = await Promise.all([
         axiosInstance.get(`/product/single/${productId}`),
-        axiosInstance.post('/product/top-trending', {
+        axiosInstance.post("/product/top-trending", {
           productId,
-          userId: localStorage.getItem('__f_id'),
-          eventType: 'visit',
+          userId: localStorage.getItem("__f_id"),
+          eventType: "visit",
         }),
       ]);
       setPreviewProduct({ ...previewRes.data.product });
     } catch (error) {
-      handleAxiosError({ error });
+      setIsError(true);
+      // handleAxiosError({ error });
     }
   };
 
@@ -40,6 +43,8 @@ const Preview = () => {
   }, []);
 
   if (isPending) return <ScreenLoading />;
+
+  if (isError) return <ProductNotFound />;
 
   if (!previewProduct) return;
 
@@ -50,7 +55,7 @@ const Preview = () => {
       <meta name="description" content={previewProduct.description} />
       <meta
         name="keywords"
-        content={previewProduct.slug.split('-').join(', ')}
+        content={previewProduct.slug.split("-").join(", ")}
       />
 
       {/* i know previewProduct and setPreviewProduct will not undefined while calling child component */}
