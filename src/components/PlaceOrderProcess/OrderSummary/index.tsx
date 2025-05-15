@@ -40,7 +40,7 @@ const OrderSummary = () => {
       setAllOrder((prev) => [{ ...prev[0], qty: prev[0].qty + 1 }]);
     } else {
       const item: IUpdateCartItem = {
-        _id: product._id,
+        productId: product.productId,
         size: product.size,
         qty: 1,
       };
@@ -53,7 +53,7 @@ const OrderSummary = () => {
       setAllOrder((prev) => [{ ...prev[0], qty: prev[0].qty - 1 }]);
     } else {
       const item: IUpdateCartItem = {
-        _id: product._id,
+        productId: product.productId,
         size: product.size,
         qty: -1,
       };
@@ -61,11 +61,11 @@ const OrderSummary = () => {
     }
   };
 
-  const deleteCartItemFnc = (_id: string, size: keyof IProductSizes) => {
+  const deleteCartItemFnc = (productId: string, size: keyof IProductSizes) => {
     if (productIDRef.current) {
       setAllOrder([]);
     } else {
-      const product = { _id, size };
+      const product = { productId, size };
       dispatch(removeCartItem(product));
     }
   };
@@ -100,7 +100,7 @@ const OrderSummary = () => {
 
     setAllOrder([
       {
-        _id: res?.data?.product?._id,
+        productId: res?.data?.product?._id,
         productName: res?.data?.product?.productName,
         sellingPrice: res?.data?.product?.sellingPrice,
         productImage: res?.data?.product?.productPictures[1]?.img,
@@ -136,9 +136,9 @@ const OrderSummary = () => {
 
           <div className="orderSummary_card_container">
             {allOrders?.length > 0 ? (
-              allOrders.map((product, index) => {
+              allOrders.map((product) => {
                 return (
-                  <div key={index} className="orderSummary_card">
+                  <div key={product.productId} className="orderSummary_card">
                     <img src={product.productImage} alt="" />
                     <div className="orderSummary_product_details">
                       <h3>{product.productName}</h3>
@@ -177,7 +177,7 @@ const OrderSummary = () => {
                             color: "var(--text-primary)",
                           }}
                           onClick={() =>
-                            deleteCartItemFnc(product._id, product.size)
+                            deleteCartItemFnc(product.productId, product.size)
                           }
                         />
                       </div>

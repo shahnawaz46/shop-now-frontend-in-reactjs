@@ -34,7 +34,7 @@ const Cart = ({ show, setShow }: ICartProps) => {
 
   const itemIncrementFnc = (product: ICartItem) => {
     const item: IUpdateCartItem = {
-      _id: product._id,
+      productId: product.productId,
       size: product.size,
       qty: 1,
     };
@@ -43,16 +43,25 @@ const Cart = ({ show, setShow }: ICartProps) => {
 
   const itemDecrementFnc = (product: ICartItem) => {
     const item: IUpdateCartItem = {
-      _id: product._id,
+      productId: product.productId,
       size: product.size,
       qty: -1,
     };
     dispatch(decrementCartItem(item));
   };
 
-  const deleteCartItemFnc = (_id: string, size: keyof IProductSizes) => {
-    const product = { _id, size };
+  const deleteCartItemFnc = (productId: string, size: keyof IProductSizes) => {
+    const product = { productId, size };
     dispatch(removeCartItem(product));
+  };
+
+  const PlaceOrderPageFunc = () => {
+    setShow(false);
+    if (personalDetails && Object.keys(personalDetails).length > 0) {
+      navigate(`/place-order?step=1`);
+    } else {
+      navigate("/account/login", { state: { from: location.pathname } });
+    }
   };
 
   useEffect(() => {
@@ -67,24 +76,6 @@ const Cart = ({ show, setShow }: ICartProps) => {
       document.body.style.paddingRight = "0px";
     };
   }, [show]);
-
-  // useEffect(() => {
-  //     if (message)
-  //         dispatch(getCartItem())
-
-  //     if (message)
-  //         dispatch(removeCartMessage())
-
-  // }, [message])
-
-  const PlaceOrderPageFunc = () => {
-    setShow(false);
-    if (personalDetails && Object.keys(personalDetails).length > 0) {
-      navigate(`/place-order?step=1`);
-    } else {
-      navigate("/account/login", { state: { from: location.pathname } });
-    }
-  };
 
   // calculating total price
   const totalPrice =
@@ -126,7 +117,7 @@ const Cart = ({ show, setShow }: ICartProps) => {
                   </div>
 
                   <div className="cart-product-right">
-                    <Link to={`/preview/${product._id}`}>
+                    <Link to={`/preview/${product.productId}`}>
                       <h3 onClick={() => setShow(false)}>
                         {product.productName}
                       </h3>
@@ -176,7 +167,7 @@ const Cart = ({ show, setShow }: ICartProps) => {
                           color: "var(--text-primary)",
                         }}
                         onClick={() =>
-                          deleteCartItemFnc(product._id, product.size)
+                          deleteCartItemFnc(product.productId, product.size)
                         }
                       />
                     </div>

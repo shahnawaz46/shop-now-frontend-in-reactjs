@@ -13,16 +13,19 @@ import FormTitle from "../../components/common/FormTitle";
 import CustomButton from "../../components/common/CustomButton";
 import { IDeviceInfo, ILoginState } from "../../types/interfaces/auth";
 import { handleAxiosError } from "../../utils/HandleAxiosError";
+import { useAppDispatch } from "../../redux/hooks/index.ts";
+import { mergeCartItems } from "../../redux/slices/CartSlice.ts";
 
 const Login = () => {
+  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const location = useLocation();
   const [isPending, startTransition] = useTransition();
   const [deviceInfo, setDeviceInfo] = useState<IDeviceInfo | null>();
 
   const handleFormSubmit = async (value: ILoginState) => {
-    console.log("handleFormSubmit");
-    // until transtion complete isPending will be true
+    // console.log("handleFormSubmit");
+    // until transtion complete, isPending will be true
     startTransition(async () => {
       try {
         const res = await axiosInstance.post("/signin", {
@@ -30,6 +33,9 @@ const Login = () => {
           ...deviceInfo,
         });
         localStorage.setItem("__f_id", res.data.userId);
+
+        // after loggedin i am dispatching(merge cart items if any available in localstorage)
+        dispatch(mergeCartItems());
 
         if (location.state) {
           navigate(`/place-order?step=1`, {

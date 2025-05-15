@@ -38,7 +38,7 @@ export const getCartItem = createAsyncThunk("cart/getCartItem", async () => {
 
 export const removeCartItem = createAsyncThunk(
   "cart/removeCartItem",
-  async (product: { _id: string; size: keyof IProductSizes }) => {
+  async (product: { productId: string; size: keyof IProductSizes }) => {
     const _userId: string | null = localStorage.getItem("__f_id");
 
     // if user is logged in then call the api and remove cartItem from db
@@ -55,7 +55,8 @@ export const removeCartItem = createAsyncThunk(
 
     const parseCartItem: ICartItem[] = JSON.parse(cartItems);
     const removedProductIndex: number = parseCartItem.findIndex(
-      (item) => item._id === product._id && item.size === product.size
+      (item) =>
+        item.productId === product.productId && item.size === product.size
     );
 
     if (removedProductIndex === -1) {
@@ -78,9 +79,9 @@ export const addToCart = createAsyncThunk(
     // if user is logged in then call the api and store cartItem into db
     // otherwise store the cartItem into LocalStorage
     if (_userId) {
-      const { _id, size, qty } = product;
+      const { productId, size, qty } = product;
       await axiosInstance.post("/cart", {
-        productId: _id,
+        productId,
         size,
         qty,
       });
@@ -111,9 +112,9 @@ const updateCartItem = (actionType: "increment" | "decrement") =>
     // if user is logged in then call the api and store cartItem into db
     // otherwise store the cartItem into LocalStorage
     if (_userId) {
-      const { _id, size, qty } = product;
+      const { productId, size, qty } = product;
       await axiosInstance.post("/cart", {
-        productId: _id,
+        productId,
         size,
         qty,
       });
@@ -126,7 +127,8 @@ const updateCartItem = (actionType: "increment" | "decrement") =>
     const parseCartItem: ICartItem[] = JSON.parse(isCartItemPresent);
 
     const index = parseCartItem.findIndex(
-      (item) => item._id === product._id && item.size === product.size
+      (item) =>
+        item.productId === product.productId && item.size === product.size
     );
 
     parseCartItem[index].qty += product.qty;
@@ -137,6 +139,24 @@ const updateCartItem = (actionType: "increment" | "decrement") =>
 
 export const incrementCartItem = updateCartItem("increment");
 export const decrementCartItem = updateCartItem("decrement");
+
+export const mergeCartItems = createAsyncThunk("cart/merge", async () => {
+  const isCartItemPresent: string | null = localStorage.getItem("__f_cartItem");
+
+  if (!isCartItemPresent) {
+    const res = await axiosInstance.get("/cart");
+    return res.data.allCartItem as ICartItem[];
+  }
+
+  const res = await axiosInstance.post(
+    "/cart/merge",
+    JSON.parse(isCartItemPresent)
+  );
+
+  localStorage.removeItem("__f_cartItem");
+
+  return res.data.allCartItem as ICartItem[];
+});
 
 const cartSlice = createSlice({
   name: "cart",
@@ -169,7 +189,8 @@ const cartSlice = createSlice({
         // increment product quantity in cart
         const index: number = state.cartItems.findIndex(
           (item) =>
-            item._id === action.payload._id && item.size === action.payload.size
+            item.productId === action.payload.productId &&
+            item.size === action.payload.size
         );
 
         if (index >= 0) {
@@ -183,7 +204,8 @@ const cartSlice = createSlice({
         // decrement product quantity in cart
         const index: number = state.cartItems.findIndex(
           (item) =>
-            item._id === action.payload._id && item.size === action.payload.size
+            item.productId === action.payload.productId &&
+            item.size === action.payload.size
         );
 
         if (index >= 0) {
@@ -197,11 +219,18 @@ const cartSlice = createSlice({
         // const filteredCartItems = state.cartItems.filter((item)=> item.productId !== action.payload._id && item.size !== action.payload.size)
         const removedProductIndex: number = state.cartItems.findIndex(
           (item) =>
-            item._id === action.payload._id && item.size === action.payload.size
+            item.productId === action.payload.productId &&
+            item.size === action.payload.size
         );
         state.cartItems.splice(removedProductIndex, 1);
       })
       .addCase(removeCartItem.rejected, (state, action) => {
+        state.error = action.error.message;
+      })
+      .addCase(mergeCartItems.fulfilled, (state, action) => {
+        state.cartItems = action.payload;
+      })
+      .addCase(mergeCartItems.rejected, (state, action) => {
         state.error = action.error.message;
       });
   },

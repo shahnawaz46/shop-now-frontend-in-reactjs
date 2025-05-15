@@ -47,12 +47,13 @@ const PreviewProduct = ({
 
     // if item already added to cart then incrementing the quantity
     const isAlreadyAdded = cartItems.find(
-      (item) => item._id === previewProduct._id && item.size === productSize
+      (item) =>
+        item.productId === previewProduct._id && item.size === productSize
     );
     if (isAlreadyAdded) {
       dispatch(
         incrementCartItem({
-          _id: previewProduct._id,
+          productId: previewProduct._id,
           size: productSize,
           qty: 1,
         })
@@ -63,7 +64,7 @@ const PreviewProduct = ({
 
     dispatch(
       addToCart({
-        _id: previewProduct._id,
+        productId: previewProduct._id,
         productName: previewProduct.productName,
         productImage: previewProduct.productPictures[0]?.img,
         sellingPrice: previewProduct.sellingPrice,

@@ -1,5 +1,5 @@
 export interface ICartItem {
-  _id: string;
+  productId: string;
   productName: string;
   sellingPrice: number;
   productImage: string;
@@ -8,7 +8,7 @@ export interface ICartItem {
 }
 
 export interface IUpdateCartItem {
-  _id: string;
+  productId: string;
   qty: number;
   size: keyof IProductSizes;
 }
@@ -40,7 +40,7 @@ export interface ITrendingProduct {
 }
 
 export interface IAllTrendingProducts {
-  targetAudience: 'Men' | 'Women';
+  targetAudience: "Men" | "Women";
   trendingProducts: ITrendingProduct[];
 }
 
@@ -60,7 +60,6 @@ export interface IAllProducts {
   next: string | null;
   items: IProduct[];
 }
-
 
 export interface IPreviewProduct {
   _id: string;
@@ -98,5 +97,3 @@ export interface IProductReviews {
   create_date: string;
   update_date: string;
 }
-
-

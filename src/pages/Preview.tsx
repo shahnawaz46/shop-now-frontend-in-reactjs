@@ -40,7 +40,7 @@ const Preview = () => {
 
   useEffect(() => {
     startTransition(getProductForPreview);
-  }, []);
+  }, [productId]);
 
   if (isPending) return <ScreenLoading />;
 

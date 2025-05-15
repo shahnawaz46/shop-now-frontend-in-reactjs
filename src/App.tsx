@@ -1,32 +1,43 @@
-import { useEffect, Suspense, lazy } from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router';
+import { useEffect, Suspense, lazy } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router";
 
 // components
-import ScrollTop from './components/ScrollTop';
-import Toastify from './components/Toastify';
-import { getCartItem } from './redux/slices/CartSlice';
-import { Login, Signup, VerifyAccount } from './pages/auth';
-import { AuthPrivateRoute, PrivateRoute } from './routes';
-import PlaceOrder from './pages/PlaceOrder';
-import ScreenLoading from './components/Loaders/ScreenLoading';
-import { useAppDispatch } from './redux/hooks';
+import ScrollTop from "./components/ScrollTop";
+import Toastify from "./components/Toastify";
+import { getCartItem } from "./redux/slices/CartSlice";
+import { Login, Signup, VerifyAccount } from "./pages/auth";
+import { AuthPrivateRoute, PrivateRoute } from "./routes";
+import PlaceOrder from "./pages/PlaceOrder";
+import ScreenLoading from "./components/Loaders/ScreenLoading";
+import { useAppDispatch } from "./redux/hooks";
+import axiosInstance from "./axios/AxiosInstance";
 
 // lazy import(Route Splitting)
-const HomePage = lazy(() => import('./pages/HomePage'));
-const MenProducts = lazy(() => import('./pages/MenProducts'));
-const WomenProducts = lazy(() => import('./pages/WomenProducts'));
-const TopSelling = lazy(() => import('./pages/TopSelling'));
-const NewProducts = lazy(() => import('./pages/NewProducts'));
-const PageNotFound = lazy(() => import('./pages/PageNotFound'));
-const Preview = lazy(() => import('./pages/Preview'));
-const Profile = lazy(() => import('./pages/Profile'));
+const HomePage = lazy(() => import("./pages/HomePage"));
+const MenProducts = lazy(() => import("./pages/MenProducts"));
+const WomenProducts = lazy(() => import("./pages/WomenProducts"));
+const TopSelling = lazy(() => import("./pages/TopSelling"));
+const NewProducts = lazy(() => import("./pages/NewProducts"));
+const PageNotFound = lazy(() => import("./pages/PageNotFound"));
+const Preview = lazy(() => import("./pages/Preview"));
+const Profile = lazy(() => import("./pages/Profile"));
 
 function App() {
   const dispatch = useAppDispatch();
 
+  const checkAuthentication = async () => {
+    try {
+      await axiosInstance.get("/authenticated");
+    } catch (err) {
+      localStorage.getItem("__f_id") && localStorage.removeItem("__f_id");
+    } finally {
+      dispatch(getCartItem());
+    }
+  };
+
   useEffect(() => {
     // console.log("useEffect App.js");
-    dispatch(getCartItem());
+    checkAuthentication();
   }, []);
 
   return (
