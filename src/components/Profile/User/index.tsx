@@ -146,17 +146,17 @@ const User = ({ userData }: { userData: IPersonalDetail }) => {
           </div>
 
           <div className="profile-user-detail-container">
-            <h2 className="profile-user-name">{`${userData?.firstName} ${userData?.lastName}`}</h2>
-            <div className="profile-user-details">
+            <h2 className="profile-user-name ellipsis">{`${userData?.firstName} ${userData?.lastName}`}</h2>
+            <div className="profile-user-details ellipsis">
               First Name - {userData?.firstName}
             </div>
-            <div className="profile-user-details">
+            <div className="profile-user-details ellipsis">
               Last Name - {userData?.lastName}
             </div>
-            <div className="profile-user-details">
+            <div className="profile-user-details ellipsis">
               Email - {userData?.email}
             </div>
-            <div className="profile-user-details">
+            <div className="profile-user-details ellipsis">
               Mobile No. - {userData?.phoneNo}
             </div>
 

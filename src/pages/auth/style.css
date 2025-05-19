@@ -49,9 +49,9 @@
   color: var(--text-primary);
 }
 
-[data-theme='dark']
+[data-theme="dark"]
   .input-container
-  > input[type='date']::-webkit-calendar-picker-indicator {
+  > input[type="date"]::-webkit-calendar-picker-indicator {
   filter: invert(1);
 }
 

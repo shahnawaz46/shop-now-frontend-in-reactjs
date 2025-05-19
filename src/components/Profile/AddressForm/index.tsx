@@ -1,8 +1,7 @@
 import React, { useState } from "react";
-import axios from "axios";
-import { MdKeyboardArrowDown, MdKeyboardArrowUp } from "react-icons/md";
 import { toast } from "react-toastify";
 import { IoClose } from "react-icons/io5";
+import { Field, Form, Formik } from "formik";
 
 // components
 import "./style.css";
@@ -20,8 +19,10 @@ import {
 } from "../../../types/interfaces/user.interface";
 import { RequestStatus } from "../../../types/enums/RequestStatus";
 import { handleAxiosError } from "../../../utils/HandleAxiosError";
-import { getKeyType } from "../../../utils/Objects";
-import { checkAddressFields } from "../../../validation/User.validation";
+import { validateAddress } from "../../../validation/User.validation";
+import FormikErrorMsg, { ErrorMsg } from "../../common/FormikErrorMsg";
+import PinCodeLogic from "./PinCodeLogic";
+import { CustomSelectInput } from "../../common/CustomInput";
 
 interface IAddressFormProps {
   openAddressModal: IOpenAddressModal;
@@ -40,71 +41,17 @@ const AddressForm = (props: IAddressFormProps) => {
     string | null
   >(null);
   const [locality, setLocality] = useState<string[]>([]);
-  const [showLocalityList, setShowLocalityList] = useState<boolean>(false);
-  const [, setLoadingForPinCode] = useState<boolean>(false);
   const [status, setStatus] = useState(RequestStatus.Idle);
 
-  const handleInput = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const name: string = e.target.name;
-    const value: string = e.target.value;
-
-    // first getting key type for check condition
-    const _getKeyType: string = getKeyType(
-      addressInitialState,
-      name as keyof IAddressDetails
-    );
-    const updatedValue = _getKeyType === "number" ? Number(value) : value;
-    setUserAddress({
-      ...userAddress,
-      [name]: updatedValue,
-    });
-
-    // if name === pincode then fetching data based on pincode
-    if (name === "pinCode") {
-      if (value.length === 6) {
-        // updating state for show loading icon and blur form while fetching data based on pincode
-        setLoadingForPinCode((prev) => !prev);
-
-        // calling api for fetching data based on pincode
-        const res = await axios.get(
-          `https://api.postalpincode.in/pincode/${value}`
-        );
-        if (res.data[0].Status === "Error" || res.data[0].Status === "404") {
-          setInvalidPinCodeMessage("Invalid Pin Code");
-          setLocality([]);
-        } else {
-          const postOffice = res.data[0].PostOffice[0];
-          setUserAddress((prev) => ({
-            ...prev,
-            state: postOffice.State,
-            cityDistrictTown: postOffice.District,
-          }));
-          setLocality(
-            res.data[0].PostOffice.map((value: { Name: string }) => value.Name)
-          );
-          setInvalidPinCodeMessage(null);
-        }
-        setLoadingForPinCode((prev) => !prev);
-      }
-    }
-  };
-
-  const handleForm = async (openAddressModal: IOpenAddressModal) => {
-    // validation
-    const result = checkAddressFields(userAddress);
-    // console.log(result);
-    if (result.error) {
-      return toast.error(result.errorMsg);
-    }
-
+  const handleSubmit = async (values: IAddressDetails) => {
     try {
       setStatus(RequestStatus.Pending);
       let res;
       if (openAddressModal.type === "Update Address") {
-        res = await axiosInstance.put("/address", result.data);
+        res = await axiosInstance.put("/address", values);
         dispatch(updateAddress(res.data.address));
       } else {
-        res = await axiosInstance.post("/address", { ...userAddress });
+        res = await axiosInstance.post("/address", values);
         dispatch(addAddress(res.data.address));
       }
 
@@ -146,238 +93,195 @@ const AddressForm = (props: IAddressFormProps) => {
             />
           </FormTitle>
 
-          <form>
-            <div className="input-flex">
-              <div className="input-container input-container-address width-50">
-                <label htmlFor="name">{addressFormLabel["name"]}</label>
-                <input
-                  id="name"
-                  name="name"
-                  type="text"
-                  value={userAddress.name || ""}
-                  onChange={handleInput}
-                  required
-                />
-              </div>
+          <Formik
+            initialValues={userAddress}
+            validate={validateAddress}
+            onSubmit={(values) => handleSubmit(values)}
+          >
+            {({ values, setFieldValue, errors }) => (
+              <Form>
+                <div className="input-flex">
+                  <div className="input-container input-container-address width-50">
+                    <label htmlFor="name">{addressFormLabel["name"]}</label>
+                    <Field id="name" name="name" />
 
-              <div className="input-container input-container-address width-50">
-                <label htmlFor="mobileNumber">
-                  {addressFormLabel["mobileNumber"]}
-                </label>
-                <input
-                  id="mobileNumber"
-                  name="mobileNumber"
-                  type="number"
-                  value={userAddress.mobileNumber || ""}
-                  onChange={handleInput}
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="input-flex">
-              <div className="input-container input-container-address width-50">
-                <label htmlFor="pinCode">{addressFormLabel["pinCode"]}</label>
-
-                <input
-                  id="pinCode"
-                  name="pinCode"
-                  type="text"
-                  value={userAddress.pinCode || ""}
-                  maxLength={6}
-                  onChange={handleInput}
-                  required
-                />
-                {invalidPinCodeMessage && (
-                  <span style={{ fontSize: "14px", color: "red" }}>
-                    *{invalidPinCodeMessage}
-                  </span>
-                )}
-              </div>
-
-              <div className="input-container input-container-address width-50">
-                <label htmlFor="state">{addressFormLabel["state"]}</label>
-                <input
-                  id="state"
-                  type="text"
-                  value={userAddress.state || ""}
-                  readOnly
-                  required
-                />
-              </div>
-            </div>
-
-            <div className="input-container input-container-address">
-              <label htmlFor="" className="address">
-                {addressFormLabel["address"]}
-              </label>
-              <input
-                id="address"
-                name="address"
-                type="text"
-                value={userAddress.address || ""}
-                placeholder="House no. 101 Block no 32"
-                onChange={handleInput}
-                required
-              />
-            </div>
-
-            <div className="input-flex">
-              <div className="input-container input-container-address width-50">
-                <label htmlFor="">{addressFormLabel["locality"]}</label>
-
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <input
-                    id="locality"
-                    name="locality"
-                    type="text"
-                    value={userAddress.locality || ""}
-                    onChange={handleInput}
-                    required
-                  />
-                  {showLocalityList ? (
-                    <MdKeyboardArrowUp
-                      onClick={() => setShowLocalityList(false)}
-                      // style={{ marginLeft: '-18px' }}
-                      className="input-locality-icon"
-                    />
-                  ) : (
-                    <MdKeyboardArrowDown
-                      onClick={() => setShowLocalityList(true)}
-                      // style={{ marginLeft: '-18px' }}
-                      className="input-locality-icon"
-                    />
-                  )}
-                </div>
-                {showLocalityList && (
-                  <div className="address-form-show-locality-box">
-                    {/* <ul> */}
-                    {locality.length > 0 &&
-                      locality.map((value, index) => {
-                        return (
-                          <span
-                            key={index}
-                            className="address-form-show-locality"
-                            onClick={() => {
-                              setUserAddress({
-                                ...userAddress,
-                                locality: value,
-                              });
-                              setShowLocalityList(false);
-                            }}
-                          >
-                            {value}
-                          </span>
-                        );
-                      })}
-                    {/* </ul> */}
+                    <FormikErrorMsg name="name" />
                   </div>
-                )}
-              </div>
 
-              <div className="input-container input-container-address width-50">
-                <label htmlFor="City"></label>
-                {addressFormLabel["cityDistrictTown"]}
-                <input
-                  id="City"
-                  type="text"
-                  value={userAddress.cityDistrictTown || ""}
-                  readOnly
-                  required
-                />
-              </div>
-            </div>
+                  <div className="input-container input-container-address width-50">
+                    <label htmlFor="mobileNumber">
+                      {addressFormLabel["mobileNumber"]}
+                    </label>
+                    <Field id="mobileNumber" name="mobileNumber" />
 
-            <div className="input-container input-container-address">
-              <label htmlFor="landmark">
-                {addressFormLabel["landmark"]}{" "}
-                <span style={{ fontSize: "15px" }}>(optional)</span>
-              </label>
-              <input
-                id="landmark"
-                name="landmark"
-                type="text"
-                value={userAddress.landmark || ""}
-                placeholder="Near Apolo Hospital"
-                onChange={handleInput}
-              />
-            </div>
-
-            <div className="input-container input-container-address">
-              <label htmlFor="alternatePhone">
-                {addressFormLabel["alternatePhone"]}{" "}
-                <span style={{ fontSize: "15px" }}>(optional)</span>
-              </label>
-              <input
-                id="alternatePhone"
-                name="alternatePhone"
-                type="text"
-                value={userAddress.alternatePhone || ""}
-                onChange={handleInput}
-              />
-            </div>
-
-            <div className="input-container input-container-address">
-              <label>{addressFormLabel["addressType"]}</label>
-              <div
-                style={{ display: "flex", alignItems: "center", gap: "20px" }}
-              >
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <input
-                    style={{ marginRight: "2px" }}
-                    type="radio"
-                    checked={userAddress.addressType === "home" && true}
-                    name="addressType"
-                    onChange={(e) =>
-                      setUserAddress({
-                        ...userAddress,
-                        [e.target.name]: "home",
-                      })
-                    }
-                    required
-                  />
-                  <span style={{ color: "var(--text-primary)" }}>Home</span>
+                    <FormikErrorMsg name="mobileNumber" />
+                  </div>
                 </div>
-                <div style={{ display: "flex", alignItems: "center" }}>
-                  <input
-                    style={{ marginRight: "2px" }}
-                    type="radio"
-                    checked={userAddress.addressType === "work" && true}
-                    name="addressType"
-                    onChange={(e) =>
-                      setUserAddress({
-                        ...userAddress,
-                        [e.target.name]: "work",
-                      })
-                    }
-                    required
-                  />
-                  <span style={{ color: "var(--text-primary)" }}>Work</span>
-                </div>
-              </div>
-            </div>
 
-            <div className="address-form-buttons">
-              <CustomButton
-                text={openAddressModal.type}
-                disabled={invalidPinCodeMessage ? true : false}
-                className={`address-form-buttton ${
-                  invalidPinCodeMessage ? "disable-add-address-button" : ""
-                }`}
-                onClick={() => {
-                  handleForm(openAddressModal);
-                }}
-              />
-              <CustomButton
-                text={"Cancel"}
-                className={`address-form-buttton`}
-                onClick={() => {
-                  setUserAddress(addressInitialState);
-                  setOpenAddressModal({ type: "", show: false });
-                }}
-              />
-            </div>
-          </form>
+                <div className="input-flex">
+                  <div className="input-container input-container-address width-50">
+                    <label htmlFor="pinCode">
+                      {addressFormLabel["pinCode"]}
+                    </label>
+                    <Field id="pinCode" name="pinCode" maxLength={6} />
+
+                    <PinCodeLogic
+                      pinCode={values.pinCode}
+                      onResult={(state, cityDistrictTown, locality, error) => {
+                        if (error) {
+                          setFieldValue("state", "");
+                          setFieldValue("cityDistrictTown", "");
+                          setFieldValue("locality", "");
+                          setLocality([]);
+                          setInvalidPinCodeMessage(error);
+                        } else {
+                          setLocality(locality);
+                          setFieldValue("state", state);
+                          setFieldValue("cityDistrictTown", cityDistrictTown);
+                          setInvalidPinCodeMessage("");
+                        }
+                      }}
+                    />
+
+                    {errors.pinCode ? (
+                      <FormikErrorMsg name="pinCode" />
+                    ) : invalidPinCodeMessage ? (
+                      <ErrorMsg msg={invalidPinCodeMessage} />
+                    ) : null}
+                  </div>
+
+                  <div className="input-container input-container-address width-50">
+                    <label htmlFor="state">{addressFormLabel["state"]}</label>
+                    <Field id="state" name="state" readOnly />
+
+                    <FormikErrorMsg name="state" />
+                  </div>
+                </div>
+
+                <div className="input-container input-container-address">
+                  <label htmlFor="address">{addressFormLabel["address"]}</label>
+
+                  <Field
+                    id="address"
+                    name="address"
+                    placeholder="House no. 101 Block no 32"
+                  />
+
+                  <FormikErrorMsg name="address" />
+                </div>
+
+                <div className="input-flex">
+                  <div className="input-container input-container-address width-50">
+                    <label>{addressFormLabel["locality"]}</label>
+
+                    <CustomSelectInput
+                      value={values.locality}
+                      options={locality}
+                      onSelect={(value) => {
+                        setFieldValue("locality", value);
+                      }}
+                      disabled={locality.length === 0}
+                    />
+
+                    <FormikErrorMsg name="locality" />
+                  </div>
+
+                  <div className="input-container input-container-address width-50">
+                    <label htmlFor="cityDistrictTown">
+                      {addressFormLabel["cityDistrictTown"]}
+                    </label>
+
+                    <Field id="cityDistrictTown" name="cityDistrictTown" />
+
+                    <FormikErrorMsg name="cityDistrictTown" />
+                  </div>
+                </div>
+
+                <div className="input-container input-container-address">
+                  <label htmlFor="landmark">
+                    {addressFormLabel["landmark"]}{" "}
+                    <span style={{ fontSize: "15px" }}>(optional)</span>
+                  </label>
+
+                  <Field
+                    id="landmark"
+                    name="landmark"
+                    placeholder="Near Apolo Hospital"
+                  />
+
+                  <FormikErrorMsg name="landmark" />
+                </div>
+
+                <div className="input-container input-container-address">
+                  <label htmlFor="alternatePhone">
+                    {addressFormLabel["alternatePhone"]}{" "}
+                    <span style={{ fontSize: "15px" }}>(optional)</span>
+                  </label>
+
+                  <Field id="alternatePhone" name="alternatePhone" />
+
+                  <FormikErrorMsg name="alternatePhone" />
+                </div>
+
+                <div className="input-container input-container-address">
+                  <div>{addressFormLabel["addressType"]}</div>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      gap: "20px",
+                    }}
+                  >
+                    <label>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <Field type="radio" name="addressType" value="home" />
+                        <span
+                          style={{
+                            color: "var(--text-primary)",
+                            marginLeft: "5px",
+                          }}
+                        >
+                          Home
+                        </span>
+                      </div>
+                    </label>
+
+                    <label>
+                      <div style={{ display: "flex", alignItems: "center" }}>
+                        <Field type="radio" name="addressType" value="work" />
+                        <span
+                          style={{
+                            color: "var(--text-primary)",
+                            marginLeft: "5px",
+                          }}
+                        >
+                          Work
+                        </span>
+                      </div>
+                    </label>
+                  </div>
+
+                  <FormikErrorMsg name="addressType" />
+                </div>
+
+                <div className="address-form-buttons">
+                  <CustomButton
+                    text={openAddressModal.type}
+                    className={`address-form-buttton`}
+                    type="submit"
+                  />
+                  <CustomButton
+                    text={"Cancel"}
+                    className={`address-form-buttton`}
+                    onClick={() => {
+                      setUserAddress(addressInitialState);
+                      setOpenAddressModal({ type: "", show: false });
+                    }}
+                  />
+                </div>
+              </Form>
+            )}
+          </Formik>
         </div>
       </Modal>
     </>

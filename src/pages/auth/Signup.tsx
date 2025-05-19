@@ -8,7 +8,7 @@ import { Formik, Form, Field } from "formik";
 import "./style.css";
 import axiosInstance from "../../axios/AxiosInstance";
 import { ScreenLoading } from "../../components/Loaders";
-import { initialState, signUpSchema } from "../../validation/SignUp.yup";
+import { signupInitialState, signUpSchema } from "../../validation/Auth.yup.ts";
 import FormikErrorMsg from "../../components/common/FormikErrorMsg.tsx";
 import FormTitle from "../../components/common/FormTitle";
 import CustomButton from "../../components/common/CustomButton";
@@ -67,7 +67,7 @@ const Signup = () => {
           <FormTitle text={"Create Your Account"} />
 
           <Formik
-            initialValues={initialState}
+            initialValues={signupInitialState}
             validationSchema={signUpSchema}
             onSubmit={(value) => handleFormSubmit(value)}
           >

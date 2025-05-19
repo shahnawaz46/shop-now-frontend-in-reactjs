@@ -1,0 +1,41 @@
+.address-form-show-locality-box {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background-color: var(--background-primary);
+  border: 1px solid var(--border-primary);
+  padding: 10px;
+  width: 100%;
+  max-height: 200px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  z-index: 11;
+}
+
+.address-form-show-locality-box::-webkit-scrollbar {
+  width: 10px;
+}
+
+.address-form-show-locality-box::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+}
+
+.address-form-show-locality-box::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+.address-form-show-locality {
+  cursor: pointer;
+  font-size: 1rem;
+  color: var(--text-primary);
+}
+
+.input-locality-icon {
+  color: var(--text-primary);
+  /* margin-left: -18px; */
+  position: absolute;
+  top: 60%;
+  right: 5px;
+  transform: translateY(-50%);
+}

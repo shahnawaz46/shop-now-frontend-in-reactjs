@@ -32,44 +32,6 @@
   background: var(--text-primary);
 }
 
-.input-locality-icon {
-  color: var(--text-primary);
-  margin-left: -18px;
-}
-
-.address-form-show-locality-box {
-  position: absolute;
-  display: flex;
-  flex-direction: column;
-  background-color: var(--background-primary);
-  border: 1px solid var(--border-primary);
-  padding: 10px;
-  width: 100%;
-  height: 200px;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  z-index: 11;
-}
-
-.address-form-show-locality-box::-webkit-scrollbar {
-  width: 10px;
-}
-
-.address-form-show-locality-box::-webkit-scrollbar-thumb {
-  background: #c1c1c1;
-}
-
-.address-form-show-locality-box::-webkit-scrollbar-track {
-  background: #f1f1f1;
-}
-
-.address-form-show-locality {
-  margin: 2px 0px;
-  cursor: pointer;
-  font-family: 1rem;
-  color: var(--text-primary);
-}
-
 .address-form-buttons {
   display: flex;
   margin-top: 10px;

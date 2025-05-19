@@ -23,6 +23,6 @@ export interface IAddressDetails {
 }
 
 export interface IOpenAddressModal {
-  type: 'Add Address' | 'Update Address' | '';
+  type: "Add Address" | "Update Address" | "";
   show: boolean;
 }
