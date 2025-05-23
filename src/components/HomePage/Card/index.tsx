@@ -1,15 +1,15 @@
-import { Link } from 'react-router';
-import './style.css';
-import HeadingAndParagraph from '../HeadingAndParagraph';
+import { Link } from "react-router";
+import "./style.css";
+import HeadingAndParagraph from "../HeadingAndParagraph";
 
 const Card = () => {
   return (
     <div className="menwomencard-container">
-      <HeadingAndParagraph heading={'WARDROBE'} />
+      <HeadingAndParagraph heading={"WARDROBE"} />
 
       <div className="menwomencard-box">
         <div className="card">
-          <img src="./men-wardrobe.webp" alt="men-wardrobe" loading="lazy" />
+          <img src="./men-wardrobe.webp" alt="men-wardrobe" />
           <div className="card-content left">
             {/* <p>
               Men's fashion refers to the styles and trends in clothing,
@@ -26,7 +26,7 @@ const Card = () => {
         </div>
 
         <div className="card">
-          <img src="./women-wardrobe.webp" alt="not found" loading="lazy" />
+          <img src="./women-wardrobe.webp" alt="not found" />
           <div className="card-content right-side">
             <Link to="/collections/Women's-Wardrobe">
               <h2>Women&apos;s Fashion</h2>
