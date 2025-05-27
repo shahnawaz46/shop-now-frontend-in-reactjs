@@ -1,8 +1,9 @@
-import axios from 'axios';
-import { apiUrl } from './UlrConfig';
+import axios from "axios";
+
+const baseURL = import.meta.env.VITE_BASE_URL;
 
 const axiosInstance = axios.create({
-  baseURL: apiUrl,
+  baseURL: baseURL,
   timeout: 120000,
   withCredentials: true,
 });
