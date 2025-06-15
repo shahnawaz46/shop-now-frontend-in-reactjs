@@ -9,14 +9,37 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
-    <link
-      href="https://fonts.googleapis.com/css2?family=Spectral+SC:wght@200&display=swap"
+    <!-- The browser starts downloading the font CSS immediately (because of preload) -->
+    <!-- The attribute media=print will skip the css on page rendering. Once the page has loaded -->
+    <!-- When the onload fires and media='all' is applied, the browser already has the fonts in its preload cache, so it can apply them instantly -->
+    <!-- Most importantly, the font will no longer render-block page -->
+
+    <!-- <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Spectral+SC:wght@200&display=swap"
+    /> -->
+    <!-- <link
       rel="stylesheet"
-    />
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Spectral+SC:wght@200&display=swap"
+      media="print"
+      onload="this.media='all'"
+    /> -->
+    <!-- <noscript>
     <link
-      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Spectral+SC:wght@200&display=swap"
       rel="stylesheet"
+      type="text/css"
     />
+    </noscript> -->
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300&family=Spectral+SC:wght@200&display=swap"
+    />
+
+    <link rel="dns-prefetch" href="https://ik.imagekit.io" />
+    <link rel="preconnect" href="https://ik.imagekit.io" crossorigin />
 
     <title>Shop Now</title>
   </head>

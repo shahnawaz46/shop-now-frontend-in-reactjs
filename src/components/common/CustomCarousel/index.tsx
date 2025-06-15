@@ -4,7 +4,13 @@ import { AiOutlineLeft, AiOutlineRight } from "react-icons/ai";
 // components
 import "./style.css";
 
-const CustomCarousel = ({ items }: { items: string[] }) => {
+interface ICustomCarouselProps {
+  items: string[];
+  width: number;
+  height: number;
+}
+
+const CustomCarousel = ({ items, width, height }: ICustomCarouselProps) => {
   const [current, setCurrent] = useState<number>(0);
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -62,7 +68,13 @@ const CustomCarousel = ({ items }: { items: string[] }) => {
               transition: "opacity 0.5s ease-in-out",
             }}
           >
-            <img src={item} alt="carousel" />
+            <img
+              src={item}
+              alt="carousel"
+              width={width} // Explicit dimensions to prevent CLS
+              height={height}
+              fetchPriority="high"
+            />
           </div>
         ))}
       </div>
