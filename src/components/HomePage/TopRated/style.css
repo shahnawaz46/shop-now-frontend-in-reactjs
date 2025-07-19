@@ -13,15 +13,15 @@
 }
 
 .top-rated-images {
-  width: 200px;
-  height: 250px;
+  /* width: 200px;
+  height: 250px; */
   object-fit: cover;
   border-radius: 10px;
   box-shadow: var(--shadow-primary);
   cursor: pointer;
 }
 
-@media screen and (max-width: 500px) {
+/* @media screen and (max-width: 500px) {
   .top-rated-images {
     width: 180px;
     height: 230px;
@@ -40,4 +40,4 @@
     width: 120px;
     height: 180px;
   }
-}
+} */
