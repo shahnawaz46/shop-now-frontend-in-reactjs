@@ -1,5 +1,6 @@
 import { useEffect, Suspense, lazy } from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router";
+import { withSentryReactRouterV7Routing } from "@sentry/react";
 
 // components
 import ScrollTop from "./components/ScrollTop";
@@ -40,13 +41,22 @@ function App() {
     checkAuthentication();
   }, []);
 
+  const SentryRoutes = withSentryReactRouterV7Routing(Routes);
+
   return (
     <Router>
       <ScrollTop />
       <Toastify />
-
+      <button
+        onClick={() => {
+          throw new Error("This is your first error!");
+        }}
+      >
+        Break the world
+      </button>
+      ;
       <Suspense fallback={<ScreenLoading />}>
-        <Routes>
+        <SentryRoutes>
           <Route index element={<HomePage />} />
           <Route path="collections">
             <Route path="Men's-Wardrobe" element={<MenProducts />} />
@@ -92,7 +102,7 @@ function App() {
               </AuthPrivateRoute>
             }
           />
-        </Routes>
+        </SentryRoutes>
       </Suspense>
     </Router>
   );
