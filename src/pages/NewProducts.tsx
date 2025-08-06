@@ -94,14 +94,6 @@ const NewProducts = () => {
         fetchMoreProducts(newestProducts?.products.next);
       }
     }
-
-    (async function () {
-      // try {
-      throw new Error("Custom Api Error");
-      // } catch (err) {
-      // console.log("Error");
-      // }
-    })();
   }, [inView]);
 
   if (isLoading) return <ScreenLoading />;

@@ -6,8 +6,7 @@ import { Provider } from "react-redux";
 import App from "./App";
 import store from "./redux/store";
 import { reactErrorHandler } from "@sentry/react";
-// import ClientErrorBoundary from "./components/ErrorBoundary";
-// import {reactErrorHandler}
+import ClientErrorBoundary from "./components/ErrorBoundary";
 
 // type assertion mean when you have information about the type of a value that TypeScript can’t know about.
 // ! -> (Non-null assertion operator)
@@ -23,8 +22,10 @@ const root = createRoot(container!, {
 
 root.render(
   <StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <ClientErrorBoundary>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </ClientErrorBoundary>
   </StrictMode>
 );

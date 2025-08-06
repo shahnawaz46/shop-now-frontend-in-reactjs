@@ -1,4 +1,8 @@
-import { init, reactRouterV7BrowserTracingIntegration } from "@sentry/react";
+import {
+  init,
+  reactRouterV7BrowserTracingIntegration,
+  replayIntegration,
+} from "@sentry/react";
 import { useEffect } from "react";
 import {
   createRoutesFromChildren,
@@ -17,14 +21,20 @@ init({
   // Set the current environment (development, production, etc.)
   environment: import.meta.env.VITE_NODE_ENV,
 
-  // Enable automatic tracking for React Router V7 (page load, navigation, etc.)
   integrations: [
+    // Enable automatic tracking for React Router V7 (page load, navigation, etc.)
     reactRouterV7BrowserTracingIntegration({
       useEffect,
       useLocation,
       useNavigationType,
       createRoutesFromChildren,
       matchRoutes,
+    }),
+
+    replayIntegration({
+      // Hide all text in replays to protect sensitive user data
+      maskAllText: true,
+      blockAllMedia: false,
     }),
   ],
 
@@ -35,6 +45,13 @@ init({
   // Add trace headers only to these requests (frontend → backend)
   tracePropagationTargets: [
     "localhost", // Allow tracing to local backend during development
-    new RegExp(import.meta.env.VITE_BASE_URL), // Match your deployed backend URL from env
+    new RegExp(import.meta.env.VITE_BASE_URL), // Match deployed backend URL from env
   ],
+
+  // Record normal user sessions, In development: Record 100% of sessions. In prod: Record only 10%
+  replaysSessionSampleRate:
+    import.meta.env.VITE_NODE_ENV === "development" ? 1.0 : 0.1,
+
+  // Always record a session when an error happens (100%)
+  replaysOnErrorSampleRate: 1.0,
 });

@@ -47,14 +47,7 @@ function App() {
     <Router>
       <ScrollTop />
       <Toastify />
-      <button
-        onClick={() => {
-          throw new Error("This is your first error!");
-        }}
-      >
-        Break the world
-      </button>
-      ;
+
       <Suspense fallback={<ScreenLoading />}>
         <SentryRoutes>
           <Route index element={<HomePage />} />
