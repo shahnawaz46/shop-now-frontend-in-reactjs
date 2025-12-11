@@ -25,7 +25,7 @@
   font-size: 25px;
   display: flex;
   align-items: center;
-  font-family: 'Spectral SC', serif;
+  font-family: "Spectral SC", serif;
 }
 
 .navbar-item {
@@ -106,6 +106,28 @@
 
 .profile-icon {
   font-size: 24px;
+}
+
+.profile-icon-present {
+  width: 40px;
+  height: 40px;
+  border-radius: 100%;
+}
+
+.profile-user-icon-name {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  background: var(--primary-color);
+  /* box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2); */
+  letter-spacing: 1px;
+  text-transform: uppercase;
 }
 
 .navbar-cart {

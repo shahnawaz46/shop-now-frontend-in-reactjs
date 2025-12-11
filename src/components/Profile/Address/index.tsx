@@ -1,4 +1,4 @@
-import { useState, memo } from "react";
+import { useState, memo, useEffect } from "react";
 import { FaRegAddressBook } from "react-icons/fa";
 import { toast } from "react-toastify";
 
@@ -6,7 +6,10 @@ import { toast } from "react-toastify";
 import "./style.css";
 import AddressForm from "../AddressForm";
 import axiosInstance from "../../../axios/AxiosInstance";
-import { deleteAddress } from "../../../redux/slices/UserSlice";
+import {
+  deleteAddress,
+  fetchAddressDetails,
+} from "../../../redux/slices/AddressSlice";
 import CustomButton from "../../common/CustomButton";
 import {
   IAddressDetails,
@@ -14,6 +17,8 @@ import {
 } from "../../../types/interfaces/user.interface";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { handleAxiosError } from "../../../utils/HandleAxiosError";
+import { RequestStatus } from "../../../types/enums/RequestStatus";
+import { ScreenLoading } from "../../Loaders";
 
 export const addressInitialState: IAddressDetails = {
   name: "",
@@ -45,7 +50,8 @@ export const addressFormLabel: Record<keyof AddressFormLabelKeys, string> = {
 
 const Address = ({ totalHeight }: { totalHeight?: number }) => {
   const dispatch = useAppDispatch();
-  const { addressDetails } = useAppSelector((state) => state.user);
+  const { status, addressDetails } = useAppSelector((state) => state.address);
+  console.log("addressDetails", status, addressDetails);
 
   const [openAddressModal, setOpenAddressModal] = useState<IOpenAddressModal>({
     type: "",
@@ -62,6 +68,54 @@ const Address = ({ totalHeight }: { totalHeight?: number }) => {
       handleAxiosError({ error });
     }
   };
+
+  useEffect(() => {
+    if (status === RequestStatus.Idle) {
+      dispatch(fetchAddressDetails());
+    }
+  }, []);
+
+  if (status === RequestStatus.Idle || status === RequestStatus.Pending) {
+    return (
+      <div
+        className="address-container"
+        style={{
+          minHeight: `calc(100vh - ${totalHeight ? totalHeight + 80 : 80}px)`,
+          position: "relative",
+        }}
+      >
+        <ScreenLoading position="absolute" />
+      </div>
+    );
+  }
+
+  if (!addressDetails || addressDetails?.length === 0) {
+    return (
+      <div
+        className="address-container"
+        style={{
+          minHeight: `calc(100vh - ${totalHeight ? totalHeight + 80 : 80}px)`,
+        }}
+      >
+        <div className="address-not-available-container">
+          <FaRegAddressBook className="address-icon" />
+          <div className="address-not-available-content">
+            <h3 className="address-not-available-h3">
+              You haven&apos;t Added any Addresses
+            </h3>
+
+            <CustomButton
+              text={"Add Address"}
+              className={"address-not-available-btn"}
+              onClick={() =>
+                setOpenAddressModal({ type: "Add Address", show: true })
+              }
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div

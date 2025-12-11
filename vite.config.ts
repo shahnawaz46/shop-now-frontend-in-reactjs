@@ -1,6 +1,9 @@
-import { sentryVitePlugin } from "@sentry/vite-plugin";
+/// <reference types="vitest" />
+/// <reference types="vite/client" />
+
 import { defineConfig, type PluginOption } from "vite";
 import react from "@vitejs/plugin-react";
+import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { visualizer } from "rollup-plugin-visualizer";
 
 // https://vite.dev/config/
@@ -37,5 +40,12 @@ export default defineConfig({
         },
       },
     },
+  },
+
+  test: {
+    globals: true, // Enable global test variables like 'describe' and 'it'
+    environment: "jsdom", // Simulate a browser-like environment
+    setupFiles: "./src/__tests__/setup.ts", // Load custom setup before tests run
+    css: true,
   },
 });

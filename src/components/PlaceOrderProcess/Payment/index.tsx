@@ -49,7 +49,7 @@ const Payment = () => {
         paymentMethod,
         process: "checkout", // for track order process(direct buy or checkout from cart)
         items: cartItems.map((item) => ({
-          product: item._id,
+          product: item.productId,
           qty: item.qty,
           size: item.size,
         })),

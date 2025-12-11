@@ -14,6 +14,7 @@ import { ScreenLoading } from "../components/Loaders";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { RequestStatus } from "../types/enums/RequestStatus";
 import { ISteeperItem } from "../types/interfaces";
+import { fetchAddressDetails } from "../redux/slices/AddressSlice";
 
 const stepperItem: ISteeperItem[] = [
   { id: 1, title: "Delivery Address" },
@@ -23,6 +24,7 @@ const stepperItem: ISteeperItem[] = [
 
 const PlaceOrder = () => {
   const { status } = useAppSelector((state) => state.user);
+  const { status: addressStatus } = useAppSelector((state) => state.address);
   const dispatch = useAppDispatch();
 
   const location = useLocation();
@@ -30,7 +32,7 @@ const PlaceOrder = () => {
   const [notAuthenticated, setNotAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log("location:", location);
+    // console.log("location:", location);
     const query = new URLSearchParams(location.search);
     if (query) {
       if (query.get("step")) setCurrentStep(Number(query.get("step")));
@@ -40,6 +42,7 @@ const PlaceOrder = () => {
 
   useEffect(() => {
     if (status === RequestStatus.Idle) dispatch(fetchPersonalDetails());
+    if (addressStatus === RequestStatus.Idle) dispatch(fetchAddressDetails());
   }, []);
 
   useEffect(() => {
@@ -49,7 +52,7 @@ const PlaceOrder = () => {
     }
   }, [status]);
 
-  // location.stata have product data that i am passing from PreviewProduct component for buy product
+  // location.state have product data that i am passing from PreviewProduct component for buy product
   // and the reason i am passing location.state to the login page is after the user login i will redirect the user to place order Page
   if (notAuthenticated)
     return (

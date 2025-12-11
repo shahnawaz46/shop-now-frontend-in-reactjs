@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { Link, NavLink, useLocation, useNavigate } from "react-router";
 import { BiSearch } from "react-icons/bi";
 import { FiShoppingBag } from "react-icons/fi";
@@ -14,8 +14,9 @@ import axiosInstance from "../../axios/AxiosInstance";
 import { useAppSelector } from "../../redux/hooks";
 import { ISearchProduct } from "../../types/interfaces/product.interface";
 import { handleAxiosError } from "../../utils/HandleAxiosError";
+import { getNameInitials } from "../../utils/Initials";
 
-const navLinks = [
+export const navLinks = [
   { name: "Home", link: "/" },
   { name: "Men's", link: "/collections/Men's-Wardrobe" },
   { name: "Women's", link: "/collections/Women's-Wardrobe" },
@@ -30,6 +31,7 @@ interface ISearchItems {
 
 const Navbar = () => {
   const { cartItems } = useAppSelector((state) => state.cart);
+  const { personalDetails } = useAppSelector((state) => state.user);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -175,13 +177,32 @@ const Navbar = () => {
               />
               <span>{cartQuantity()}</span>
             </div>
+
             <Link
               to={"/my-account/address"}
               state={{ from: location.pathname }}
               aria-label="profile"
               style={{ color: "var(--text-primary)" }}
             >
-              <MdPerson className="icon profile-icon" />
+              {personalDetails ? (
+                personalDetails?.profilePicture ? (
+                  <img
+                    src={personalDetails.profilePicture}
+                    alt="Profile"
+                    className="icon profile-icon-present"
+                  />
+                ) : (
+                  <div className="profile-user-icon-name">
+                    {getNameInitials(
+                      personalDetails?.firstName +
+                        " " +
+                        personalDetails.lastName
+                    )}
+                  </div>
+                )
+              ) : (
+                <MdPerson className="icon profile-icon" />
+              )}
             </Link>
 
             <RiMenu2Line

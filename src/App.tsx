@@ -7,11 +7,12 @@ import ScrollTop from "./components/ScrollTop";
 import Toastify from "./components/Toastify";
 import { getCartItem } from "./redux/slices/CartSlice";
 import { Login, Signup, VerifyAccount } from "./pages/auth";
-import { AuthPrivateRoute, PrivateRoute } from "./routes";
+import { AuthRoute, PrivateRoute } from "./routes";
 import PlaceOrder from "./pages/PlaceOrder";
 import ScreenLoading from "./components/Loaders/ScreenLoading";
 import { useAppDispatch } from "./redux/hooks";
 import axiosInstance from "./axios/AxiosInstance";
+import { fetchPersonalDetails } from "./redux/slices/UserSlice";
 
 // lazy import(Route Splitting)
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -28,7 +29,7 @@ function App() {
 
   const checkAuthentication = async () => {
     try {
-      await axiosInstance.get("/authenticated");
+      dispatch(fetchPersonalDetails());
     } catch (err) {
       localStorage.getItem("__f_id") && localStorage.removeItem("__f_id");
     } finally {
@@ -61,40 +62,15 @@ function App() {
           <Route path="/place-order" element={<PlaceOrder />} />
           <Route path="*" element={<PageNotFound />} />
 
-          <Route
-            path="/my-account/:page"
-            element={
-              <PrivateRoute>
-                <Profile />
-              </PrivateRoute>
-            }
-          />
+          <Route element={<PrivateRoute />}>
+            <Route path="/my-account/:page" element={<Profile />} />
+          </Route>
 
-          <Route
-            path="/account/login"
-            element={
-              <AuthPrivateRoute>
-                <Login />
-              </AuthPrivateRoute>
-            }
-          />
-          <Route
-            path="/account/signup"
-            element={
-              <AuthPrivateRoute>
-                <Signup />
-              </AuthPrivateRoute>
-            }
-          />
-
-          <Route
-            path="/account/verify"
-            element={
-              <AuthPrivateRoute>
-                <VerifyAccount />
-              </AuthPrivateRoute>
-            }
-          />
+          <Route element={<AuthRoute />}>
+            <Route path="/account/login" element={<Login />} />
+            <Route path="/account/signup" element={<Signup />} />
+            <Route path="/account/verify" element={<VerifyAccount />} />
+          </Route>
         </SentryRoutes>
       </Suspense>
     </Router>

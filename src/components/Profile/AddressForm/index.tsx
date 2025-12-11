@@ -6,7 +6,7 @@ import { Field, Form, Formik } from "formik";
 // components
 import "./style.css";
 import Modal from "../../common/Modal";
-import { addAddress, updateAddress } from "../../../redux/slices/UserSlice";
+import { addAddress, updateAddress } from "../../../redux/slices/AddressSlice";
 import axiosInstance from "../../../axios/AxiosInstance";
 import FormTitle from "../../common/FormTitle";
 import { addressFormLabel, addressInitialState } from "../Address";

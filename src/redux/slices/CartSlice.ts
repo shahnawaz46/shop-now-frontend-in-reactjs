@@ -22,7 +22,7 @@ const initialState: CartState = {
 export const getCartItem = createAsyncThunk("cart/getCartItem", async () => {
   const _userId: string | null = localStorage.getItem("__f_id");
 
-  // if user is logged in then call the api and get cartItem from db
+  // if user is logged in, then call the api and get cartItem from db
   // otherwise get cartItem from LocalStorage
   if (_userId) {
     const res = await axiosInstance.get("/cart");
