@@ -21,15 +21,15 @@ import useElementSize from "../../../hooks/useMultipleElementSizes";
 const userConfig = [
   {
     id: 1,
-    name: "Your Address",
-    link: "/my-account/address",
-    component: Address,
-  },
-  {
-    id: 2,
     name: "Edit Profile",
     link: "/my-account/edit-profile",
     component: EditProfile,
+  },
+  {
+    id: 2,
+    name: "Your Address",
+    link: "/my-account/address",
+    component: Address,
   },
   {
     id: 3,

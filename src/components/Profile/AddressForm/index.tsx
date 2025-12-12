@@ -17,7 +17,7 @@ import {
   IOpenAddressModal,
   IAddressDetails,
 } from "../../../types/interfaces/user.interface";
-import { RequestStatus } from "../../../types/enums/RequestStatus";
+import { ERequestStatus } from "../../../types/enums";
 import { handleAxiosError } from "../../../utils/HandleAxiosError";
 import { validateAddress } from "../../../validation/User.validation";
 import FormikErrorMsg, { ErrorMsg } from "../../common/FormikErrorMsg";
@@ -41,11 +41,11 @@ const AddressForm = (props: IAddressFormProps) => {
     string | null
   >(null);
   const [locality, setLocality] = useState<string[]>([]);
-  const [status, setStatus] = useState(RequestStatus.Idle);
+  const [status, setStatus] = useState(ERequestStatus.Idle);
 
   const handleSubmit = async (values: IAddressDetails) => {
     try {
-      setStatus(RequestStatus.Pending);
+      setStatus(ERequestStatus.Pending);
       let res;
       if (openAddressModal.type === "Update Address") {
         res = await axiosInstance.put("/address", values);
@@ -59,16 +59,16 @@ const AddressForm = (props: IAddressFormProps) => {
       setUserAddress(addressInitialState);
 
       toast.success(res.data.msg);
-      setStatus(RequestStatus.Succeeded);
+      setStatus(ERequestStatus.Succeeded);
     } catch (error) {
-      setStatus(RequestStatus.Failed);
+      setStatus(ERequestStatus.Failed);
       handleAxiosError({ error });
     }
   };
 
   return (
     <>
-      {status === RequestStatus.Pending && (
+      {status === ERequestStatus.Pending && (
         <ScreenLoading backgroundColor="rgba(0,0,0,0.5)" />
       )}
 

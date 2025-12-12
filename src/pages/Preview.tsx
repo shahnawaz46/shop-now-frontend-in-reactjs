@@ -10,8 +10,10 @@ import { ScreenLoading } from "../components/Loaders";
 import { IPreviewProduct } from "../types/interfaces/product.interface";
 // import { handleAxiosError } from "../utils/HandleAxiosError";
 import ProductNotFound from "../components/Preview/ProductNotFound";
+import { useAppSelector } from "../redux/hooks";
 
 const Preview = () => {
+  const { personalDetails } = useAppSelector((state) => state.user);
   const { productId } = useParams();
 
   const [previewProduct, setPreviewProduct] = useState<IPreviewProduct>();
@@ -27,7 +29,7 @@ const Preview = () => {
         axiosInstance.get(`/product/single/${productId}`),
         axiosInstance.post("/product/top-trending", {
           productId,
-          userId: localStorage.getItem("__f_id"),
+          userId: personalDetails?._id,
           eventType: "visit",
         }),
       ]);

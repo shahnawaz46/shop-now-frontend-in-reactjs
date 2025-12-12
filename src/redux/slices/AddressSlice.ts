@@ -1,16 +1,18 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RequestStatus } from "../../types/enums/RequestStatus";
+import { ERequestStatus } from "../../types/enums";
 import { IAddressDetails } from "../../types/interfaces/user.interface";
 import axiosInstance from "../../axios/AxiosInstance";
+import { logout } from "../actions";
+// import { logout } from "../store";
 
 interface AddressState {
-  status: RequestStatus;
+  status: ERequestStatus;
   error: string | null | undefined;
   addressDetails: IAddressDetails[];
 }
 
 const initialState: AddressState = {
-  status: RequestStatus.Idle,
+  status: ERequestStatus.Idle,
   error: null,
   addressDetails: [],
 };
@@ -44,29 +46,28 @@ const addressSlice = createSlice({
       );
       state.addressDetails = updatedAddress;
     },
-
-    logout: () => {
-      return { ...initialState };
-    },
   },
 
   extraReducers: (builder) => {
     builder
       .addCase(fetchAddressDetails.pending, (state) => {
-        state.status = RequestStatus.Pending;
+        state.status = ERequestStatus.Pending;
       })
       .addCase(fetchAddressDetails.fulfilled, (state, action) => {
-        state.status = RequestStatus.Succeeded;
+        state.status = ERequestStatus.Succeeded;
         state.addressDetails = action.payload;
       })
       .addCase(fetchAddressDetails.rejected, (state, action) => {
-        state.status = RequestStatus.Failed;
+        state.status = ERequestStatus.Failed;
         state.error = action.error.message;
+      })
+      .addCase(logout, () => {
+        return initialState;
       });
   },
 });
 
-export const { addAddress, updateAddress, deleteAddress, logout } =
+export const { addAddress, updateAddress, deleteAddress } =
   addressSlice.actions;
 
 export default addressSlice.reducer;

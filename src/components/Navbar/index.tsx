@@ -15,6 +15,7 @@ import { useAppSelector } from "../../redux/hooks";
 import { ISearchProduct } from "../../types/interfaces/product.interface";
 import { handleAxiosError } from "../../utils/HandleAxiosError";
 import { getNameInitials } from "../../utils/Initials";
+import ProfileAvatar from "../Avatar/ProfileAvatar";
 
 export const navLinks = [
   { name: "Home", link: "/" },
@@ -179,27 +180,16 @@ const Navbar = () => {
             </div>
 
             <Link
-              to={"/my-account/address"}
+              to={"/my-account/edit-profile"}
               state={{ from: location.pathname }}
               aria-label="profile"
               style={{ color: "var(--text-primary)" }}
             >
               {personalDetails ? (
-                personalDetails?.profilePicture ? (
-                  <img
-                    src={personalDetails.profilePicture}
-                    alt="Profile"
-                    className="icon profile-icon-present"
-                  />
-                ) : (
-                  <div className="profile-user-icon-name">
-                    {getNameInitials(
-                      personalDetails?.firstName +
-                        " " +
-                        personalDetails.lastName
-                    )}
-                  </div>
-                )
+                <ProfileAvatar
+                  image={personalDetails?.profilePicture}
+                  text={`${personalDetails?.firstName} ${personalDetails?.lastName}`}
+                />
               ) : (
                 <MdPerson className="icon profile-icon" />
               )}

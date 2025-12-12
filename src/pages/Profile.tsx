@@ -8,7 +8,7 @@ import { ScreenLoading } from "../components/Loaders";
 import { fetchPersonalDetails } from "../redux/slices/UserSlice";
 import { clearStateAndStorage } from "../utils/ClearStateAndStorage";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { RequestStatus } from "../types/enums/RequestStatus";
+import { ERequestStatus } from "../types/enums";
 import { IPersonalDetail } from "../types/interfaces/user.interface";
 
 const Profile = () => {
@@ -18,13 +18,13 @@ const Profile = () => {
   const [notAuthenticated, setNotAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-    if (status === RequestStatus.Idle) {
+    if (status === ERequestStatus.Idle) {
       dispatch(fetchPersonalDetails());
     }
   }, []);
 
   useEffect(() => {
-    if (status === RequestStatus.Failed) {
+    if (status === ERequestStatus.Failed) {
       clearStateAndStorage();
       setNotAuthenticated(true);
     }
@@ -34,9 +34,9 @@ const Profile = () => {
     return <Navigate to={"/account/login"} replace={true} />;
 
   if (
-    status === RequestStatus.Idle ||
-    status === RequestStatus.Pending ||
-    status === RequestStatus.Failed
+    status === ERequestStatus.Idle ||
+    status === ERequestStatus.Pending ||
+    status === ERequestStatus.Failed
   )
     return <ScreenLoading />;
 

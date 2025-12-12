@@ -17,7 +17,7 @@ import {
 } from "../../../types/interfaces/user.interface";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { handleAxiosError } from "../../../utils/HandleAxiosError";
-import { RequestStatus } from "../../../types/enums/RequestStatus";
+import { ERequestStatus } from "../../../types/enums";
 import { ScreenLoading } from "../../Loaders";
 
 export const addressInitialState: IAddressDetails = {
@@ -70,12 +70,12 @@ const Address = ({ totalHeight }: { totalHeight?: number }) => {
   };
 
   useEffect(() => {
-    if (status === RequestStatus.Idle) {
+    if (status === ERequestStatus.Idle) {
       dispatch(fetchAddressDetails());
     }
   }, []);
 
-  if (status === RequestStatus.Idle || status === RequestStatus.Pending) {
+  if (status === ERequestStatus.Idle || status === ERequestStatus.Pending) {
     return (
       <div
         className="address-container"

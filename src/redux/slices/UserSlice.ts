@@ -1,30 +1,23 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 import axiosInstance from "../../axios/AxiosInstance";
-import { RequestStatus } from "../../types/enums/RequestStatus";
-import {
-  IAddressDetails,
-  IPersonalDetail,
-} from "../../types/interfaces/user.interface";
+import { ERequestStatus } from "../../types/enums";
+import { IPersonalDetail } from "../../types/interfaces/user.interface";
+import { logout } from "../actions";
 
-interface UserState {
-  status: RequestStatus;
+interface IUserState {
+  status: ERequestStatus;
   error: string | null | undefined;
   personalDetails: IPersonalDetail | null;
-  // addressDetails: IAddressDetails[];
+  isAuthenticated: boolean | null;
 }
 
-const initialState: UserState = {
-  status: RequestStatus.Idle,
+const initialState: IUserState = {
+  status: ERequestStatus.Idle,
   error: null,
   personalDetails: null,
-  // addressDetails: [],
+  isAuthenticated: null,
 };
-
-// interface ResponseType {
-//   userDetail: IPersonalDetail;
-//   address: IAddressDetails[];
-// }
 
 export const fetchPersonalDetails = createAsyncThunk(
   "personalDetail/fetch",
@@ -41,52 +34,28 @@ const userSlice = createSlice({
     updatePersonDetail: (state, action: PayloadAction<IPersonalDetail>) => {
       state.personalDetails = action.payload;
     },
-
-    // addAddress: (state, action: PayloadAction<IAddressDetails>) => {
-    //   state.addressDetails.push(action.payload);
-    // },
-
-    // updateAddress: (state, action: PayloadAction<IAddressDetails>) => {
-    //   const index: number = state.addressDetails.findIndex(
-    //     (item) => item._id === action.payload._id
-    //   );
-    //   state.addressDetails.splice(index, 1, action.payload);
-    // },
-
-    // deleteAddress: (state, action: PayloadAction<string>) => {
-    //   const updatedAddress = state.addressDetails.filter(
-    //     (item) => item._id !== action.payload
-    //   );
-    //   state.addressDetails = updatedAddress;
-    // },
-
-    logout: () => {
-      return { ...initialState };
-    },
   },
   extraReducers: (builder) => {
     builder
       .addCase(fetchPersonalDetails.pending, (state) => {
-        state.status = RequestStatus.Pending;
+        state.status = ERequestStatus.Pending;
       })
       .addCase(fetchPersonalDetails.fulfilled, (state, action) => {
-        state.status = RequestStatus.Succeeded;
+        state.status = ERequestStatus.Succeeded;
         state.personalDetails = action.payload;
-        // state.addressDetails = action.payload.address;
+        state.isAuthenticated = true;
       })
       .addCase(fetchPersonalDetails.rejected, (state, action) => {
-        state.status = RequestStatus.Failed;
+        state.status = ERequestStatus.Failed;
         state.error = action.error.message;
+        state.isAuthenticated = false;
+      })
+      .addCase(logout, () => {
+        return { ...initialState, isAuthenticated: false };
       });
   },
 });
 
-export const {
-  updatePersonDetail,
-  // addAddress,
-  // updateAddress,
-  // deleteAddress,
-  logout,
-} = userSlice.actions;
+export const { updatePersonDetail } = userSlice.actions;
 
 export default userSlice.reducer;

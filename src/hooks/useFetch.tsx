@@ -1,10 +1,10 @@
-import { useEffect, useState } from 'react';
-import { toast } from 'react-toastify';
-import axios from 'axios';
+import { useEffect, useState } from "react";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 // components
-import axiosInstance from '../axios/AxiosInstance';
-import { RequestStatus } from '../types/enums/RequestStatus';
+import axiosInstance from "../axios/AxiosInstance";
+import { ERequestStatus } from "../types/enums";
 
 interface IDataMap<T> {
   refetchIn: number;
@@ -20,8 +20,8 @@ function useFetch<T>(
   URL: string | string[],
   refetchIn: number = defaultTime
 ) {
-  const [status, setStatus] = useState<RequestStatus>(RequestStatus.Idle);
-  const [error, setError] = useState<string>('');
+  const [status, setStatus] = useState<ERequestStatus>(ERequestStatus.Idle);
+  const [error, setError] = useState<string>("");
   const setDateUpdated = useState<number>(0)[1]; //  i am not using state that's why i am only taking stateFunction(for re-render)
 
   const cacheData = dataMap.get(key) as IDataMap<T> | undefined;
@@ -36,7 +36,7 @@ function useFetch<T>(
     }
 
     try {
-      setStatus(RequestStatus.Pending);
+      setStatus(ERequestStatus.Pending);
       let res: T;
 
       // if user send URL in array and if array have multiple URL then i am using promise.all for fetch all response
@@ -54,7 +54,7 @@ function useFetch<T>(
         res = mergedResponse as T;
         // console.log('res: ', res);
       } else {
-        const _URL: string = typeof URL === 'string' ? URL : URL[0];
+        const _URL: string = typeof URL === "string" ? URL : URL[0];
         const tempRes = await axiosInstance.get(_URL);
         res = tempRes.data;
       }
@@ -63,25 +63,25 @@ function useFetch<T>(
       const refetchTime = new Date().getTime() + refetchIn;
 
       dataMap.set(key, { refetchIn: refetchTime, data: res });
-      setStatus(RequestStatus.Succeeded);
+      setStatus(ERequestStatus.Succeeded);
     } catch (err) {
-      setStatus(RequestStatus.Failed);
+      setStatus(ERequestStatus.Failed);
       if (axios.isAxiosError(err)) {
         setError(
           err?.response?.data?.error ||
             err?.message ||
-            'Something went wrong please try again'
+            "Something went wrong please try again"
         );
         toast.error(
           err?.response?.data?.error ||
             err?.message ||
-            'Something went wrong please try again'
+            "Something went wrong please try again"
         );
       } else if (err instanceof Error) {
-        setError(err?.message || 'Something went wrong please try again');
-        toast.error(err?.message || 'Something went wrong please try again');
+        setError(err?.message || "Something went wrong please try again");
+        toast.error(err?.message || "Something went wrong please try again");
       } else {
-        console.error('Unexpected error:', error);
+        console.error("Unexpected error:", error);
       }
     }
   };

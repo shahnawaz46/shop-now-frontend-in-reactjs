@@ -15,6 +15,7 @@ import { IDeviceInfo, ILoginState } from "../../types/interfaces/auth";
 import { handleAxiosError } from "../../utils/HandleAxiosError";
 import { useAppDispatch } from "../../redux/hooks/index.ts";
 import { mergeCartItems } from "../../redux/slices/CartSlice.ts";
+import { fetchPersonalDetails } from "../../redux/slices/UserSlice.ts";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -32,7 +33,8 @@ const Login = () => {
           ...value,
           ...deviceInfo,
         });
-        localStorage.setItem("__f_id", res.data.userId);
+        // localStorage.setItem("__f_id", res.data.userId);
+        await dispatch(fetchPersonalDetails());
 
         // after loggedin i am dispatching(merge cart items if any available in localstorage)
         dispatch(mergeCartItems());
@@ -43,7 +45,7 @@ const Login = () => {
             replace: true,
           });
         } else {
-          navigate("/my-account/address", { replace: true });
+          navigate("/my-account/edit-profile", { replace: true });
         }
       } catch (error) {
         handleAxiosError({

@@ -28,13 +28,13 @@ function App() {
   const dispatch = useAppDispatch();
 
   const checkAuthentication = async () => {
-    try {
-      dispatch(fetchPersonalDetails());
-    } catch (err) {
-      localStorage.getItem("__f_id") && localStorage.removeItem("__f_id");
-    } finally {
-      dispatch(getCartItem());
-    }
+    // try {
+    await dispatch(fetchPersonalDetails());
+    // } catch (err) {
+    //   localStorage.getItem("__f_id") && localStorage.removeItem("__f_id");
+    // } finally {
+    await dispatch(getCartItem());
+    // }
   };
 
   useEffect(() => {

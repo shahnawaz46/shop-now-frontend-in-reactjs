@@ -12,7 +12,7 @@ import { clearStateAndStorage } from "../utils/ClearStateAndStorage";
 import { fetchPersonalDetails } from "../redux/slices/UserSlice";
 import { ScreenLoading } from "../components/Loaders";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { RequestStatus } from "../types/enums/RequestStatus";
+import { ERequestStatus } from "../types/enums";
 import { ISteeperItem } from "../types/interfaces";
 import { fetchAddressDetails } from "../redux/slices/AddressSlice";
 
@@ -41,12 +41,12 @@ const PlaceOrder = () => {
   }, [location]);
 
   useEffect(() => {
-    if (status === RequestStatus.Idle) dispatch(fetchPersonalDetails());
-    if (addressStatus === RequestStatus.Idle) dispatch(fetchAddressDetails());
+    if (status === ERequestStatus.Idle) dispatch(fetchPersonalDetails());
+    if (addressStatus === ERequestStatus.Idle) dispatch(fetchAddressDetails());
   }, []);
 
   useEffect(() => {
-    if (status === RequestStatus.Failed) {
+    if (status === ERequestStatus.Failed) {
       clearStateAndStorage();
       setNotAuthenticated(true);
     }
@@ -59,7 +59,7 @@ const PlaceOrder = () => {
       <Navigate to={"/account/login"} state={location.state} replace={true} />
     );
 
-  if (status === RequestStatus.Idle || status === RequestStatus.Pending)
+  if (status === ERequestStatus.Idle || status === ERequestStatus.Pending)
     return <ScreenLoading />;
 
   return (

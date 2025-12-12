@@ -1,26 +1,33 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../axios/AxiosInstance";
-import { RequestStatus } from "../../types/enums/RequestStatus";
+import { ERequestStatus } from "../../types/enums";
 import {
   ICartItem,
   IProductSizes,
   IUpdateCartItem,
 } from "../../types/interfaces/product.interface";
+import { RootState } from "../store";
+import { logout } from "../actions";
 
 interface CartState {
-  status: RequestStatus;
+  status: ERequestStatus;
   cartItems: ICartItem[];
   error: string | undefined | null;
 }
 
 const initialState: CartState = {
-  status: RequestStatus.Idle,
+  status: ERequestStatus.Idle,
   cartItems: [],
   error: null,
 };
 
-export const getCartItem = createAsyncThunk("cart/getCartItem", async () => {
-  const _userId: string | null = localStorage.getItem("__f_id");
+export const getCartItem = createAsyncThunk<
+  any, // return type
+  void, // argument type
+  { state: RootState }
+>("cart/getCartItem", async (_, { getState }) => {
+  const { user } = getState();
+  const _userId: string | undefined = user.personalDetails?._id;
 
   // if user is logged in, then call the api and get cartItem from db
   // otherwise get cartItem from LocalStorage
@@ -36,78 +43,85 @@ export const getCartItem = createAsyncThunk("cart/getCartItem", async () => {
   }
 });
 
-export const removeCartItem = createAsyncThunk(
-  "cart/removeCartItem",
-  async (product: { productId: string; size: keyof IProductSizes }) => {
-    const _userId: string | null = localStorage.getItem("__f_id");
+export const removeCartItem = createAsyncThunk<
+  any, // return type
+  { productId: string; size: keyof IProductSizes }, // argument type
+  { state: RootState }
+>("cart/removeCartItem", async (product, { getState }) => {
+  const { user } = getState();
+  const _userId: string | undefined = user.personalDetails?._id;
 
-    // if user is logged in then call the api and remove cartItem from db
-    // otherwise remove cartItem from LocalStorage
-    if (_userId) {
-      await axiosInstance.delete("/cart", { data: { product } });
-      return product;
-    }
+  // if user is logged in then call the api and remove cartItem from db
+  // otherwise remove cartItem from LocalStorage
+  if (_userId) {
+    await axiosInstance.delete("/cart", { data: { product } });
+    return product;
+  }
 
-    const cartItems: string | null = localStorage.getItem("__f_cartItem");
-    if (!cartItems) {
-      throw new Error("No items in the cart to remove");
-    }
+  const cartItems: string | null = localStorage.getItem("__f_cartItem");
+  if (!cartItems) {
+    throw new Error("No items in the cart to remove");
+  }
 
-    const parseCartItem: ICartItem[] = JSON.parse(cartItems);
-    const removedProductIndex: number = parseCartItem.findIndex(
-      (item) =>
-        item.productId === product.productId && item.size === product.size
-    );
+  const parseCartItem: ICartItem[] = JSON.parse(cartItems);
+  const removedProductIndex: number = parseCartItem.findIndex(
+    (item) => item.productId === product.productId && item.size === product.size
+  );
 
-    if (removedProductIndex === -1) {
-      throw new Error("Item not found in the cart.");
-    }
+  if (removedProductIndex === -1) {
+    throw new Error("Item not found in the cart.");
+  }
 
-    parseCartItem.splice(removedProductIndex, 1);
-    localStorage.setItem("__f_cartItem", JSON.stringify(parseCartItem));
-    // console.log(parseCartItem, removedProductIndex)
+  parseCartItem.splice(removedProductIndex, 1);
+  localStorage.setItem("__f_cartItem", JSON.stringify(parseCartItem));
+  // console.log(parseCartItem, removedProductIndex)
+
+  return product;
+});
+
+export const addToCart = createAsyncThunk<
+  any, // return type
+  ICartItem, // argument type
+  { state: RootState }
+>("cart/addToCart", async (product: ICartItem, { getState }) => {
+  const { user } = getState();
+  const _userId: string | undefined = user.personalDetails?._id;
+
+  // if user is logged in then call the api and store cartItem into db
+  // otherwise store the cartItem into LocalStorage
+  if (_userId) {
+    const { productId, size, qty } = product;
+    await axiosInstance.post("/cart", {
+      productId,
+      size,
+      qty,
+    });
 
     return product;
   }
-);
 
-export const addToCart = createAsyncThunk(
-  "cart/addToCart",
-  async (product: ICartItem) => {
-    const _userId: string | null = localStorage.getItem("__f_id");
-
-    // if user is logged in then call the api and store cartItem into db
-    // otherwise store the cartItem into LocalStorage
-    if (_userId) {
-      const { productId, size, qty } = product;
-      await axiosInstance.post("/cart", {
-        productId,
-        size,
-        qty,
-      });
-
-      return product;
-    }
-
-    // if user is not logged in
-    const isCartItemPresent: string | null =
-      localStorage.getItem("__f_cartItem");
-    if (!isCartItemPresent) {
-      localStorage.setItem("__f_cartItem", JSON.stringify([product]));
-      return product;
-    }
-
-    const parseCartItem: ICartItem[] = JSON.parse(isCartItemPresent);
-    parseCartItem.push(product);
-    localStorage.setItem("__f_cartItem", JSON.stringify(parseCartItem));
-
+  // if user is not logged in
+  const isCartItemPresent: string | null = localStorage.getItem("__f_cartItem");
+  if (!isCartItemPresent) {
+    localStorage.setItem("__f_cartItem", JSON.stringify([product]));
     return product;
   }
-);
+
+  const parseCartItem: ICartItem[] = JSON.parse(isCartItemPresent);
+  parseCartItem.push(product);
+  localStorage.setItem("__f_cartItem", JSON.stringify(parseCartItem));
+
+  return product;
+});
 
 const updateCartItem = (actionType: "increment" | "decrement") =>
-  createAsyncThunk(`cart/${actionType}`, async (product: IUpdateCartItem) => {
-    const _userId: string | null = localStorage.getItem("__f_id");
+  createAsyncThunk<
+    any, // return type
+    IUpdateCartItem, // argument type
+    { state: RootState }
+  >(`cart/${actionType}`, async (product, { getState }) => {
+    const { user } = getState();
+    const _userId: string | undefined = user.personalDetails?._id;
 
     // if user is logged in then call the api and store cartItem into db
     // otherwise store the cartItem into LocalStorage
@@ -169,14 +183,14 @@ const cartSlice = createSlice({
   extraReducers: (builder) => {
     builder
       .addCase(getCartItem.pending, (state) => {
-        state.status = RequestStatus.Pending;
+        state.status = ERequestStatus.Pending;
       })
       .addCase(getCartItem.fulfilled, (state, action) => {
         state.cartItems = action.payload;
-        state.status = RequestStatus.Succeeded;
+        state.status = ERequestStatus.Succeeded;
       })
       .addCase(getCartItem.rejected, (state, action) => {
-        state.status = RequestStatus.Failed;
+        state.status = ERequestStatus.Failed;
         state.error = action.error.message;
       })
       .addCase(addToCart.fulfilled, (state, action) => {
@@ -232,6 +246,9 @@ const cartSlice = createSlice({
       })
       .addCase(mergeCartItems.rejected, (state, action) => {
         state.error = action.error.message;
+      })
+      .addCase(logout, () => {
+        return initialState;
       });
   },
 });
