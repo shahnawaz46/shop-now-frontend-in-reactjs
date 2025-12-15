@@ -13,7 +13,7 @@ import ProductNotFound from "../components/Preview/ProductNotFound";
 import { useAppSelector } from "../redux/hooks";
 
 const Preview = () => {
-  const { personalDetails } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
   const { productId } = useParams();
 
   const [previewProduct, setPreviewProduct] = useState<IPreviewProduct>();
@@ -29,7 +29,7 @@ const Preview = () => {
         axiosInstance.get(`/product/single/${productId}`),
         axiosInstance.post("/product/top-trending", {
           productId,
-          userId: personalDetails?._id,
+          userId: user?._id,
           eventType: "visit",
         }),
       ]);

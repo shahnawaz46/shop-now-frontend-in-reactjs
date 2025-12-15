@@ -3,7 +3,7 @@ import { useAppSelector } from "../redux/hooks";
 import { ScreenLoading } from "../components/Loaders";
 
 const AuthRoute = () => {
-  const { isAuthenticated } = useAppSelector((state) => state.user);
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
 
   if (isAuthenticated === null) return <ScreenLoading />;
 

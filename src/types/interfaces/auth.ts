@@ -1,6 +1,6 @@
 export interface IDeviceInfo {
-  device: string;
-  browser: string;
+  device?: string;
+  browser?: string;
 }
 
 export interface ILoginState {

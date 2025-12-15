@@ -11,8 +11,7 @@ import { AuthRoute, PrivateRoute } from "./routes";
 import PlaceOrder from "./pages/PlaceOrder";
 import ScreenLoading from "./components/Loaders/ScreenLoading";
 import { useAppDispatch } from "./redux/hooks";
-import axiosInstance from "./axios/AxiosInstance";
-import { fetchPersonalDetails } from "./redux/slices/UserSlice";
+import { fetchAuthDetails } from "./redux/slices/AuthSlice";
 
 // lazy import(Route Splitting)
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -28,17 +27,11 @@ function App() {
   const dispatch = useAppDispatch();
 
   const checkAuthentication = async () => {
-    // try {
-    await dispatch(fetchPersonalDetails());
-    // } catch (err) {
-    //   localStorage.getItem("__f_id") && localStorage.removeItem("__f_id");
-    // } finally {
+    await dispatch(fetchAuthDetails());
     await dispatch(getCartItem());
-    // }
   };
 
   useEffect(() => {
-    // console.log("useEffect App.js");
     checkAuthentication();
   }, []);
 

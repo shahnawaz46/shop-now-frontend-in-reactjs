@@ -5,7 +5,7 @@ import { Field, Form, Formik } from "formik";
 // components
 import "./style.css";
 import axiosInstance from "../../../axios/AxiosInstance";
-import { updatePersonDetail } from "../../../redux/slices/UserSlice";
+import { updatePersonDetail } from "../../../redux/slices/AuthSlice";
 import FormikErrorMsg from "../../common/FormikErrorMsg";
 import CustomButton from "../../common/CustomButton";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
@@ -21,7 +21,7 @@ type TOmitedPersonalDetail = Omit<
 
 const EditProfile = () => {
   const dispatch = useAppDispatch();
-  const { personalDetails } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
 
   const handleSubmit = async (values: IPersonalDetail) => {
     const updatedData: Partial<TOmitedPersonalDetail> = {};
@@ -33,11 +33,7 @@ const EditProfile = () => {
 
     requiredFields.forEach((key) => {
       const _value = values[key].trim().replace(/\s+/g, " ");
-      if (
-        requiredFields.includes(key) &&
-        personalDetails &&
-        personalDetails[key] !== _value
-      ) {
+      if (requiredFields.includes(key) && user && user[key] !== _value) {
         updatedData[key] = _value;
       }
     });
@@ -61,7 +57,7 @@ const EditProfile = () => {
         <h2 className="editprofile-h2">Edit Details</h2>
 
         <Formik
-          initialValues={personalDetails!}
+          initialValues={user!}
           validationSchema={editProfileSchema}
           onSubmit={(value, { setSubmitting }) => {
             handleSubmit(value);

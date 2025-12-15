@@ -18,7 +18,7 @@ import { ScreenLoading } from "../../Loaders";
 const Payment = () => {
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector((state) => state.cart);
-  const { personalDetails } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
   const [paymentMethod, setPaymentMethod] =
     useState<IPlaceOrder["paymentMethod"]>();
 
@@ -102,9 +102,9 @@ const Payment = () => {
       },
       // customer details
       prefill: {
-        name: `${personalDetails?.firstName} ${personalDetails?.lastName}`,
-        email: personalDetails?.email,
-        contact: personalDetails?.phoneNo,
+        name: `${user?.firstName} ${user?.lastName}`,
+        email: user?.email,
+        contact: user?.phoneNo,
       },
       notes: {
         address: "Razorpay Corporate Office",

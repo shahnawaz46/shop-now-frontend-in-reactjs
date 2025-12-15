@@ -27,7 +27,7 @@ const Cart = ({ show, setShow }: ICartProps) => {
   const dispatch = useAppDispatch();
 
   const { cartItems } = useAppSelector((state) => state.cart);
-  const { personalDetails } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -57,7 +57,7 @@ const Cart = ({ show, setShow }: ICartProps) => {
 
   const PlaceOrderPageFunc = () => {
     setShow(false);
-    if (personalDetails && Object.keys(personalDetails).length > 0) {
+    if (user && Object.keys(user).length > 0) {
       navigate(`/place-order?step=1`);
     } else {
       navigate("/account/login", { state: { from: location.pathname } });

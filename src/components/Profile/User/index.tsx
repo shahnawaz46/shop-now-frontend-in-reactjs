@@ -8,7 +8,7 @@ import "./style.css";
 import Address from "../Address";
 import EditProfile from "../EditProfile";
 import PlaceOrders from "../PlaceOrder";
-import { updatePersonDetail } from "../../../redux/slices/UserSlice";
+import { updatePersonDetail } from "../../../redux/slices/AuthSlice";
 import axiosInstance from "../../../axios/AxiosInstance";
 import { clearStateAndStorage } from "../../../utils/ClearStateAndStorage";
 import CustomButton from "../../common/CustomButton";

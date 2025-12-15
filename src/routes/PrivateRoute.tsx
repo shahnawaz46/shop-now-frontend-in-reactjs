@@ -1,11 +1,9 @@
 import { Navigate, Outlet, useLocation } from "react-router";
 import { useAppSelector } from "../redux/hooks";
-// import { ERequestStatus } from "../types/enums";
 import { ScreenLoading } from "../components/Loaders";
-import { ERequestStatus } from "../types/enums";
 
 const PrivateRoute = () => {
-  const { isAuthenticated } = useAppSelector((state) => state.user);
+  const { isAuthenticated } = useAppSelector((state) => state.auth);
   const location = useLocation();
 
   // inside location.state.from, i am getting the route from where the user clicked on the profile icon to view the profile.

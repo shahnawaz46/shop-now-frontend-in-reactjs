@@ -3,8 +3,16 @@ import "./style.css";
 import { IChildren } from "../../types/interfaces";
 
 const ClientErrorBoundary = ({ children }: IChildren) => {
+  // return children;
   return (
-    <ErrorBoundary FallbackComponent={ErrorFallback}>{children}</ErrorBoundary>
+    <ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      onError={(error) => {
+        import.meta.env.VITE_NODE_ENV === "development" && console.log(error);
+      }}
+    >
+      {children}
+    </ErrorBoundary>
   );
 };
 

@@ -12,8 +12,6 @@ import { Link } from "react-router";
 // import { useSelector } from 'react-redux';
 
 const Footer = () => {
-  // const { authenticate } = useSelector((state) => state.user)
-
   return (
     <div className="footer-main-box">
       <div className="footer-first-box">

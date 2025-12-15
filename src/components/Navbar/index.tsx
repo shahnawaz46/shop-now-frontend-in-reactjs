@@ -32,7 +32,7 @@ interface ISearchItems {
 
 const Navbar = () => {
   const { cartItems } = useAppSelector((state) => state.cart);
-  const { personalDetails } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -185,10 +185,10 @@ const Navbar = () => {
               aria-label="profile"
               style={{ color: "var(--text-primary)" }}
             >
-              {personalDetails ? (
+              {user ? (
                 <ProfileAvatar
-                  image={personalDetails?.profilePicture}
-                  text={`${personalDetails?.firstName} ${personalDetails?.lastName}`}
+                  image={user?.profilePicture}
+                  text={`${user?.firstName} ${user?.lastName}`}
                 />
               ) : (
                 <MdPerson className="icon profile-icon" />

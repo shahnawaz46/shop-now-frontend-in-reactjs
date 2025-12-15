@@ -7,7 +7,7 @@ import CustomButton from "../../common/CustomButton";
 import { useAppSelector } from "../../../redux/hooks";
 
 const OrderDone = () => {
-  const { personalDetails } = useAppSelector((state) => state.user);
+  const { user } = useAppSelector((state) => state.auth);
 
   return (
     <div className="orderDone_container">
@@ -18,7 +18,7 @@ const OrderDone = () => {
           alt="order-confirmed"
           style={{ objectFit: "contain", width: "100px" }}
         />
-        <p>You will get notify to you {personalDetails?.email}</p>
+        <p>You will get notify to you {user?.email}</p>
         <Link to={"/my-account/orders"}>
           <CustomButton text={"Your Orders"} className={"orderDone_btn"} />
         </Link>

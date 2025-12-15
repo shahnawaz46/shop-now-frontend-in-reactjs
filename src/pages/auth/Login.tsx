@@ -5,7 +5,6 @@ import { Field, Form, Formik } from "formik";
 
 // components
 import "./style.css";
-import axiosInstance from "../../axios/AxiosInstance";
 import { ScreenLoading } from "../../components/Loaders";
 import { signInSchema, singinInitialState } from "../../validation/Auth.yup.ts";
 import FormikErrorMsg from "../../components/common/FormikErrorMsg.tsx";
@@ -15,7 +14,7 @@ import { IDeviceInfo, ILoginState } from "../../types/interfaces/auth";
 import { handleAxiosError } from "../../utils/HandleAxiosError";
 import { useAppDispatch } from "../../redux/hooks/index.ts";
 import { mergeCartItems } from "../../redux/slices/CartSlice.ts";
-import { fetchPersonalDetails } from "../../redux/slices/UserSlice.ts";
+import { loginUser } from "../../redux/slices/AuthSlice";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -25,16 +24,9 @@ const Login = () => {
   const [deviceInfo, setDeviceInfo] = useState<IDeviceInfo | null>();
 
   const handleFormSubmit = async (value: ILoginState) => {
-    // console.log("handleFormSubmit");
-    // until transtion complete, isPending will be true
     startTransition(async () => {
       try {
-        const res = await axiosInstance.post("/signin", {
-          ...value,
-          ...deviceInfo,
-        });
-        // localStorage.setItem("__f_id", res.data.userId);
-        await dispatch(fetchPersonalDetails());
+        await dispatch(loginUser({ ...value, ...deviceInfo }));
 
         // after loggedin i am dispatching(merge cart items if any available in localstorage)
         dispatch(mergeCartItems());

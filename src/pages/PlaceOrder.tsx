@@ -9,7 +9,7 @@ import OrderSummary from "../components/PlaceOrderProcess/OrderSummary";
 import Payment from "../components/PlaceOrderProcess/Payment";
 import OrderDone from "../components/PlaceOrderProcess/OrderDone";
 import { clearStateAndStorage } from "../utils/ClearStateAndStorage";
-import { fetchPersonalDetails } from "../redux/slices/UserSlice";
+import { fetchAuthDetails } from "../redux/slices/AuthSlice";
 import { ScreenLoading } from "../components/Loaders";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { ERequestStatus } from "../types/enums";
@@ -23,7 +23,7 @@ const stepperItem: ISteeperItem[] = [
 ];
 
 const PlaceOrder = () => {
-  const { status } = useAppSelector((state) => state.user);
+  const { status } = useAppSelector((state) => state.auth);
   const { status: addressStatus } = useAppSelector((state) => state.address);
   const dispatch = useAppDispatch();
 
@@ -41,7 +41,7 @@ const PlaceOrder = () => {
   }, [location]);
 
   useEffect(() => {
-    if (status === ERequestStatus.Idle) dispatch(fetchPersonalDetails());
+    if (status === ERequestStatus.Idle) dispatch(fetchAuthDetails());
     if (addressStatus === ERequestStatus.Idle) dispatch(fetchAddressDetails());
   }, []);
 
