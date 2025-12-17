@@ -1,10 +1,13 @@
 // components
-import store from "../redux/store";
-import { emptyCart } from "../redux/slices/CartSlice";
-import { logout } from "../redux/actions";
+import { clearToken } from "../services/tokenService";
 
 export const clearStateAndStorage = async () => {
-  localStorage.removeItem("__f_id");
+  const { default: store } = await import("../redux/store");
+  const { emptyCart } = await import("../redux/slices/CartSlice");
+  const { logout } = await import("../redux/actions");
+
+  clearToken();
+
   store.dispatch(logout());
   store.dispatch(emptyCart());
 };

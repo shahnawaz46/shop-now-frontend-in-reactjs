@@ -5,6 +5,7 @@ import { ERequestStatus } from "../../types/enums";
 import { IPersonalDetail } from "../../types/interfaces/user.interface";
 import { logout } from "../actions";
 import { IDeviceInfo, ILoginState } from "../../types/interfaces/auth";
+import { setToken } from "../../services/tokenService";
 
 interface IUserState {
   status: ERequestStatus;
@@ -31,6 +32,7 @@ export const loginUser = createAsyncThunk(
   "auth/login",
   async (payload: LoginPayload) => {
     const res = await axiosInstance.post("/signin", payload);
+    setToken(res.data._a_t);
     return res.data;
   }
 );
@@ -41,6 +43,11 @@ const AuthSlice = createSlice({
   reducers: {
     updatePersonDetail: (state, action: PayloadAction<IPersonalDetail>) => {
       state.user = action.payload;
+    },
+    addUser: (state, action: PayloadAction<IPersonalDetail>) => {
+      state.user = action.payload;
+      state.isAuthenticated = true;
+      state.status = ERequestStatus.Succeeded;
     },
   },
   extraReducers: (builder) => {
@@ -77,6 +84,6 @@ const AuthSlice = createSlice({
   },
 });
 
-export const { updatePersonDetail } = AuthSlice.actions;
+export const { updatePersonDetail, addUser } = AuthSlice.actions;
 
 export default AuthSlice.reducer;
