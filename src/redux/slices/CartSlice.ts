@@ -6,8 +6,8 @@ import {
   IProductSizes,
   IUpdateCartItem,
 } from "../../types/interfaces/product.interface";
-import { RootState } from "../store";
 import { logout } from "../actions";
+import { RootState } from "../store";
 
 interface CartState {
   status: ERequestStatus;
@@ -26,8 +26,8 @@ export const getCartItem = createAsyncThunk<
   void, // argument type
   { state: RootState }
 >("cart/getCartItem", async (_, { getState }) => {
-  const { user } = getState();
-  const _userId: string | undefined = user.personalDetails?._id;
+  const { auth } = getState();
+  const _userId: string | undefined = auth.user?._id;
 
   // if user is logged in, then call the api and get cartItem from db
   // otherwise get cartItem from LocalStorage
@@ -48,8 +48,8 @@ export const removeCartItem = createAsyncThunk<
   { productId: string; size: keyof IProductSizes }, // argument type
   { state: RootState }
 >("cart/removeCartItem", async (product, { getState }) => {
-  const { user } = getState();
-  const _userId: string | undefined = user.personalDetails?._id;
+  const { auth } = getState();
+  const _userId: string | undefined = auth.user?._id;
 
   // if user is logged in then call the api and remove cartItem from db
   // otherwise remove cartItem from LocalStorage
@@ -65,7 +65,8 @@ export const removeCartItem = createAsyncThunk<
 
   const parseCartItem: ICartItem[] = JSON.parse(cartItems);
   const removedProductIndex: number = parseCartItem.findIndex(
-    (item) => item.productId === product.productId && item.size === product.size
+    (item) =>
+      item.productId === product.productId && item.size === product.size,
   );
 
   if (removedProductIndex === -1) {
@@ -84,8 +85,8 @@ export const addToCart = createAsyncThunk<
   ICartItem, // argument type
   { state: RootState }
 >("cart/addToCart", async (product: ICartItem, { getState }) => {
-  const { user } = getState();
-  const _userId: string | undefined = user.personalDetails?._id;
+  const { auth } = getState();
+  const _userId: string | undefined = auth.user?._id;
 
   // if user is logged in then call the api and store cartItem into db
   // otherwise store the cartItem into LocalStorage
@@ -120,8 +121,8 @@ const updateCartItem = (actionType: "increment" | "decrement") =>
     IUpdateCartItem, // argument type
     { state: RootState }
   >(`cart/${actionType}`, async (product, { getState }) => {
-    const { user } = getState();
-    const _userId: string | undefined = user.personalDetails?._id;
+    const { auth } = getState();
+    const _userId: string | undefined = auth.user?._id;
 
     // if user is logged in then call the api and store cartItem into db
     // otherwise store the cartItem into LocalStorage
@@ -142,7 +143,7 @@ const updateCartItem = (actionType: "increment" | "decrement") =>
 
     const index = parseCartItem.findIndex(
       (item) =>
-        item.productId === product.productId && item.size === product.size
+        item.productId === product.productId && item.size === product.size,
     );
 
     parseCartItem[index].qty += product.qty;
@@ -164,7 +165,7 @@ export const mergeCartItems = createAsyncThunk("cart/merge", async () => {
 
   const res = await axiosInstance.post(
     "/cart/merge",
-    JSON.parse(isCartItemPresent)
+    JSON.parse(isCartItemPresent),
   );
 
   localStorage.removeItem("__f_cartItem");
@@ -204,7 +205,7 @@ const cartSlice = createSlice({
         const index: number = state.cartItems.findIndex(
           (item) =>
             item.productId === action.payload.productId &&
-            item.size === action.payload.size
+            item.size === action.payload.size,
         );
 
         if (index >= 0) {
@@ -219,7 +220,7 @@ const cartSlice = createSlice({
         const index: number = state.cartItems.findIndex(
           (item) =>
             item.productId === action.payload.productId &&
-            item.size === action.payload.size
+            item.size === action.payload.size,
         );
 
         if (index >= 0) {
@@ -234,7 +235,7 @@ const cartSlice = createSlice({
         const removedProductIndex: number = state.cartItems.findIndex(
           (item) =>
             item.productId === action.payload.productId &&
-            item.size === action.payload.size
+            item.size === action.payload.size,
         );
         state.cartItems.splice(removedProductIndex, 1);
       })

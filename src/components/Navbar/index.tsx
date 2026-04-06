@@ -115,7 +115,8 @@ const Navbar = () => {
           <div className="website-name">
             <Link to="/" style={{ color: "var(--text-primary)" }}>
               <h3>
-                <span style={{ color: "var(--primary-color)" }}>Shop</span>Now
+                <span style={{ color: "var(--primary-color)" }}>Shop</span>
+                <span>Now</span>
               </h3>
             </Link>
           </div>
@@ -147,7 +148,11 @@ const Navbar = () => {
             {/* search bar for large device */}
             <div style={{ position: "relative" }}>
               <div className="navbar_search_bar">
-                <BiSearch className="navbar_search_icon" />
+                <BiSearch
+                  className="navbar_search_icon"
+                  role="img"
+                  aria-label="search-icon"
+                />
                 <input
                   type="text"
                   placeholder="Search item"

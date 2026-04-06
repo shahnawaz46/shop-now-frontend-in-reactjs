@@ -1,5 +1,4 @@
 import axios from "axios";
-import store from "../redux/store";
 import { getToken, setToken } from "../services/tokenService";
 import { clearStateAndStorage } from "../utils/ClearStateAndStorage";
 
@@ -22,7 +21,7 @@ axiosInstance.interceptors.request.use(
   },
   (error) => {
     return Promise.reject(error);
-  }
+  },
 );
 
 axiosInstance.interceptors.response.use(
@@ -53,7 +52,7 @@ axiosInstance.interceptors.response.use(
     }
 
     return Promise.reject(error);
-  }
+  },
 );
 
 export default axiosInstance;

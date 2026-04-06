@@ -1,20 +1,21 @@
-import { useState, useEffect, useTransition } from "react";
-import { Link, useLocation, useNavigate } from "react-router";
-import { deviceDetect, browserName } from "react-device-detect";
 import { Field, Form, Formik } from "formik";
+import { useEffect, useState, useTransition } from "react";
+import { browserName, deviceDetect } from "react-device-detect";
+import { Link, useLocation, useNavigate } from "react-router";
 
 // components
-import "./style.css";
-import { ScreenLoading } from "../../components/Loaders";
-import { signInSchema, singinInitialState } from "../../validation/Auth.yup.ts";
+import CustomButton from "../../components/common/CustomButton";
 import FormikErrorMsg from "../../components/common/FormikErrorMsg.tsx";
 import FormTitle from "../../components/common/FormTitle";
-import CustomButton from "../../components/common/CustomButton";
+import { ScreenLoading } from "../../components/Loaders";
+import { useAppDispatch } from "../../redux/hooks/index.ts";
+import { loginUser } from "../../redux/slices/AuthSlice";
+import { mergeCartItems } from "../../redux/slices/CartSlice.ts";
+import store from "../../redux/store.ts";
 import { IDeviceInfo, ILoginState } from "../../types/interfaces/auth";
 import { handleAxiosError } from "../../utils/HandleAxiosError";
-import { useAppDispatch } from "../../redux/hooks/index.ts";
-import { mergeCartItems } from "../../redux/slices/CartSlice.ts";
-import { loginUser } from "../../redux/slices/AuthSlice";
+import { signInSchema, singinInitialState } from "../../validation/Auth.yup.ts";
+import "./style.css";
 
 const Login = () => {
   const dispatch = useAppDispatch();
@@ -28,16 +29,18 @@ const Login = () => {
       try {
         await dispatch(loginUser({ ...value, ...deviceInfo }));
 
-        // after loggedin i am dispatching(merge cart items if any available in localstorage)
-        dispatch(mergeCartItems());
+        if (store.getState().auth.user?._id) {
+          // after loggedin i am dispatching(merge cart items if any available in localstorage)
+          dispatch(mergeCartItems());
 
-        if (location.state) {
-          navigate(`/place-order?step=1`, {
-            state: location.state,
-            replace: true,
-          });
-        } else {
-          navigate("/my-account/edit-profile", { replace: true });
+          if (location.state) {
+            navigate(`/place-order?step=1`, {
+              state: location.state,
+              replace: true,
+            });
+          } else {
+            navigate("/my-account/edit-profile", { replace: true });
+          }
         }
       } catch (error) {
         handleAxiosError({

@@ -1,7 +1,7 @@
 /// <reference types="vitest" />
 /// <reference types="vite/client" />
 
-import { defineConfig, type PluginOption } from "vite";
+import { defineConfig, type PluginOption, UserConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { visualizer } from "rollup-plugin-visualizer";
@@ -48,4 +48,4 @@ export default defineConfig({
     setupFiles: "./src/__tests__/setup.ts", // Load custom setup before tests run
     css: true,
   },
-});
+} as UserConfig);

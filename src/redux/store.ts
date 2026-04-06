@@ -9,6 +9,7 @@ const store = configureStore({
     auth: AuthReducer,
     address: UserAddress,
   },
+  devTools: import.meta.env.VITE_NODE_ENV === "development", // Enable Redux DevTools only in development mode
 });
 
 export default store;
