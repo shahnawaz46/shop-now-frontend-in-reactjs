@@ -1,6 +1,6 @@
 import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import "./style.css";
 import { IChildren } from "../../types/interfaces";
+import "./style.css";
 
 const ClientErrorBoundary = ({ children }: IChildren) => {
   // return children;
@@ -17,8 +17,6 @@ const ClientErrorBoundary = ({ children }: IChildren) => {
 };
 
 const ErrorFallback = ({ resetErrorBoundary }: FallbackProps) => {
-  // console.log('ErrorFallback:', error);
-
   return (
     <div className="error-fallback">
       <h2>Oops! Something went wrong.</h2>
@@ -26,13 +24,6 @@ const ErrorFallback = ({ resetErrorBoundary }: FallbackProps) => {
       <ul>
         <li>Check your internet connection.</li>
         <li>Refresh the page.</li>
-        <li>
-          If the problem persists,{" "}
-          <a href="mailto:shahnawaz85748@gmail.com" className="error-anchor">
-            Contact us
-          </a>
-          .
-        </li>
       </ul>
 
       <button onClick={resetErrorBoundary} className="retry-button">

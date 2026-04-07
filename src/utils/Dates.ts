@@ -25,7 +25,7 @@ export const getDate = (date: string, time = true): string => {
     ? `${
         monthsName[newDate.getMonth()]
       } ${newDate.getDate()}, ${newDate.getFullYear()} at ${String(
-        hours
+        hours,
       ).padStart(2, "0")}:${String(minutes).padStart(2, "0")} ${meridiam}`
     : `${
         monthsName[newDate.getMonth()]
@@ -33,7 +33,6 @@ export const getDate = (date: string, time = true): string => {
 };
 
 export const printReviewDate = (db_date: string) => {
-  // console.log('printReviewDate:', db_date, typeof db_date);
   const date = new Date(db_date);
 
   const day = date.getDate();

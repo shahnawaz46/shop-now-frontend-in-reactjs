@@ -75,7 +75,6 @@ export const removeCartItem = createAsyncThunk<
 
   parseCartItem.splice(removedProductIndex, 1);
   localStorage.setItem("__f_cartItem", JSON.stringify(parseCartItem));
-  // console.log(parseCartItem, removedProductIndex)
 
   return product;
 });

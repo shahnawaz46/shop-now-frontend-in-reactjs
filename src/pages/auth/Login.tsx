@@ -11,7 +11,6 @@ import { ScreenLoading } from "../../components/Loaders";
 import { useAppDispatch } from "../../redux/hooks/index.ts";
 import { loginUser } from "../../redux/slices/AuthSlice";
 import { mergeCartItems } from "../../redux/slices/CartSlice.ts";
-import store from "../../redux/store.ts";
 import { IDeviceInfo, ILoginState } from "../../types/interfaces/auth";
 import { handleAxiosError } from "../../utils/HandleAxiosError";
 import { signInSchema, singinInitialState } from "../../validation/Auth.yup.ts";
@@ -27,21 +26,21 @@ const Login = () => {
   const handleFormSubmit = async (value: ILoginState) => {
     startTransition(async () => {
       try {
-        await dispatch(loginUser({ ...value, ...deviceInfo }));
+        await dispatch(loginUser({ ...value, ...deviceInfo })).unwrap();
 
-        if (store.getState().auth.user?._id) {
-          // after loggedin i am dispatching(merge cart items if any available in localstorage)
-          dispatch(mergeCartItems());
+        // if (store.getState().auth.user?._id) {
+        // after loggedin i am dispatching(merge cart items if any available in localstorage)
+        dispatch(mergeCartItems());
 
-          if (location.state) {
-            navigate(`/place-order?step=1`, {
-              state: location.state,
-              replace: true,
-            });
-          } else {
-            navigate("/my-account/edit-profile", { replace: true });
-          }
+        if (location.state) {
+          navigate(`/place-order?step=1`, {
+            state: location.state,
+            replace: true,
+          });
+        } else {
+          navigate("/my-account/edit-profile", { replace: true });
         }
+        // }
       } catch (error) {
         handleAxiosError({
           error: error,

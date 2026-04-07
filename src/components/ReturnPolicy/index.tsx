@@ -1,4 +1,4 @@
-import './style.css';
+import "./style.css";
 
 const ReturnPolicy = () => {
   return (
@@ -16,16 +16,7 @@ const ReturnPolicy = () => {
             Shipping charges are non-refundable.
           </p>
         </div>
-        <div className="return-policy-content">
-          <h4 className="return-policy-sub-heading">SUPPORT</h4>
-          <p className="return-policy-description">
-            Please email us at{' '}
-            <span style={{ fontWeight: '700' }}>shahnawaz85748@gmail.com</span>{' '}
-            or call us during office hours Monday thru Saturday at{' '}
-            <span style={{ fontWeight: '700' }}>1234567890</span> Whatsapp us on{' '}
-            <span style={{ fontWeight: '700' }}>1234567890</span>
-          </p>
-        </div>
+
         <div className="return-policy-content">
           <h4 className="return-policy-sub-heading">EXCHANGE</h4>
           <p className="return-policy-description">

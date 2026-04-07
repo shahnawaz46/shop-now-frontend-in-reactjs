@@ -1,17 +1,17 @@
 import { useRef, useState, useTransition } from "react";
-import { toast } from "react-toastify";
 import { Navigate, useLocation, useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 // components
-import "./style.css";
 import axiosInstance from "../../axios/AxiosInstance";
 import { ScreenLoading } from "../../components/Loaders";
-import FormTitle from "../../components/common/FormTitle";
 import CustomButton from "../../components/common/CustomButton";
-import { handleAxiosError } from "../../utils/HandleAxiosError";
+import FormTitle from "../../components/common/FormTitle";
 import { useAppDispatch } from "../../redux/hooks";
 import { addUser } from "../../redux/slices/AuthSlice";
 import { setToken } from "../../services/tokenService";
+import { handleAxiosError } from "../../utils/HandleAxiosError";
+import "./style.css";
 
 const OTP_SIZE = 4;
 
@@ -27,7 +27,7 @@ const VerifyAccount = () => {
 
   const handleUpdateOtp = (
     e: React.ChangeEvent<HTMLInputElement>,
-    index: number
+    index: number,
   ) => {
     const value: string = e.target.value;
 
@@ -45,10 +45,9 @@ const VerifyAccount = () => {
 
   const handleRemoveOtp = (
     e: React.KeyboardEvent<HTMLInputElement>,
-    index: number
+    index: number,
   ) => {
     if (e.key === "Backspace" && !otp[index] && index > 0) {
-      console.log(index - 1);
       inputRef.current[index - 1]?.focus();
     }
   };

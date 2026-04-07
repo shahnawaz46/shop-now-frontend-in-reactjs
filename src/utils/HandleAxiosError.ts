@@ -1,5 +1,5 @@
-import axios from 'axios';
-import { toast } from 'react-toastify';
+import axios from "axios";
+import { toast } from "react-toastify";
 
 interface IError {
   error: unknown;
@@ -7,19 +7,27 @@ interface IError {
 }
 
 export const handleAxiosError = ({ error, onMatch }: IError) => {
-  if (axios.isAxiosError(error)) {
-    toast.error(
-      error.response?.data?.error ||
-        "Oops! Something went wrong. We're working to fix it. Please try again shortly."
-    );
+  let message = "Oops! Something went wrong. Please try again.";
 
-    // only when i have some extra if else condition inside catch block
-    if (onMatch && onMatch.case === error.response?.data?.error) {
-      onMatch.perform();
-    }
-  } else if (error instanceof Error) {
-    toast.error(error.message);
-  } else {
-    console.error('Unexpected error:', error);
+  // case 1: axios error
+  if (axios.isAxiosError(error)) {
+    message = error.response?.data?.error || message;
+  }
+
+  // case 2: general JS/Axios error
+  else if (error instanceof Error) {
+    message = error?.message;
+  }
+
+  // case 3: string error
+  else if (typeof error === "string") {
+    message = error;
+  }
+
+  toast.error(message);
+
+  // handle custom match
+  if (onMatch && onMatch.case === message) {
+    onMatch.perform();
   }
 };

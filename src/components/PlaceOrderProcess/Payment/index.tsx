@@ -3,17 +3,17 @@ import { useLocation, useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
 // components
-import "./style.css";
 import axiosInstance from "../../../axios/AxiosInstance";
-import { emptyCart } from "../../../redux/slices/CartSlice";
-import CustomButton from "../../common/CustomButton";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { emptyCart } from "../../../redux/slices/CartSlice";
 import {
   ICurrentOrder,
   IPlaceOrder,
 } from "../../../types/interfaces/placeOrder.interface";
 import { handleAxiosError } from "../../../utils/HandleAxiosError";
+import CustomButton from "../../common/CustomButton";
 import { ScreenLoading } from "../../Loaders";
+import "./style.css";
 
 const Payment = () => {
   const dispatch = useAppDispatch();
@@ -93,7 +93,7 @@ const Payment = () => {
           // Once the payment is processed, payment verification will be done in server.
           await axiosInstance.post(
             `/order/payment-verification/${orderRes.orderId}`,
-            { ...response, process: orderRes?.process }
+            { ...response, process: orderRes?.process },
           );
           navigate("/place-order?status=done", { replace: true });
         } catch (error) {
@@ -123,7 +123,6 @@ const Payment = () => {
       async (response: {
         error: { metadata: { order_id: any; payment_id: any } };
       }) => {
-        // console.log("payment failed callback");
         try {
           await axiosInstance.post("/order/payment-failed", {
             orderId: orderRes.orderId,
@@ -135,7 +134,7 @@ const Payment = () => {
         } catch (error) {
           handleAxiosError({ error });
         }
-      }
+      },
     );
   };
 

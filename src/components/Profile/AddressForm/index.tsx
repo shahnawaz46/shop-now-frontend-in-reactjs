@@ -1,28 +1,28 @@
-import React, { useState } from "react";
-import { toast } from "react-toastify";
-import { IoClose } from "react-icons/io5";
 import { Field, Form, Formik } from "formik";
+import React, { useState } from "react";
+import { IoClose } from "react-icons/io5";
+import { toast } from "react-toastify";
 
 // components
-import "./style.css";
-import Modal from "../../common/Modal";
-import { addAddress, updateAddress } from "../../../redux/slices/AddressSlice";
 import axiosInstance from "../../../axios/AxiosInstance";
-import FormTitle from "../../common/FormTitle";
-import { addressFormLabel, addressInitialState } from "../Address";
-import { ScreenLoading } from "../../Loaders";
-import CustomButton from "../../common/CustomButton";
 import { useAppDispatch } from "../../../redux/hooks";
-import {
-  IOpenAddressModal,
-  IAddressDetails,
-} from "../../../types/interfaces/user.interface";
+import { addAddress, updateAddress } from "../../../redux/slices/AddressSlice";
 import { ERequestStatus } from "../../../types/enums";
+import {
+  IAddressDetails,
+  IOpenAddressModal,
+} from "../../../types/interfaces/user.interface";
 import { handleAxiosError } from "../../../utils/HandleAxiosError";
 import { validateAddress } from "../../../validation/User.validation";
-import FormikErrorMsg, { ErrorMsg } from "../../common/FormikErrorMsg";
-import PinCodeLogic from "./PinCodeLogic";
+import { ScreenLoading } from "../../Loaders";
+import CustomButton from "../../common/CustomButton";
 import { CustomSelectInput } from "../../common/CustomInput";
+import FormTitle from "../../common/FormTitle";
+import FormikErrorMsg, { ErrorMsg } from "../../common/FormikErrorMsg";
+import Modal from "../../common/Modal";
+import { addressFormLabel, addressInitialState } from "../Address";
+import PinCodeLogic from "./PinCodeLogic";
+import "./style.css";
 
 interface IAddressFormProps {
   openAddressModal: IOpenAddressModal;

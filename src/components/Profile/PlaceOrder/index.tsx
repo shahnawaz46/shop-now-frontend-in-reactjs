@@ -1,22 +1,22 @@
 import { useEffect, useState, useTransition } from "react";
-import { MdOutlineRemoveShoppingCart } from "react-icons/md";
-import { useNavigate } from "react-router";
 import { FaFileInvoiceDollar } from "react-icons/fa";
+import { MdOutlineRemoveShoppingCart } from "react-icons/md";
 import { TbViewfinder } from "react-icons/tb";
+import { useNavigate } from "react-router";
 
 // components
-import "./style.css";
 import axiosInstance from "../../../axios/AxiosInstance";
-import { getDate } from "../../../utils/Dates";
-import Modal from "../../common/Modal";
-import TrackOrder from "../TrackOrder";
-import { DELIVERY_CHARGE } from "../../PlaceOrderProcess/OrderSummary";
-import { ScreenLoading } from "../../Loaders";
-import { handleAxiosError } from "../../../utils/HandleAxiosError";
 import {
   IOpenTrackModal,
   IPlaceOrder,
 } from "../../../types/interfaces/placeOrder.interface";
+import { getDate } from "../../../utils/Dates";
+import { handleAxiosError } from "../../../utils/HandleAxiosError";
+import Modal from "../../common/Modal";
+import { ScreenLoading } from "../../Loaders";
+import { DELIVERY_CHARGE } from "../../PlaceOrderProcess/OrderSummary";
+import TrackOrder from "../TrackOrder";
+import "./style.css";
 
 const paymentStatusStyle = (paymentStatus: string): React.CSSProperties => {
   return {
@@ -31,18 +31,18 @@ const paymentStatusStyle = (paymentStatus: string): React.CSSProperties => {
       paymentStatus === "success"
         ? "#C6F6D5"
         : paymentStatus === "pending"
-        ? "#E2E8F0"
-        : paymentStatus === "failed"
-        ? "#FEB2B2"
-        : "#F7FAFC",
+          ? "#E2E8F0"
+          : paymentStatus === "failed"
+            ? "#FEB2B2"
+            : "#F7FAFC",
     color:
       paymentStatus === "success"
         ? "#2F855A"
         : paymentStatus === "pending"
-        ? "#1A202C"
-        : paymentStatus === "failed"
-        ? "#C53030"
-        : "#A0AEC0",
+          ? "#1A202C"
+          : paymentStatus === "failed"
+            ? "#C53030"
+            : "#A0AEC0",
   };
 };
 
@@ -70,13 +70,12 @@ const PlaceOrders = ({ totalHeight }: { totalHeight?: number }) => {
           `/order/generate-invoice/${orderId}`,
           {
             responseType: "blob",
-          }
+          },
         );
 
         // const blob = await res.blob();
         const blob = new Blob([res.data, { type: "application/pdf" }]);
         const url = URL.createObjectURL(blob);
-        // console.log(res.data, blob, url);
 
         const a = document.createElement("a");
         a.download = "invoice.pdf";
@@ -272,7 +271,7 @@ const PlaceOrders = ({ totalHeight }: { totalHeight?: number }) => {
                         {value?.items?.length > 0
                           ? value.items.reduce(
                               (total, item) => total + item.qty,
-                              0
+                              0,
                             )
                           : 0}{" "}
                         items)
@@ -282,7 +281,7 @@ const PlaceOrders = ({ totalHeight }: { totalHeight?: number }) => {
                         {value?.items?.length > 0
                           ? value?.items.reduce(
                               (total, item) => total + item.price * item.qty,
-                              0
+                              0,
                             )
                           : 0}
                       </span>

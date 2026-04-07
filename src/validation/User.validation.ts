@@ -1,6 +1,6 @@
 import { IAddressDetails } from "../types/interfaces/user.interface";
-import { locationRegex, numberRegex, unicodeNameRegex } from "../utils/Regex";
 import { maxAddressSize, maxNameSize, maxNumberSize } from "../utils/Constants";
+import { locationRegex, numberRegex, unicodeNameRegex } from "../utils/Regex";
 
 interface IValidationEror {
   [key: string]: string;
@@ -86,6 +86,5 @@ export const validateAddress = (values: IAddressDetails) => {
     error.addressType = "Address Type is required";
   }
 
-  // console.log("Values: ", values);
   return error;
 };

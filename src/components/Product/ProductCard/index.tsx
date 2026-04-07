@@ -1,13 +1,11 @@
-import { memo } from 'react';
-import { Link } from 'react-router';
+import { memo } from "react";
+import { Link } from "react-router";
 
 // components
-import './style.css';
-import { IProduct } from '../../../types/interfaces/product.interface';
+import { IProduct } from "../../../types/interfaces/product.interface";
+import "./style.css";
 
 const ProductCard = ({ product }: { product: IProduct }) => {
-  // console.log('ProductCard: ', product);
-
   const totalOff = (
     100 -
     (product.sellingPrice / product.actualPrice) * 100
@@ -35,9 +33,9 @@ const ProductCard = ({ product }: { product: IProduct }) => {
             )}
             <span
               style={{
-                fontSize: '14px',
-                color: 'rgb(4, 126, 11)',
-                fontWeight: '600',
+                fontSize: "14px",
+                color: "rgb(4, 126, 11)",
+                fontWeight: "600",
               }}
             >
               {totalOff}% <span>off</span>

@@ -1,13 +1,13 @@
+import dayjs from "dayjs";
 import * as Yup from "yup";
 import { ILoginState, ISignUpState } from "../types/interfaces/auth";
-import dayjs from "dayjs";
-import { numberRegex, passwordRegex, unicodeNameRegex } from "../utils/Regex";
 import {
   maxEmailSize,
   maxNameSize,
   maxNumberSize,
   maxPasswordSize,
 } from "../utils/Constants";
+import { numberRegex, passwordRegex, unicodeNameRegex } from "../utils/Regex";
 
 export const singinInitialState: ILoginState = {
   email: "",
@@ -38,7 +38,7 @@ export const signUpSchema = Yup.object({
     .max(maxNameSize, `First Name must be at most ${maxNameSize} characters`)
     .matches(
       unicodeNameRegex,
-      "First name can only contain letters, spaces, hyphens, and apostrophes"
+      "First name can only contain letters, spaces, hyphens, and apostrophes",
     ),
 
   lastName: Yup.string()
@@ -46,7 +46,7 @@ export const signUpSchema = Yup.object({
     .max(maxNameSize, `Last Name must be at most ${maxNameSize} characters`)
     .matches(
       unicodeNameRegex,
-      "First name can only contain letters, spaces, hyphens, and apostrophes"
+      "First name can only contain letters, spaces, hyphens, and apostrophes",
     ),
 
   email: Yup.string()
@@ -68,26 +68,25 @@ export const signUpSchema = Yup.object({
       function (value) {
         const dob = dayjs(value);
         const age = dayjs().diff(dob, "years");
-        // console.log(value, dob, age, age > 10);
         return age > 10;
-      }
+      },
     ),
   password: Yup.string()
     .required("Password is required")
     .min(8, "Password must be at least 8 characters")
     .max(
       maxPasswordSize,
-      `Password must be at most ${maxPasswordSize} characters`
+      `Password must be at most ${maxPasswordSize} characters`,
     )
     .matches(
       passwordRegex,
-      "Password must contain at least one lowercase letter, one uppercase letter, one number and one special character"
+      "Password must contain at least one lowercase letter, one uppercase letter, one number and one special character",
     ),
   confirm_password: Yup.string()
     .required("Confirm Password is required")
     .oneOf([Yup.ref("password")], "Passwords do not match"),
   checked: Yup.boolean().oneOf(
     [true],
-    "You must accept the terms and conditions"
+    "You must accept the terms and conditions",
   ),
 });

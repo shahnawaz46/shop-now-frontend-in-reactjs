@@ -1,20 +1,20 @@
 import { useState } from "react";
-import { AiFillStar } from "react-icons/ai";
 import AliceCarousel from "react-alice-carousel";
-import { toast } from "react-toastify";
+import { AiFillStar } from "react-icons/ai";
 import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 // components
-import "./style.css";
-import Sizes from "../Sizes";
-import { addToCart, incrementCartItem } from "../../../redux/slices/CartSlice";
-import AllReviews from "../../Review/allReviews";
-import { totalRating } from "../../../utils/Product";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { addToCart, incrementCartItem } from "../../../redux/slices/CartSlice";
 import {
   IPreviewProduct,
   IProductSizes,
 } from "../../../types/interfaces/product.interface";
+import { totalRating } from "../../../utils/Product";
+import AllReviews from "../../Review/allReviews";
+import Sizes from "../Sizes";
+import "./style.css";
 
 const responsive = {
   0: { items: 1 },
@@ -32,7 +32,6 @@ const PreviewProduct = ({
 }: IPreviewProductProps) => {
   const dispatch = useAppDispatch();
   const { cartItems } = useAppSelector((state) => state.cart);
-  // console.log('PreviewProduct:', previewProduct);
 
   const navigate = useNavigate();
   const [productSize, setProductSize] = useState<
@@ -48,7 +47,7 @@ const PreviewProduct = ({
     // if item already added to cart then incrementing the quantity
     const isAlreadyAdded = cartItems.find(
       (item) =>
-        item.productId === previewProduct._id && item.size === productSize
+        item.productId === previewProduct._id && item.size === productSize,
     );
     if (isAlreadyAdded) {
       dispatch(
@@ -56,7 +55,7 @@ const PreviewProduct = ({
           productId: previewProduct._id,
           size: productSize,
           qty: 1,
-        })
+        }),
       );
 
       return;
@@ -70,7 +69,7 @@ const PreviewProduct = ({
         sellingPrice: previewProduct.sellingPrice,
         size: productSize,
         qty: 1,
-      })
+      }),
     );
   };
 

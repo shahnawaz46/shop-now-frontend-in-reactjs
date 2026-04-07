@@ -1,6 +1,6 @@
+import axios from "axios";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import axios from "axios";
 
 // components
 import axiosInstance from "../axios/AxiosInstance";
@@ -18,7 +18,7 @@ const defaultTime: number = 24 * 60 * 60 * 1000; // by default i am caching the 
 function useFetch<T>(
   key: string,
   URL: string | string[],
-  refetchIn: number = defaultTime
+  refetchIn: number = defaultTime,
 ) {
   const [status, setStatus] = useState<ERequestStatus>(ERequestStatus.Idle);
   const [error, setError] = useState<string>("");
@@ -27,7 +27,6 @@ function useFetch<T>(
   const cacheData = dataMap.get(key) as IDataMap<T> | undefined;
 
   const fetchDate = async () => {
-    // console.log(dataMap);
     const currentTime = new Date().getTime();
 
     // don't fetch again if cache is still valid
@@ -42,7 +41,7 @@ function useFetch<T>(
       // if user send URL in array and if array have multiple URL then i am using promise.all for fetch all response
       if (Array.isArray(URL) && URL?.length > 1) {
         const tempRes = await Promise.all(
-          URL.map((url) => axiosInstance.get(url))
+          URL.map((url) => axiosInstance.get(url)),
         );
 
         const mergedResponse: { [key: string]: unknown } = {};
@@ -52,7 +51,6 @@ function useFetch<T>(
         });
 
         res = mergedResponse as T;
-        // console.log('res: ', res);
       } else {
         const _URL: string = typeof URL === "string" ? URL : URL[0];
         const tempRes = await axiosInstance.get(_URL);
@@ -70,12 +68,12 @@ function useFetch<T>(
         setError(
           err?.response?.data?.error ||
             err?.message ||
-            "Something went wrong please try again"
+            "Something went wrong please try again",
         );
         toast.error(
           err?.response?.data?.error ||
             err?.message ||
-            "Something went wrong please try again"
+            "Something went wrong please try again",
         );
       } else if (err instanceof Error) {
         setError(err?.message || "Something went wrong please try again");
@@ -89,9 +87,8 @@ function useFetch<T>(
   async function updateData<K>(
     key: string,
     subKey: string,
-    data: K
+    data: K,
   ): Promise<void> {
-    // console.log('updating Data: ', key, subKey, data, dataMap.get(key));
     let current = dataMap.get(key) as IDataMap<T> | undefined;
     if (!current) return;
 
@@ -103,8 +100,6 @@ function useFetch<T>(
   useEffect(() => {
     fetchDate();
   }, []);
-
-  // console.log('cacheData:', cacheData);
 
   return {
     isLoading: dataMap.get(key) ? false : true,

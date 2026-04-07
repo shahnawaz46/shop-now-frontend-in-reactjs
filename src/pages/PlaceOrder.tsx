@@ -3,18 +3,18 @@ import { Navigate, useLocation } from "react-router";
 
 // components
 import RootLayout from "../components/Layout/RootLayout";
-import Stepper from "../components/PlaceOrderProcess/Stepper";
-import ShippingAddress from "../components/PlaceOrderProcess/ShippingAddress";
+import { ScreenLoading } from "../components/Loaders";
+import OrderDone from "../components/PlaceOrderProcess/OrderDone";
 import OrderSummary from "../components/PlaceOrderProcess/OrderSummary";
 import Payment from "../components/PlaceOrderProcess/Payment";
-import OrderDone from "../components/PlaceOrderProcess/OrderDone";
-import { clearStateAndStorage } from "../utils/ClearStateAndStorage";
-import { fetchAuthDetails } from "../redux/slices/AuthSlice";
-import { ScreenLoading } from "../components/Loaders";
+import ShippingAddress from "../components/PlaceOrderProcess/ShippingAddress";
+import Stepper from "../components/PlaceOrderProcess/Stepper";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { fetchAddressDetails } from "../redux/slices/AddressSlice";
+import { fetchAuthDetails } from "../redux/slices/AuthSlice";
 import { ERequestStatus } from "../types/enums";
 import { ISteeperItem } from "../types/interfaces";
-import { fetchAddressDetails } from "../redux/slices/AddressSlice";
+import { clearStateAndStorage } from "../utils/ClearStateAndStorage";
 
 const stepperItem: ISteeperItem[] = [
   { id: 1, title: "Delivery Address" },
@@ -32,7 +32,6 @@ const PlaceOrder = () => {
   const [notAuthenticated, setNotAuthenticated] = useState<boolean>(false);
 
   useEffect(() => {
-    // console.log("location:", location);
     const query = new URLSearchParams(location.search);
     if (query) {
       if (query.get("step")) setCurrentStep(Number(query.get("step")));

@@ -1,9 +1,9 @@
-import React from 'react';
-import { IProduct } from '../../../types/interfaces/product.interface';
-import { PaginationLoading, ScreenLoading } from '../../Loaders';
-import NotFound from '../../NotFound';
-import ProductCard from '../ProductCard';
-import './style.css';
+import React from "react";
+import { IProduct } from "../../../types/interfaces/product.interface";
+import { PaginationLoading, ScreenLoading } from "../../Loaders";
+import NotFound from "../../NotFound";
+import ProductCard from "../ProductCard";
+import "./style.css";
 
 interface IProductCardWrapperProps {
   isLoading: boolean;
@@ -16,7 +16,6 @@ interface IProductCardWrapperProps {
 const ProductCardWrapper = (props: IProductCardWrapperProps) => {
   const { isLoading, products, errorMsg, hasFetchNext, fetchNextRef } = props;
 
-  // console.log(hasFetchNext);
   if (isLoading) {
     return <ScreenLoading position="absolute" />;
   }

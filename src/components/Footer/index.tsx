@@ -1,13 +1,12 @@
-import "./style.css";
 import {
   FaBuilding,
   FaFacebookSquare,
-  FaTwitterSquare,
   FaInstagramSquare,
+  FaTwitterSquare,
 } from "react-icons/fa";
 import { IoMdCall } from "react-icons/io";
-import { MdEmail } from "react-icons/md";
 import { Link } from "react-router";
+import "./style.css";
 
 // import { useSelector } from 'react-redux';
 
@@ -50,10 +49,6 @@ const Footer = () => {
             <li>
               <IoMdCall />
               +91 9999968025
-            </li>
-            <li>
-              <MdEmail />
-              shahnawaz85748@gmail.com
             </li>
           </ul>
         </div>

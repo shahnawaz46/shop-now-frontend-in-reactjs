@@ -1,17 +1,17 @@
+import { Field, Form, Formik } from "formik";
 import { memo } from "react";
 import { toast } from "react-toastify";
-import { Field, Form, Formik } from "formik";
 
 // components
-import "./style.css";
 import axiosInstance from "../../../axios/AxiosInstance";
-import { updatePersonDetail } from "../../../redux/slices/AuthSlice";
-import FormikErrorMsg from "../../common/FormikErrorMsg";
-import CustomButton from "../../common/CustomButton";
 import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
+import { updatePersonDetail } from "../../../redux/slices/AuthSlice";
 import { IPersonalDetail } from "../../../types/interfaces/user.interface";
 import { handleAxiosError } from "../../../utils/HandleAxiosError";
 import { editProfileSchema } from "../../../validation/EditProfile.yup";
+import CustomButton from "../../common/CustomButton";
+import FormikErrorMsg from "../../common/FormikErrorMsg";
+import "./style.css";
 
 // Omit
 type TOmitedPersonalDetail = Omit<
@@ -65,7 +65,6 @@ const EditProfile = () => {
           }}
         >
           {({ isSubmitting }) => (
-            //  { console.log(isSubmitting)}
             <Form className="editprofile-form">
               <div className="editprofile-input">
                 <label htmlFor="first_name">First Name</label>

@@ -1,9 +1,8 @@
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
+import axiosInstance from "../../axios/AxiosInstance";
 import { ERequestStatus } from "../../types/enums";
 import { IAddressDetails } from "../../types/interfaces/user.interface";
-import axiosInstance from "../../axios/AxiosInstance";
 import { logout } from "../actions";
-// import { logout } from "../store";
 
 interface AddressState {
   status: ERequestStatus;
@@ -22,7 +21,7 @@ export const fetchAddressDetails = createAsyncThunk(
   async () => {
     const res = await axiosInstance.get("/address");
     return res.data.userAddress as IAddressDetails[];
-  }
+  },
 );
 
 const addressSlice = createSlice({
@@ -35,14 +34,14 @@ const addressSlice = createSlice({
 
     updateAddress: (state, action: PayloadAction<IAddressDetails>) => {
       const index: number = state.addressDetails.findIndex(
-        (item) => item._id === action.payload._id
+        (item) => item._id === action.payload._id,
       );
       state.addressDetails.splice(index, 1, action.payload);
     },
 
     deleteAddress: (state, action: PayloadAction<string>) => {
       const updatedAddress = state.addressDetails.filter(
-        (item) => item._id !== action.payload
+        (item) => item._id !== action.payload,
       );
       state.addressDetails = updatedAddress;
     },

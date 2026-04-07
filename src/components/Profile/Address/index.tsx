@@ -1,24 +1,24 @@
-import { useState, memo, useEffect } from "react";
+import { memo, useEffect, useState } from "react";
 import { FaRegAddressBook } from "react-icons/fa";
 import { toast } from "react-toastify";
 
 // components
-import "./style.css";
-import AddressForm from "../AddressForm";
 import axiosInstance from "../../../axios/AxiosInstance";
+import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import {
   deleteAddress,
   fetchAddressDetails,
 } from "../../../redux/slices/AddressSlice";
-import CustomButton from "../../common/CustomButton";
+import { ERequestStatus } from "../../../types/enums";
 import {
   IAddressDetails,
   IOpenAddressModal,
 } from "../../../types/interfaces/user.interface";
-import { useAppDispatch, useAppSelector } from "../../../redux/hooks";
 import { handleAxiosError } from "../../../utils/HandleAxiosError";
-import { ERequestStatus } from "../../../types/enums";
+import CustomButton from "../../common/CustomButton";
 import { ScreenLoading } from "../../Loaders";
+import AddressForm from "../AddressForm";
+import "./style.css";
 
 export const addressInitialState: IAddressDetails = {
   name: "",
@@ -51,7 +51,6 @@ export const addressFormLabel: Record<keyof AddressFormLabelKeys, string> = {
 const Address = ({ totalHeight }: { totalHeight?: number }) => {
   const dispatch = useAppDispatch();
   const { status, addressDetails } = useAppSelector((state) => state.address);
-  console.log("addressDetails", status, addressDetails);
 
   const [openAddressModal, setOpenAddressModal] = useState<IOpenAddressModal>({
     type: "",
@@ -113,6 +112,15 @@ const Address = ({ totalHeight }: { totalHeight?: number }) => {
             />
           </div>
         </div>
+
+        {openAddressModal?.show && (
+          <AddressForm
+            openAddressModal={openAddressModal}
+            setOpenAddressModal={setOpenAddressModal}
+            userAddress={userAddress}
+            setUserAddress={setUserAddress}
+          />
+        )}
       </div>
     );
   }

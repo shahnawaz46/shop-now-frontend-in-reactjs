@@ -1,11 +1,11 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axiosInstance from "../../axios/AxiosInstance";
+import { setToken } from "../../services/tokenService";
 import { ERequestStatus } from "../../types/enums";
+import { IDeviceInfo, ILoginState } from "../../types/interfaces/auth";
 import { IPersonalDetail } from "../../types/interfaces/user.interface";
 import { logout } from "../actions";
-import { IDeviceInfo, ILoginState } from "../../types/interfaces/auth";
-import { setToken } from "../../services/tokenService";
 
 interface IUserState {
   status: ERequestStatus;
@@ -30,11 +30,15 @@ export const fetchAuthDetails = createAsyncThunk("auth/fetch", async () => {
 
 export const loginUser = createAsyncThunk(
   "auth/login",
-  async (payload: LoginPayload) => {
-    const res = await axiosInstance.post("/signin", payload);
-    setToken(res.data._a_t);
-    return res.data;
-  }
+  async (payload: LoginPayload, { rejectWithValue }) => {
+    try {
+      const res = await axiosInstance.post("/signin", payload);
+      setToken(res.data._a_t);
+      return res.data;
+    } catch (error: any) {
+      return rejectWithValue(error?.response?.data?.error);
+    }
+  },
 );
 
 const AuthSlice = createSlice({
