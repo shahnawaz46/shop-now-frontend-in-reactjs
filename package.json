@@ -15,7 +15,7 @@
   "dependencies": {
     "@reduxjs/toolkit": "^2.11.2",
     "@sentry/react": "^10.1.0",
-    "axios": "^1.7.9",
+    "axios": "^1.16.1",
     "dayjs": "^1.11.20",
     "formik": "^2.4.9",
     "lodash": "^4.17.21",
@@ -52,12 +52,11 @@
     "eslint-plugin-react-refresh": "^0.4.18",
     "globals": "^15.14.0",
     "jsdom": "^27.0.1",
-    "netlify-cli": "^24.10.0",
+    "netlify-cli": "^26.0.1",
     "rollup-plugin-visualizer": "^5.14.0",
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.29.1",
     "vite": "6.4.2",
-    "vitest": "^4.0.3",
-    "yarn-audit-fix": "^10.1.1"
+    "vitest": "^4.0.3"
   }
 }
